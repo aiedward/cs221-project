@@ -8,10 +8,16 @@
 # Note: Commenting encouraged so other people can learn from what you've done!
 
 import collections, itertools, copy
+import sys, os
 import numpy, scipy, math
 import re
 import inspect
 import json
+from multiprocessing import Pool
+from contextlib import closing
+import thread
+import threading
+import time
 
 def printFunctionName():
     print ""
@@ -292,7 +298,45 @@ def test_database1():
 
     print
 
+def test_pool1():
+    printFunctionName()
+    
+    exitFlag = 0
 
+    class QueryThread (threading.Thread):
+        def __init__(self, threadID, name, delay):
+            threading.Thread.__init__(self)
+            self.threadID = threadID
+            self.name = name
+            self.delay = delay
+        def run(self):
+            print "Starting " + self.name
+            writeToFile(self.threadID, self.name)
+            print "Exiting " + self.name
+
+    def writeToFile(threadID, threadName, curFile):
+        filedir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "res", "threadtest")
+        filename = os.path.join(filedir, threadName) + ".txt"
+        with open(filename, 'w+') as f:
+            f.write(threadName)
+
+
+    # Create new threads
+    # for i in xrange(4):
+    #     threads_list.append(QueryThread(i, "Thread-" + str(i), i))
+    for i in xrange(4):
+        thread.start_new_thread(writeToFile, (i, "AwesomeThread-" + str(i), __file__))
+
+    # Start new Threads
+    # for tid, t in threading.enumerate():
+    #     t.start()
+
+    for tid, t in threading.enumerate():
+        t.join()
+
+    print "Exiting Main Thread"
+
+    print
 def main(argv):
     # test_slicing()
     # test_split1()
@@ -309,4 +353,8 @@ def main(argv):
     # test_exception3()
     # test_exception4()
 
-    test_database1()
+    # test_database1()
+    test_pool1()
+
+if __name__ == "__main__":
+    main(sys.argv)
