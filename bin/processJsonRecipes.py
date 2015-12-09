@@ -1,6 +1,6 @@
 import collections, itertools, copy, Queue
 import numpy, scipy, math, random
-import os, sys
+import os, sys, time
 import tokenize, re, string
 import json, unicodedata
 import thread
@@ -20,9 +20,12 @@ FILENAME_JSON_RECIPES = "allRecipes.json"
 ##
 def main(argv):
 	allRecipes = []
-	aliasCounts = {}
-	aliasRelations = {}
-	aliasToAliasLines = {}
+
+	# Each alias has 3 main fields:
+	#   "count"
+	#   "aliasBuddies"
+	#   "lines"
+	aliasData = {}
 
 	# Read in and parse recipe data structures (dictionaries) from a json file.
 	extractRecipesFromJSON(allRecipes)
@@ -34,12 +37,13 @@ def main(argv):
 	# Create a dictionary storing relationships between the various aliases.
 	# Create a dictionary with aliases as keys and lists of lines they've been
 	#    associated with as values.
-	fillDataStructures(allRecipes, aliasCounts, aliasRelations, aliasToAliasLines)
+	fillAliasData(allRecipes, aliasData)
 
-	# print sorted(aliasCounts.items(), key=lambda x: -x[1])[:10]
+	dumpDictToJsonFile(aliasData, "aliasData")
 
-	for item in aliasRelations.items()[:10]:
-		print item
+	printAliasData(aliasData, 10, True)
+	
+
 
 ##
 # Function: extractRecipesFromJSON
@@ -47,20 +51,29 @@ def main(argv):
 # Reads in all data from the json file containing all recipe data.
 ##
 def extractRecipesFromJSON(allRecipes):
+	# Read in the JSON file containing recipe data
 	jsonFileName = os.path.join(PATH_TO_RESOURCES, FILENAME_JSON_RECIPES);
-	fullJsonString = open(jsonFileName, 'r').read()
+	fullJsonString = None
+	with open(jsonFileName, 'r') as f:
+		fullJsonString = f.read()
+
+	# This is dead code I was trying to use to remove all escaped unicode
+	# characters (e.g. \u00bd) or convert them to ascii
 	#noUnicodeJsonString = fullJsonString.decode('unicode_escape').encode('ascii','ignore')
 	#asciiJsonString = fullJsonString.decode('unicode-escape')
 
+	# Read the JSON file in as a dictionary
 	d = json.JSONDecoder()
 	myDict = d.decode(fullJsonString)
 
+	# Fill allRecipes with just the values for each JSON member,
+	# as the values actually contain the keys as a member
 	for _, val in myDict.items():
 		allRecipes.append(val)
 
 ##
 # Function: lowerAllStrings
-# -----------------------
+# -------------------------
 # Converts all string data to lowercase.
 ##
 def lowerAllStrings(allRecipes):
@@ -70,50 +83,133 @@ def lowerAllStrings(allRecipes):
 		recipe["recipeName"] = recipe["recipeName"].lower()
 
 ##
-# Function: fillDataStructures
-# ----------------------------
-# 
-##
-def fillDataStructures(allRecipes, aliasCounts, aliasRelations, aliasToAliasLines):
-	fillAliasCounts(allRecipes, aliasCounts)
-	fillAliasRelations(allRecipes, aliasRelations)
-	fillAliasLineRelations(allRecipes, aliasToAliasLines)
-
-
-##
-# Function: fillAliasCounts
-# ------------------------------
-# Get the counts of ingredient short names and create a dictionary storing
-# relationships between the various aliases.
-#
+# Function: fillAliasData
+# -----------------------
 # Example Aliases:
 #    An alias for "1 pound dried pasta" might be "dried pasta"
 #    An alias for "4 cloves garlic, minced" might be "garlic"
 ##
-def fillAliasCounts(allRecipes, aliasCounts):
+def fillAliasData(allRecipes, aliasData):
+	initializeAliasData(allRecipes, aliasData)
+
+	fillAliasCounts(allRecipes, aliasData)
+	fillAliasRelations(allRecipes, aliasData)
+	fillAliasLineRelations(allRecipes, aliasData)
+
+	convertBuddyListToNormalDict(aliasData)
+
+##
+# Function: initializeAliasData
+# ----------------------------
+# Make the various field's for each alias's dict easier to add things to.
+##
+def initializeAliasData(allRecipes, aliasData):
 	for recipe in allRecipes:
 		for alias in recipe["ingredients"]:
-			aliasCounts[alias] = aliasCounts.get(alias, 0) + 1
+			if alias not in aliasData:
+				aliasData[alias] = \
+					{"count": 0, 
+					"aliasBuddies": collections.defaultdict(int), 
+					"lines": []}
 
-def fillAliasRelations(allRecipes, aliasRelations):
+##
+# Function: fillAliasCounts
+# ------------------------------
+# Get the counts of total number of appearances of all
+# short-names (aliases) in all recipes.
+#
+# Example aliasCounts:
+# {
+#   "garlic": 8,
+#   "oregano": 18
+# }
+##
+def fillAliasCounts(allRecipes, aliasData):
+	for recipe in allRecipes:
+		for alias in recipe["ingredients"]:
+			aliasData[alias]["count"] += 1
+
+##
+# Function: fillAliasRelations
+# ----------------------------
+# Fill relations from ingredient short-names (aliases) to other
+# aliases they've been seen with in the same recipe. Counts of how
+# many times they've been seen with each ingredient are included.
+#
+# Example aliasRelations:
+# {
+#   "garlic": {"oregano": 5, "crushed tomatoes": 1, "small yellow onion": 2},
+#   "oregano": {"garlic": 5, "crushed tomatoes": 3, "salt": 10}
+# }
+##
+def fillAliasRelations(allRecipes, aliasData):
 	for recipe in allRecipes:
 		ingredientAliases = recipe["ingredients"]
-		numIngredientAliases = len(ingredientAliases)
-		for i in xrange(numIngredientAliases):
-			alias = ingredientAliases[i]
-
+		for i, alias in enumerate(ingredientAliases):
 			# Add the other aliases in this recipe to this alias's
-			# relation list (aliases it's been seen with)
-			aliasRelations[alias] = aliasRelations.get(alias, []) + \
-				[ingredientAliases[j] for j in xrange(numIngredientAliases) if j != i]
+			# buddy alias dict (aliases it's been seen with)
+			for j, aliasBuddy in enumerate(ingredientAliases):
+				if j == i:
+					continue
 
-	# Tally up each ingredient in the alias relations list for each alias
-	for key in aliasRelations.keys():
-		aliasRelations[key] = dict(collections.Counter(aliasRelations[key]))
+				# Add 1 to the count for this buddy
+				aliasData[alias]["aliasBuddies"][aliasBuddy] +=1
 
-def fillAliasLineRelations(allRecipes, aliasToAliasLines):
-	pass
+##
+# Function: fillAliasLineRelations
+# --------------------------------
+# Fill relations from ingredient short-names (aliases) to lists of ingredient
+# lines that've been written for them.
+#
+# Example aliasLineRelations:
+# {
+#    "garlic": ["4 cloves garlic, minced", "garlic to taste, diced"],
+#    "oregano": ["1/4 teaspoon dried oregano", "oregano and basil to taste"]
+# }
+##
+def fillAliasLineRelations(allRecipes, aliasData):
+	for recipe in allRecipes:
+		for alias, aliasLine in zip(recipe["ingredients"], recipe["ingredientLines"]):
+			aliasData[alias]["lines"].append(aliasLine)
 
+##
+# Function: convertBuddyListToNormalDict
+# --------------------------------------
+# Default dicts are fine, but I'd rather have the ["aliasBuddies"] field be
+# just a normal dict. This doesn't actually change much.
+##
+def convertBuddyListToNormalDict(aliasData):
+	for alias in aliasData:
+		aliasData[alias]["aliasBuddies"] = dict(aliasData[alias]["aliasBuddies"])
+
+##
+# Function: convertBuddyListToNormalDict
+# --------------------------------------
+# Print out the 3 fields for each alias.
+##
+def printAliasData(aliasData, numToPrint, randomize):
+	itemsToPrint = None
+	if randomize == True:
+		itemsToPrint = random.sample(aliasData.items(), numToPrint)
+	else:
+		itemsToPrint = aliasData.items()[:numToPrint]
+
+	for key, val in itemsToPrint:
+		print key
+		print "--------"
+		for k, v in val.items():
+			print k, ": ", v
+		print
+
+def dumpDictToJsonFile(dict2dump, fileNamePrefix):
+	jsonDatabase = json.dumps(dict2dump, sort_keys=True, indent=4)
+	fileName = string_appendDateAndTime(fileNamePrefix)
+	fullFileName = os.path.join(PATH_TO_RESOURCES, fileName)
+	with open(fullFileName, "w") as f:
+		f.write(jsonDatabase)
+
+def string_appendDateAndTime(s):
+	return "_".join([s, time.strftime("%m-%d-%Y"), time.strftime("%Hh-%Mm-%Ss")]) + ".json"
 
 # If called from command line, call the main() function
 if __name__ == "__main__":
