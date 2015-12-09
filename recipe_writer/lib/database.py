@@ -8,12 +8,13 @@ This file is responsible for constructing the Recipe and the Nutritional Databas
 
 # -------------------- NOTES --------------------
 
-import collections, requests, json, time, pdb
+import collections, requests, json, time, pdb, sys
 
 # Yummly API constants
 YUM_APP_ID = "4d1d7424"
 YUM_APP_KEY = "419a5ef2649eb3b6e359b7a9de93e905"
 YUM_STEP = 100
+#YUM_STEP = 5 #for test purposes
 YUM_ALLOWED_COURSE = "course^course-Main Dishes"
 PRINT_RECIPE_IN_DATABASE = False
 
@@ -46,7 +47,10 @@ def setConstants(recipesInDatabase, remainingCalls, missedIngredients, apiNum,st
 	PRINT_REMAINING_CALLS = remainingCalls
 	PRINT_MISSED_INGREDIENTS = missedIngredients
 	GOV_NUT_API_KEY = govAPIArray[apiNum]
+	
+	global startNumber
 	startNumber = startNum
+
 
 
 # Function: printMissedIngredients
@@ -213,7 +217,9 @@ def buildRecipeEntry(recipe):
 	recipeName = recipe['recipeName']
 	recipeId= recipe['id']
 	ingredients = recipe['ingredients']
-	addIngredientToNutritionalList(ingredients)
+	#Commenting out to test recipe dump.
+	#addIngredientToNutritionalList(ingredients)
+	
 	brokeRequest = True
 
 	while brokeRequest:
@@ -251,10 +257,26 @@ def getNumSteps(totalResults):
 # maxResults number given the iteration we are in and the
 # totalResults.
 def getStartAndMaxResults(i, numSteps, totalResults):
+	#print "startnumber = " + str(startNumber)
 	start = YUM_STEP * i + startNumber #Added offset into the recipe lists.
 	maxResults = YUM_STEP
 	if i == numSteps - 1:
 		maxResults = totalResults - start
+	if totalResults < YUM_STEP:
+		maxResults = totalResults
+	return start, maxResults
+
+# Function: indexedGetStartAndMaxResults
+# ---------------------
+# Quick calculations to return the start number and the
+# maxResults number given the iteration we are in and the
+# totalResults.
+def indexedGetStartAndMaxResults(i, numSteps, totalResults, startIndex):
+	#print "startnumber = " + str(startNumber)
+	start = YUM_STEP * i + startIndex #Added offset into the recipe lists.
+	maxResults = YUM_STEP
+	if i == numSteps - 1:
+		maxResults = totalResults - start + startIndex
 	if totalResults < YUM_STEP:
 		maxResults = totalResults
 	return start, maxResults
@@ -279,13 +301,11 @@ def buildRecipeDatabase(recipeFilename, totalResults):
 		start, maxResults = getStartAndMaxResults(i, numSteps, totalResults)
 		print "... Processing recipes: %d to %d ..." % (start + 1, start + maxResults)
 		# print "... start: %d, maxResults: %d ..." % (start, maxResults)
-
+		# allRecipesFile = open(recipeFilename, 'a')
 		while brokeRequest:
 			apiSearchString = "http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=&allowedCourse[]=%s&maxResult=%d&start=%d" % (YUM_APP_ID, YUM_APP_KEY, YUM_ALLOWED_COURSE, maxResults, start)
 			searchRequest = requests.get(apiSearchString)
 			brokeRequest = not (searchRequest.status_code == 200)
-
-
 		# check out BROKEREQUEST!!!
 		allRecipes = json.loads(searchRequest.content)
 		matches = allRecipes["matches"]
@@ -299,11 +319,55 @@ def buildRecipeDatabase(recipeFilename, totalResults):
 
 	jsonRecipeDatabase = json.dumps(recipeDatabase, sort_keys=True, indent=4)
 	print "--> len of recipeDatabase = %d" % len(recipeDatabase)
-	allRecipesFile = open(recipeFilename, 'w+')
+	allRecipesFile = open(recipeFilename + ".json", 'a')
 	allRecipesFile.write(jsonRecipeDatabase)
 	allRecipesFile.close()
 
 	print "... Done creating Recipe Database with %d recipes ..." % totalResults
+
+# Function: buildOnlyRecipeDatabase
+# ---------------------
+# Modifies Bruno's original buildRecipeDatabase to constantly output to a set of files,
+# writing within each loop.
+def buildOnlyRecipeDatabase(recipeFilename, totalResults, startIndex):
+	#print "... Creating Recipe Database with %d recipes ..." % totalResults
+
+	numSteps = getNumSteps(totalResults)
+	recipeDatabase = {}
+	count = 0
+
+	for i in range(numSteps):
+		brokeRequest = True
+		start, maxResults = indexedGetStartAndMaxResults(i, numSteps, totalResults, startIndex)
+		processUpdateStatement = "... Processing recipes: %d to %d ..." % (start + 1, start + maxResults)
+		sys.stdout.write(processUpdateStatement +  '\n')
+
+		while brokeRequest:
+			apiSearchString = "http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=&allowedCourse[]=%s&maxResult=%d&start=%d" % (YUM_APP_ID, YUM_APP_KEY, YUM_ALLOWED_COURSE, maxResults, start)
+			searchRequest = requests.get(apiSearchString)
+			brokeRequest = not (searchRequest.status_code == 200)
+
+		# check out BROKEREQUEST!!!
+		allRecipes = json.loads(searchRequest.content)
+		matches = allRecipes["matches"]
+		for recipe in matches:
+			recipeName, recipeObj = buildRecipeEntry(recipe)
+			recipeDatabase[recipeName] = recipeObj
+			count += 1
+			if PRINT_RECIPE_IN_DATABASE:
+				print "--> recipe %d: %s" % (count, recipeName)
+				print "--> len of recipeDatabase = %d" % len(recipeDatabase)
+		#indenting this all into the for loop.  Was originally outside while.
+		jsonRecipeDatabase = json.dumps(recipeDatabase, sort_keys=True, indent=4)
+		#print "--> len of recipeDatabase = %d" % len(recipeDatabase)
+		targetFileName = recipeFilename + "_" + str(startIndex/YUM_STEP + i) + ".json"
+		allRecipesFile = open(targetFileName, 'a')
+		allRecipesFile.write(jsonRecipeDatabase)
+		allRecipesFile.close()
+		#Adding to clear dict on each loop.
+		recipeDatabase.clear()
+
+	#print "... Done creating Recipe Database with %d recipes ..." % totalResults
 
 # Function: createDatabases
 # ---------------------
@@ -316,3 +380,13 @@ def createDatabases(recipeFilename, nutritionalFileName, numRecipes):
 	print
 	print "The recipe and nutritional databases are ready to go! Access them at %s and %s, respectively" % (recipeFilename, nutritionalFileName)
 	print
+
+# Function: createOnlyRecipeDatabase
+# ---------------------
+# Creates the Recipe and the Nutritional Databases and store them in the
+# respective files in json format.
+def createOnlyRecipeDatabase(recipeFilename, nutritionalFileName, numRecipes, startIndex):
+	buildOnlyRecipeDatabase(recipeFilename, numRecipes, startIndex)
+	#
+	#print "The recipe and nutritional databases are ready to go! Access them at %s and %s, respectively" % (recipeFilename, nutritionalFileName)
+	#print
