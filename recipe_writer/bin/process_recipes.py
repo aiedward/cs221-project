@@ -5,8 +5,9 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from lib.constants import *
+from lib import constants as c
+c.init(os.path.dirname(os.path.dirname(__file__)))
+
 
 ##
 # Function: main
@@ -36,7 +37,7 @@ def main(argv):
 
 	dumpDictToJsonFile(aliasData, "aliasData")
 
-	printAliasData(aliasData, 10, True)
+	printAliasData(aliasData, 5, True)
 	
 
 
@@ -46,8 +47,10 @@ def main(argv):
 # Reads in all data from the json file containing all recipe data.
 ##
 def extractRecipesFromJSON(allRecipes):
+	# print "c.PATH_TO_RESOURCES: ", c.PATH_TO_RESOURCES
+	# print "c.FILENAME_JSON_RECIPES", c.FILENAME_JSON_RECIPES
 	# Read in the JSON file containing recipe data
-	jsonFileName = os.path.join(PATH_TO_RESOURCES, FILENAME_JSON_RECIPES);
+	jsonFileName = os.path.join(c.PATH_TO_RESOURCES, c.FILENAME_JSON_RECIPES);
 	fullJsonString = None
 	with open(jsonFileName, 'r') as f:
 		fullJsonString = f.read()
@@ -199,7 +202,7 @@ def printAliasData(aliasData, numToPrint, randomize):
 def dumpDictToJsonFile(dict2dump, fileNamePrefix):
 	jsonDatabase = json.dumps(dict2dump, sort_keys=True, indent=4)
 	fileName = string_appendDateAndTime(fileNamePrefix)
-	fullFileName = os.path.join(PATH_TO_ALIASDATA, fileName)
+	fullFileName = os.path.join(c.PATH_TO_ALIASDATA, fileName)
 	with open(fullFileName, "w") as f:
 		f.write(jsonDatabase)
 
@@ -209,7 +212,7 @@ def string_appendDateAndTime(s):
 
 # If called from command line, call the main() function
 if __name__ == "__main__":
-    main(sys.argv)
+	main(sys.argv)
 
 # Otherwise, this file is being imported as a module
 else:
