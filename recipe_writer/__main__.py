@@ -13,6 +13,15 @@ from lib import constants as c
 c.init(os.path.dirname(__file__))
 
 ##
+# Note to Bruno/Alex
+# ------------------
+# Change this variable to change which executable .py file you want to run
+# if you do not want to specify that file name from the command line.
+# Choices include "process_recipes", "query_online_db", "write_recipes"
+##
+DEFAULT_EXE_CHOICE = "process_recipes"
+
+##
 # Function: main
 # --------------
 # argv = ["main.py", <executable>, <args..>]
@@ -25,18 +34,18 @@ def main(argv):
 	exe.main(new_argv)
 
 
-
 if __name__ == "__main__":
+
 	sys.path.append(c.PATH_TO_ROOT)
 
 	argv = sys.argv
 
 	# If no executable was provided, use the default
 	if len(argv) < c.EXE_ARG_POS+1:
-		argv.append(c.DEFAULT_EXE_CHOICE)
+		argv.append(DEFAULT_EXE_CHOICE)
 
 	# If an executable was provided that doesn't exist, use the default
 	elif argv[c.EXE_ARG_POS] not in c.EXECUTABLES:
-		argv[c.EXE_ARG_POS] = c.DEFAULT_EXE_CHOICE
+		argv[c.EXE_ARG_POS] = DEFAULT_EXE_CHOICE
 
 	main(argv)

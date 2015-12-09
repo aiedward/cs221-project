@@ -51,4 +51,3 @@ def init(pathToRoot):
 	#  - main.py to direct execution to the proper executable in bin/
 	constantsModule.EXECUTABLES = ["process_recipes", "query_online_db", "write_recipes"]
 	constantsModule.EXE_ARG_POS = 1
-	constantsModule.DEFAULT_EXE_CHOICE = constantsModule.EXECUTABLES[0]
