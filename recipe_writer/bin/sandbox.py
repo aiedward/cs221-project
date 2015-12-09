@@ -337,6 +337,20 @@ def test_threading1():
     print "Exiting Main Thread"
 
     print
+
+def safeConnect(fxn, args, tries=20):
+    returnVal = None
+    for i in range(tries):
+        try:
+            returnVal = fxn(*args)
+        except requests.exceptions.ConnectionError as e:
+            pass
+    return returnVal
+
+
+
+
+
 def main(argv):
     # test_slicing()
     # test_split1()
