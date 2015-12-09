@@ -1,0 +1,199 @@
+{
+    "Fettuccine Alfredo": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.3333333333333333, 
+            "meaty": 0.8333333333333334, 
+            "piquant": 0.0, 
+            "salty": 0.6666666666666666, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "9 ounces fresh fettuccine, cooked al dente in lightly salted water with a little olive oil and timed to be ready just as the sauce is done. Reserve \u00bc cup of the pasta water.", 
+            "9 ounces fresh fettuccine, cooked al dente in lightly salted water with a little olive oil and timed to be ready just as the sauce is done. Reserve \u00bc cup of the pasta water.", 
+            "5 tablespoons quality unsalted butter", 
+            "2 cloves garlic, minced", 
+            "1\u00bc cups quality heavy cream", 
+            "2 large egg yolks", 
+            "1 cup freshly grated quality Parmigiano-Reggiano", 
+            "1 teaspoon finely grated lemon zest", 
+            "Small pinch of freshly grated nutmeg", 
+            "\u00bc teaspoon salt"
+        ], 
+        "ingredients": [
+            "fettucine", 
+            "pasta water", 
+            "unsalted butter", 
+            "garlic", 
+            "heavy cream", 
+            "large egg yolks", 
+            "parmigiano reggiano cheese", 
+            "grated lemon zest", 
+            "grated nutmeg", 
+            "salt"
+        ], 
+        "recipeId": "Fettuccine-Alfredo-1396147", 
+        "recipeName": "Fettuccine Alfredo", 
+        "totalTimeInSeconds": 1200
+    }, 
+    "Sausage Pasta": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.5, 
+            "meaty": 0.5, 
+            "piquant": 0.0, 
+            "salty": 0.5, 
+            "sour": 0.3333333333333333, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "3/4 pound pasta", 
+            "2 tablespoons olive oil", 
+            "1 pound spicy Italian sausage", 
+            "2 onions, chopped", 
+            "5 cloves garlic, minced", 
+            "1 (14.5 ounce) can chicken broth", 
+            "1 teaspoon dried basil", 
+            "1 (14.5 ounce) can diced tomatoes", 
+            "1 (10 ounce) package frozen chopped spinach", 
+            "1 cup grated Parmesan cheese"
+        ], 
+        "ingredients": [
+            "pasta", 
+            "olive oil", 
+            "italian sausage", 
+            "onions", 
+            "garlic", 
+            "chicken broth", 
+            "dried basil", 
+            "diced tomatoes", 
+            "frozen chopped spinach", 
+            "grated parmesan cheese"
+        ], 
+        "recipeId": "Sausage-Pasta-1396513", 
+        "recipeName": "Sausage Pasta", 
+        "totalTimeInSeconds": 2400
+    }, 
+    "Southwestern Egg Rolls": {
+        "course": [], 
+        "cuisine": [
+            "Southwestern"
+        ], 
+        "flavors": {
+            "bitter": 0.16666666666666666, 
+            "meaty": 0.8333333333333334, 
+            "piquant": 0.8333333333333334, 
+            "salty": 0.3333333333333333, 
+            "sour": 0.3333333333333333, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "3 tablespoons vegetable oil", 
+            "1 skinless, boneless chicken breast half", 
+            "3 tablespoons minced green onion", 
+            "4 tablespoons minced red bell pepper", 
+            "1/2 cup frozen corn kernels", 
+            "1/4 cup black beans, rinsed and drained", 
+            "4 tablespoons frozen chopped spinach, thawed and drained", 
+            "4 tablespoons diced jalapeno peppers", 
+            "1 tablespoon minced fresh parsley", 
+            "1 teaspoon ground cumin", 
+            "1 teaspoon chili powder", 
+            "1/2 teaspoon salt", 
+            "1 pinch ground cayenne pepper", 
+            "5 (6 inch) flour tortillas", 
+            "1 quart oil for deep frying"
+        ], 
+        "ingredients": [
+            "vegetable oil", 
+            "boneless skinless chicken breasts", 
+            "green onions", 
+            "red bell pepper", 
+            "frozen corn kernels", 
+            "black beans", 
+            "frozen chopped spinach", 
+            "jalapeno chilies", 
+            "fresh parsley", 
+            "ground cumin", 
+            "chili powder", 
+            "salt", 
+            "ground cayenne pepper", 
+            "flour tortillas", 
+            "oil"
+        ], 
+        "recipeId": "Southwestern-Egg-Rolls-1396465", 
+        "recipeName": "Southwestern Egg Rolls", 
+        "totalTimeInSeconds": 3000
+    }, 
+    "Three Ingredient Freezer Friendly Burritos": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": [], 
+        "flavors": {
+            "bitter": 0.6666666666666666, 
+            "meaty": 0.6666666666666666, 
+            "piquant": 0.0, 
+            "salty": 0.8333333333333334, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "1 to 1\u00bd lbs hamburger", 
+            "1 can chili beans (or black beans)", 
+            "1 cup cheddar cheese", 
+            "tortillas"
+        ], 
+        "ingredients": [
+            "hamburger", 
+            "chili beans", 
+            "cheddar cheese", 
+            "tortillas"
+        ], 
+        "recipeId": "Three-Ingredient-Freezer-Friendly-Burritos-1393915", 
+        "recipeName": "Three Ingredient Freezer Friendly Burritos", 
+        "totalTimeInSeconds": 2100
+    }, 
+    "Turkey Shepherd's Pie": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.5, 
+            "meaty": 0.16666666666666666, 
+            "piquant": 0.0, 
+            "salty": 0.3333333333333333, 
+            "sour": 0.3333333333333333, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "3-4 cups left over turkey, cubed", 
+            "1 cup poultry stock or broth", 
+            "1 tablespoon flour", 
+            "1 cup frozen peas", 
+            "2-3 carrots sliced in 1\" pieces", 
+            "3-4 cups leftover mashed potatoes", 
+            "1 tablespoon butter, softened"
+        ], 
+        "ingredients": [
+            "turkey", 
+            "poultry stock", 
+            "flour", 
+            "frozen peas", 
+            "carrots", 
+            "mashed potatoes", 
+            "butter"
+        ], 
+        "recipeId": "Turkey-Shepherd_s-Pie-1395470", 
+        "recipeName": "Turkey Shepherd's Pie", 
+        "totalTimeInSeconds": 4200
+    }
+}

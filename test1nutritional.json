@@ -1,0 +1,858 @@
+{
+    "black beans": {
+        "foodCalories": [
+            "91", 
+            "kcal", 
+            [
+                {
+                    "eqv": 257.0, 
+                    "label": "cup (8 fl oz)", 
+                    "qty": 1.0, 
+                    "value": "234"
+                }, 
+                {
+                    "eqv": 312.0, 
+                    "label": "can (11 oz), undiluted", 
+                    "qty": 1.0, 
+                    "value": "284"
+                }
+            ]
+        ], 
+        "ingredientId": "06002", 
+        "ingredientName": "black beans"
+    }, 
+    "boneless skinless chicken breasts": {
+        "foodCalories": [
+            "120", 
+            "kcal", 
+            [
+                {
+                    "eqv": 85.0, 
+                    "label": "oz", 
+                    "qty": 3.0, 
+                    "value": "102"
+                }, 
+                {
+                    "eqv": 272.0, 
+                    "label": "piece", 
+                    "qty": 1.0, 
+                    "value": "326"
+                }, 
+                {
+                    "eqv": 926.0, 
+                    "label": "package", 
+                    "qty": 1.0, 
+                    "value": "1111"
+                }
+            ]
+        ], 
+        "ingredientId": "05062", 
+        "ingredientName": "boneless skinless chicken breasts"
+    }, 
+    "butter": {
+        "foodCalories": [
+            "727", 
+            "kcal", 
+            [
+                {
+                    "eqv": 14.1, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "103"
+                }, 
+                {
+                    "eqv": 227.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "1650"
+                }, 
+                {
+                    "eqv": 4.7, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "34"
+                }, 
+                {
+                    "eqv": 111.0, 
+                    "label": "stick", 
+                    "qty": 1.0, 
+                    "value": "807"
+                }
+            ]
+        ], 
+        "ingredientId": "04585", 
+        "ingredientName": "butter"
+    }, 
+    "carrots": {
+        "foodCalories": [
+            "41", 
+            "kcal", 
+            [
+                {
+                    "eqv": 128.0, 
+                    "label": "cup chopped", 
+                    "qty": 1.0, 
+                    "value": "52"
+                }, 
+                {
+                    "eqv": 110.0, 
+                    "label": "cup grated", 
+                    "qty": 1.0, 
+                    "value": "45"
+                }, 
+                {
+                    "eqv": 122.0, 
+                    "label": "cup strips or slices", 
+                    "qty": 1.0, 
+                    "value": "50"
+                }, 
+                {
+                    "eqv": 72.0, 
+                    "label": "large (7-1/4\" to 8-/1/2\" long)", 
+                    "qty": 1.0, 
+                    "value": "30"
+                }, 
+                {
+                    "eqv": 61.0, 
+                    "label": "medium", 
+                    "qty": 1.0, 
+                    "value": "25"
+                }, 
+                {
+                    "eqv": 50.0, 
+                    "label": "small (5-1/2\" long)", 
+                    "qty": 1.0, 
+                    "value": "20"
+                }, 
+                {
+                    "eqv": 3.0, 
+                    "label": "slice", 
+                    "qty": 1.0, 
+                    "value": "1"
+                }, 
+                {
+                    "eqv": 7.0, 
+                    "label": "strip large (3\" long)", 
+                    "qty": 1.0, 
+                    "value": "3"
+                }, 
+                {
+                    "eqv": 4.0, 
+                    "label": "strip medium", 
+                    "qty": 1.0, 
+                    "value": "2"
+                }
+            ]
+        ], 
+        "ingredientId": "11124", 
+        "ingredientName": "carrots"
+    }, 
+    "cheddar cheese": {
+        "foodCalories": [
+            "176", 
+            "kcal", 
+            [
+                {
+                    "eqv": 21.0, 
+                    "label": "piece", 
+                    "qty": 1.0, 
+                    "value": "37"
+                }, 
+                {
+                    "eqv": 566.0, 
+                    "label": "package", 
+                    "qty": 1.0, 
+                    "value": "996"
+                }
+            ]
+        ], 
+        "ingredientId": "01259", 
+        "ingredientName": "cheddar cheese"
+    }, 
+    "chicken broth": {
+        "foodCalories": [
+            "63", 
+            "kcal", 
+            [
+                {
+                    "eqv": 126.0, 
+                    "label": "serving 1/2 cup", 
+                    "qty": 1.0, 
+                    "value": "79"
+                }
+            ]
+        ], 
+        "ingredientId": "06357", 
+        "ingredientName": "chicken broth"
+    }, 
+    "chili beans": {
+        "foodCalories": [
+            "103", 
+            "kcal", 
+            [
+                {
+                    "eqv": 256.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "264"
+                }, 
+                {
+                    "eqv": 16.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "16"
+                }
+            ]
+        ], 
+        "ingredientId": "16059", 
+        "ingredientName": "chili beans"
+    }, 
+    "chili powder": {
+        "foodCalories": [
+            "282", 
+            "kcal", 
+            [
+                {
+                    "eqv": 2.7, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "8"
+                }, 
+                {
+                    "eqv": 8.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "23"
+                }
+            ]
+        ], 
+        "ingredientId": "02009", 
+        "ingredientName": "chili powder"
+    }, 
+    "diced tomatoes": {
+        "foodCalories": [
+            "125", 
+            "kcal", 
+            [
+                {
+                    "eqv": 198.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "248"
+                }
+            ]
+        ], 
+        "ingredientId": "32021", 
+        "ingredientName": "diced tomatoes"
+    }, 
+    "dried basil": {
+        "foodCalories": [
+            "137", 
+            "kcal", 
+            [
+                {
+                    "eqv": 71.0, 
+                    "label": "patty", 
+                    "qty": 1.0, 
+                    "value": "97"
+                }
+            ]
+        ], 
+        "ingredientId": "16585", 
+        "ingredientName": "dried basil"
+    }, 
+    "flour": {
+        "foodCalories": [
+            "257", 
+            "kcal", 
+            [
+                {
+                    "eqv": 69.0, 
+                    "label": "roll", 
+                    "qty": 1.0, 
+                    "value": "177"
+                }
+            ]
+        ], 
+        "ingredientId": "28342", 
+        "ingredientName": "flour"
+    }, 
+    "flour tortillas": {
+        "foodCalories": [
+            "287", 
+            "kcal", 
+            [
+                {
+                    "eqv": 51.0, 
+                    "label": "serving", 
+                    "qty": 1.0, 
+                    "value": "146"
+                }
+            ]
+        ], 
+        "ingredientId": "18616", 
+        "ingredientName": "flour tortillas"
+    }, 
+    "fresh parsley": {
+        "foodCalories": [
+            "36", 
+            "kcal", 
+            [
+                {
+                    "eqv": 60.0, 
+                    "label": "cup chopped", 
+                    "qty": 1.0, 
+                    "value": "22"
+                }, 
+                {
+                    "eqv": 3.8, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "1"
+                }, 
+                {
+                    "eqv": 10.0, 
+                    "label": "sprigs", 
+                    "qty": 10.0, 
+                    "value": "4"
+                }
+            ]
+        ], 
+        "ingredientId": "11297", 
+        "ingredientName": "fresh parsley"
+    }, 
+    "frozen chopped spinach": {
+        "foodCalories": [
+            "29", 
+            "kcal", 
+            [
+                {
+                    "eqv": 156.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "45"
+                }, 
+                {
+                    "eqv": 284.0, 
+                    "label": "package (10 oz)", 
+                    "qty": 1.0, 
+                    "value": "82"
+                }
+            ]
+        ], 
+        "ingredientId": "11463", 
+        "ingredientName": "frozen chopped spinach"
+    }, 
+    "frozen corn kernels": {
+        "foodCalories": [
+            "98", 
+            "kcal", 
+            [
+                {
+                    "eqv": 165.0, 
+                    "label": "cup kernels", 
+                    "qty": 1.0, 
+                    "value": "162"
+                }, 
+                {
+                    "eqv": 125.0, 
+                    "label": "ear, yields", 
+                    "qty": 1.0, 
+                    "value": "122"
+                }
+            ]
+        ], 
+        "ingredientId": "11180", 
+        "ingredientName": "frozen corn kernels"
+    }, 
+    "frozen peas": {
+        "foodCalories": [
+            "77", 
+            "kcal", 
+            [
+                {
+                    "eqv": 134.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "103"
+                }, 
+                {
+                    "eqv": 284.0, 
+                    "label": "package", 
+                    "qty": 1.0, 
+                    "value": "219"
+                }
+            ]
+        ], 
+        "ingredientId": "11312", 
+        "ingredientName": "frozen peas"
+    }, 
+    "garlic": {
+        "foodCalories": [
+            "331", 
+            "kcal", 
+            [
+                {
+                    "eqv": 3.1, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "10"
+                }, 
+                {
+                    "eqv": 9.7, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "32"
+                }
+            ]
+        ], 
+        "ingredientId": "02020", 
+        "ingredientName": "garlic"
+    }, 
+    "grated parmesan cheese": {
+        "foodCalories": [
+            "420", 
+            "kcal", 
+            [
+                {
+                    "eqv": 100.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "420"
+                }, 
+                {
+                    "eqv": 5.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "21"
+                }, 
+                {
+                    "eqv": 28.35, 
+                    "label": "oz", 
+                    "qty": 1.0, 
+                    "value": "119"
+                }
+            ]
+        ], 
+        "ingredientId": "01032", 
+        "ingredientName": "grated parmesan cheese"
+    }, 
+    "green onions": {
+        "foodCalories": [
+            "41", 
+            "kcal", 
+            [
+                {
+                    "eqv": 250.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "102"
+                }, 
+                {
+                    "eqv": 411.0, 
+                    "label": "can, 15 oz (303 x 406)", 
+                    "qty": 1.0, 
+                    "value": "169"
+                }
+            ]
+        ], 
+        "ingredientId": "11557", 
+        "ingredientName": "green onions"
+    }, 
+    "ground cayenne pepper": {
+        "foodCalories": [
+            "318", 
+            "kcal", 
+            [
+                {
+                    "eqv": 1.8, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "6"
+                }, 
+                {
+                    "eqv": 5.3, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "17"
+                }
+            ]
+        ], 
+        "ingredientId": "02031", 
+        "ingredientName": "ground cayenne pepper"
+    }, 
+    "hamburger": {
+        "foodCalories": [
+            "264", 
+            "kcal", 
+            [
+                {
+                    "eqv": 95.0, 
+                    "label": "sandwich", 
+                    "qty": 1.0, 
+                    "value": "251"
+                }
+            ]
+        ], 
+        "ingredientId": "21228", 
+        "ingredientName": "hamburger"
+    }, 
+    "heavy cream": {
+        "foodCalories": [
+            "340", 
+            "kcal", 
+            [
+                {
+                    "eqv": 120.0, 
+                    "label": "cup, whipped", 
+                    "qty": 1.0, 
+                    "value": "408"
+                }, 
+                {
+                    "eqv": 238.0, 
+                    "label": "cup, fluid (yields 2 cups whipped)", 
+                    "qty": 1.0, 
+                    "value": "809"
+                }, 
+                {
+                    "eqv": 15.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "51"
+                }, 
+                {
+                    "eqv": 29.8, 
+                    "label": "fl oz", 
+                    "qty": 1.0, 
+                    "value": "101"
+                }
+            ]
+        ], 
+        "ingredientId": "01053", 
+        "ingredientName": "heavy cream"
+    }, 
+    "italian sausage": {
+        "foodCalories": [
+            "72", 
+            "kcal", 
+            [
+                {
+                    "eqv": 125.0, 
+                    "label": "serving 1/2 cup", 
+                    "qty": 1.0, 
+                    "value": "90"
+                }
+            ]
+        ], 
+        "ingredientId": "06226", 
+        "ingredientName": "italian sausage"
+    }, 
+    "large egg yolks": {
+        "foodCalories": [
+            "322", 
+            "kcal", 
+            [
+                {
+                    "eqv": 17.0, 
+                    "label": "large", 
+                    "qty": 1.0, 
+                    "value": "55"
+                }, 
+                {
+                    "eqv": 243.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "782"
+                }
+            ]
+        ], 
+        "ingredientId": "01125", 
+        "ingredientName": "large egg yolks"
+    }, 
+    "mashed potatoes": {
+        "foodCalories": [
+            "128", 
+            "kcal", 
+            [
+                {
+                    "eqv": 385.0, 
+                    "label": "serving", 
+                    "qty": 1.0, 
+                    "value": "493"
+                }, 
+                {
+                    "eqv": 422.0, 
+                    "label": "package", 
+                    "qty": 1.0, 
+                    "value": "540"
+                }, 
+                {
+                    "eqv": 28.35, 
+                    "label": "oz", 
+                    "qty": 1.0, 
+                    "value": "36"
+                }
+            ]
+        ], 
+        "ingredientId": "22957", 
+        "ingredientName": "mashed potatoes"
+    }, 
+    "oil": {
+        "foodCalories": [
+            "884", 
+            "kcal", 
+            [
+                {
+                    "eqv": 13.6, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "120"
+                }, 
+                {
+                    "eqv": 218.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "1927"
+                }, 
+                {
+                    "eqv": 4.5, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "40"
+                }
+            ]
+        ], 
+        "ingredientId": "04646", 
+        "ingredientName": "oil"
+    }, 
+    "olive oil": {
+        "foodCalories": [
+            "361", 
+            "kcal", 
+            [
+                {
+                    "eqv": 15.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "54"
+                }, 
+                {
+                    "eqv": 232.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "838"
+                }
+            ]
+        ], 
+        "ingredientId": "04708", 
+        "ingredientName": "olive oil"
+    }, 
+    "onions": {
+        "foodCalories": [
+            "155", 
+            "kcal", 
+            [
+                {
+                    "eqv": 228.0, 
+                    "label": "inch sub", 
+                    "qty": 6.0, 
+                    "value": "353"
+                }, 
+                {
+                    "eqv": 457.0, 
+                    "label": "inch sub", 
+                    "qty": 12.0, 
+                    "value": "708"
+                }
+            ]
+        ], 
+        "ingredientId": "21151", 
+        "ingredientName": "onions"
+    }, 
+    "pasta": {
+        "foodCalories": [
+            "371", 
+            "kcal", 
+            [
+                {
+                    "eqv": 91.0, 
+                    "label": "cup spaghetti", 
+                    "qty": 1.0, 
+                    "value": "338"
+                }, 
+                {
+                    "eqv": 57.0, 
+                    "label": "oz", 
+                    "qty": 2.0, 
+                    "value": "211"
+                }, 
+                {
+                    "eqv": 122.0, 
+                    "label": "cup elbows", 
+                    "qty": 1.0, 
+                    "value": "453"
+                }, 
+                {
+                    "eqv": 95.0, 
+                    "label": "cup penne", 
+                    "qty": 1.0, 
+                    "value": "352"
+                }, 
+                {
+                    "eqv": 81.0, 
+                    "label": "cup farfalle", 
+                    "qty": 1.0, 
+                    "value": "301"
+                }, 
+                {
+                    "eqv": 96.0, 
+                    "label": "cup rotini", 
+                    "qty": 1.0, 
+                    "value": "356"
+                }, 
+                {
+                    "eqv": 64.0, 
+                    "label": "cup shells", 
+                    "qty": 1.0, 
+                    "value": "237"
+                }, 
+                {
+                    "eqv": 90.0, 
+                    "label": "cup lasagna", 
+                    "qty": 1.0, 
+                    "value": "334"
+                }
+            ]
+        ], 
+        "ingredientId": "20120", 
+        "ingredientName": "pasta"
+    }, 
+    "red bell pepper": {
+        "foodCalories": [
+            "318", 
+            "kcal", 
+            [
+                {
+                    "eqv": 1.8, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "6"
+                }, 
+                {
+                    "eqv": 5.3, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "17"
+                }
+            ]
+        ], 
+        "ingredientId": "02031", 
+        "ingredientName": "red bell pepper"
+    }, 
+    "salt": {
+        "foodCalories": [
+            "0", 
+            "kcal", 
+            [
+                {
+                    "eqv": 6.0, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "0"
+                }, 
+                {
+                    "eqv": 18.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "0"
+                }, 
+                {
+                    "eqv": 292.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "0"
+                }, 
+                {
+                    "eqv": 0.4, 
+                    "label": "dash", 
+                    "qty": 1.0, 
+                    "value": "0"
+                }
+            ]
+        ], 
+        "ingredientId": "02047", 
+        "ingredientName": "salt"
+    }, 
+    "tortillas": {
+        "foodCalories": [
+            "218", 
+            "kcal", 
+            [
+                {
+                    "eqv": 28.35, 
+                    "label": "oz", 
+                    "qty": 1.0, 
+                    "value": "62"
+                }, 
+                {
+                    "eqv": 19.0, 
+                    "label": "enchilada", 
+                    "qty": 1.0, 
+                    "value": "41"
+                }, 
+                {
+                    "eqv": 24.0, 
+                    "label": "tortilla", 
+                    "qty": 1.0, 
+                    "value": "52"
+                }
+            ]
+        ], 
+        "ingredientId": "18363", 
+        "ingredientName": "tortillas"
+    }, 
+    "turkey": {
+        "foodCalories": [
+            "201", 
+            "kcal", 
+            [
+                {
+                    "eqv": 227.0, 
+                    "label": "lb", 
+                    "qty": 0.5, 
+                    "value": "456"
+                }
+            ]
+        ], 
+        "ingredientId": "05304", 
+        "ingredientName": "turkey"
+    }, 
+    "vegetable oil": {
+        "foodCalories": [
+            "339", 
+            "kcal", 
+            [
+                {
+                    "eqv": 14.9, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "51"
+                }, 
+                {
+                    "eqv": 232.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "786"
+                }, 
+                {
+                    "eqv": 4.8, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "16"
+                }
+            ]
+        ], 
+        "ingredientId": "04128", 
+        "ingredientName": "vegetable oil"
+    }
+}
