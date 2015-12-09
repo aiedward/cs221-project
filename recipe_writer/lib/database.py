@@ -10,40 +10,11 @@ This file is responsible for constructing the Recipe and the Nutritional Databas
 
 import collections, requests, json, time, pdb
 
-# Yummly API constants
-YUM_APP_ID = "4d1d7424"
-YUM_APP_KEY = "419a5ef2649eb3b6e359b7a9de93e905"
-YUM_STEP = 100
-YUM_ALLOWED_COURSE = "course^course-Main Dishes"
-PRINT_RECIPE_IN_DATABASE = False
-
-# Goverment Nutritional Database API constants
-GOV_NUT_API_KEY = "5YbfzajkZSaGWi7hibcD4Nq1EXSGHRtZP5Pvlkvv"
-GOV_NUT_API_KEY_1 = "svYYehDakYftfY9OsNtQuE30yFNotcWrb2db8MzH"
-GOV_NUT_API_KEY_2 = "e8AUBbuo2cPNt5nXONZ7ZHZrizZsoeLuAxonNA9z"
-GOV_NUT_API_KEY_3 = "IcpbZjpGGe81PQW0ruxgzwWe3lSEuqAKeG1N8UqV"
-GOV_NUT_API_KEY_4 = "6NxAEpCnVr3oCRAffO2DhDpcMrcTmGrBCgdtJX8q"
-SLEEP_THRESHOLD = 1
-SLEEP_TIME = 60*30
-PRINT_REMAINING_CALLS = False
-PRINT_MISSED_INGREDIENTS = False
-
 # Global variables
 allIngredientIds = {}
 missedIngredients = []
 foundItems = 0
 missedItems = 0
-
-##
-# 
-def setConstants(recipesInDatabase, remainingCalls, missedIngredients):
-	global PRINT_RECIPE_IN_DATABASE
-	global PRINT_REMAINING_CALLS
-	global PRINT_MISSED_INGREDIENTS
-	PRINT_RECIPE_IN_DATABASE = recipesInDatabase
-	PRINT_REMAINING_CALLS = remainingCalls
-	PRINT_MISSED_INGREDIENTS = missedIngredients
-
 
 # Function: printMissedIngredients
 # ---------------------
