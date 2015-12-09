@@ -6,8 +6,6 @@ import json, unicodedata
 import thread
 
 from lib import constants as c
-c.init(os.path.dirname(os.path.dirname(__file__)))
-
 
 ##
 # Function: main
@@ -35,6 +33,8 @@ def main(argv):
 	#    associated with as values.
 	fillAliasData(allRecipes, aliasData)
 
+	print "len(aliasData.keys()): ", len(aliasData.keys())
+
 	dumpDictToJsonFile(aliasData, "aliasData")
 
 	printAliasData(aliasData, 5, True)
@@ -47,8 +47,8 @@ def main(argv):
 # Reads in all data from the json file containing all recipe data.
 ##
 def extractRecipesFromJSON(allRecipes):
-	# print "c.PATH_TO_RESOURCES: ", c.PATH_TO_RESOURCES
-	# print "c.FILENAME_JSON_RECIPES", c.FILENAME_JSON_RECIPES
+	print "c.PATH_TO_RESOURCES: ", c.PATH_TO_RESOURCES
+	print "c.FILENAME_JSON_RECIPES", c.FILENAME_JSON_RECIPES
 	# Read in the JSON file containing recipe data
 	jsonFileName = os.path.join(c.PATH_TO_RESOURCES, c.FILENAME_JSON_RECIPES);
 	fullJsonString = None
