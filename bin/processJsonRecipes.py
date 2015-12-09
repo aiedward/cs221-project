@@ -3,6 +3,7 @@ import numpy, scipy, math, random
 import os, sys
 import tokenize, re, string
 import json, unicodedata
+import thread
 
 ##
 # Global Variables
@@ -19,19 +20,26 @@ FILENAME_JSON_RECIPES = "allRecipes.json"
 ##
 def main(argv):
 	allRecipes = []
-	ingredientAliases = set()
+	aliasCounts = {}
+	aliasRelations = {}
+	aliasToAliasLines = {}
 
 	# Read in and parse recipe data structures (dictionaries) from a json file.
 	extractRecipesFromJSON(allRecipes)
 
 	# Convert all string data to lowercase.
-	formatStrings(allRecipes)
+	lowerAllStrings(allRecipes)
 
-	# Fill a set with all short names for ingredients seen in the recipes.
-	getIngredientAliases(allRecipes, ingredientAliases)
+	# Get the counts of ingredient short names.
+	# Create a dictionary storing relationships between the various aliases.
+	# Create a dictionary with aliases as keys and lists of lines they've been
+	#    associated with as values.
+	fillDataStructures(allRecipes, aliasCounts, aliasRelations, aliasToAliasLines)
 
-	print list(ingredientAliases)[:5]
+	# print sorted(aliasCounts.items(), key=lambda x: -x[1])[:10]
 
+	for item in aliasRelations.items()[:10]:
+		print item
 
 ##
 # Function: extractRecipesFromJSON
@@ -51,30 +59,60 @@ def extractRecipesFromJSON(allRecipes):
 		allRecipes.append(val)
 
 ##
-# Function: formatStrings
+# Function: lowerAllStrings
 # -----------------------
 # Converts all string data to lowercase.
 ##
-def formatStrings(allRecipes):
+def lowerAllStrings(allRecipes):
 	for recipe in allRecipes:
 		for key in ["course", "ingredientLines", "ingredients"]:
 			recipe[key] = [s.lower() for s in recipe[key]]
 		recipe["recipeName"] = recipe["recipeName"].lower()
 
 ##
-# Function: getIngredientAliases
+# Function: fillDataStructures
+# ----------------------------
+# 
+##
+def fillDataStructures(allRecipes, aliasCounts, aliasRelations, aliasToAliasLines):
+	fillAliasCounts(allRecipes, aliasCounts)
+	fillAliasRelations(allRecipes, aliasRelations)
+	fillAliasLineRelations(allRecipes, aliasToAliasLines)
+
+
+##
+# Function: fillAliasCounts
 # ------------------------------
-# Fill a set with every ingredient alias (short name for ingredient)
-# seen in the "ingredients" entry for all recipes.
+# Get the counts of ingredient short names and create a dictionary storing
+# relationships between the various aliases.
 #
-# Example:
+# Example Aliases:
 #    An alias for "1 pound dried pasta" might be "dried pasta"
 #    An alias for "4 cloves garlic, minced" might be "garlic"
 ##
-def getIngredientAliases(allRecipes, ingredientAliases):
+def fillAliasCounts(allRecipes, aliasCounts):
 	for recipe in allRecipes:
 		for alias in recipe["ingredients"]:
-			ingredientAliases.add(alias)
+			aliasCounts[alias] = aliasCounts.get(alias, 0) + 1
+
+def fillAliasRelations(allRecipes, aliasRelations):
+	for recipe in allRecipes:
+		ingredientAliases = recipe["ingredients"]
+		numIngredientAliases = len(ingredientAliases)
+		for i in xrange(numIngredientAliases):
+			alias = ingredientAliases[i]
+
+			# Add the other aliases in this recipe to this alias's
+			# relation list (aliases it's been seen with)
+			aliasRelations[alias] = aliasRelations.get(alias, []) + \
+				[ingredientAliases[j] for j in xrange(numIngredientAliases) if j != i]
+
+	# Tally up each ingredient in the alias relations list for each alias
+	for key in aliasRelations.keys():
+		aliasRelations[key] = dict(collections.Counter(aliasRelations[key]))
+
+def fillAliasLineRelations(allRecipes, aliasToAliasLines):
+	pass
 
 
 # If called from command line, call the main() function
