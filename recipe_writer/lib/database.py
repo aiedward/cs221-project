@@ -8,8 +8,8 @@ This file is responsible for constructing the Recipe and the Nutritional Databas
 
 # -------------------- NOTES --------------------
 
-<<<<<<< HEAD
 import collections, requests, json, time, pdb, sys
+import lib.constants as c
 
 # Yummly API constants
 YUM_APP_ID = "4d1d7424"
@@ -32,10 +32,6 @@ SLEEP_THRESHOLD = 1
 SLEEP_TIME = 60*30
 PRINT_REMAINING_CALLS = False
 PRINT_MISSED_INGREDIENTS = False
-=======
-import collections, requests, json, time, pdb
-import lib.constants as c
->>>>>>> 9711532d7c7291f7a2c2b12014dc03e46a723450
 
 # Global variables
 allIngredientIds = {}
@@ -44,7 +40,6 @@ foundItems = 0
 missedItems = 0
 startNumber = 0
 
-<<<<<<< HEAD
 def setConstants(recipesInDatabase, remainingCalls, missedIngredients, apiNum,startNum):
 	global PRINT_RECIPE_IN_DATABASE
 	global PRINT_REMAINING_CALLS
@@ -58,9 +53,6 @@ def setConstants(recipesInDatabase, remainingCalls, missedIngredients, apiNum,st
 	startNumber = startNum
 
 
-
-=======
->>>>>>> 9711532d7c7291f7a2c2b12014dc03e46a723450
 # Function: printMissedIngredients
 # ---------------------
 # Prints each ingredient in the @missedIngredients global list
@@ -267,14 +259,8 @@ def getNumSteps(totalResults):
 # maxResults number given the iteration we are in and the
 # totalResults.
 def getStartAndMaxResults(i, numSteps, totalResults):
-<<<<<<< HEAD
-	#print "startnumber = " + str(startNumber)
-	start = YUM_STEP * i + startNumber #Added offset into the recipe lists.
-	maxResults = YUM_STEP
-=======
 	start = c.YUM_STEP * i + startNumber #Added offset into the recipe lists.
 	maxResults = c.YUM_STEP
->>>>>>> 9711532d7c7291f7a2c2b12014dc03e46a723450
 	if i == numSteps - 1:
 		maxResults = totalResults - start
 	if totalResults < YUM_STEP:
@@ -288,11 +274,11 @@ def getStartAndMaxResults(i, numSteps, totalResults):
 # totalResults.
 def indexedGetStartAndMaxResults(i, numSteps, totalResults, startIndex):
 	#print "startnumber = " + str(startNumber)
-	start = YUM_STEP * i + startIndex #Added offset into the recipe lists.
-	maxResults = YUM_STEP
+	start = c.YUM_STEP * i + startIndex #Added offset into the recipe lists.
+	maxResults = c.YUM_STEP
 	if i == numSteps - 1:
 		maxResults = totalResults - start + startIndex
-	if totalResults < YUM_STEP:
+	if totalResults < c.YUM_STEP:
 		maxResults = totalResults
 	return start, maxResults
 
@@ -369,13 +355,13 @@ def buildOnlyRecipeDatabase(recipeFilename, totalResults, startIndex):
 			recipeName, recipeObj = buildRecipeEntry(recipe)
 			recipeDatabase[recipeName] = recipeObj
 			count += 1
-			if PRINT_RECIPE_IN_DATABASE:
-				print "--> recipe %d: %s" % (count, recipeName)
-				print "--> len of recipeDatabase = %d" % len(recipeDatabase)
+			#if PRINT_RECIPE_IN_DATABASE:
+				#print "--> recipe %d: %s" % (count, recipeName)
+				#print "--> len of recipeDatabase = %d" % len(recipeDatabase)
 		#indenting this all into the for loop.  Was originally outside while.
 		jsonRecipeDatabase = json.dumps(recipeDatabase, sort_keys=True, indent=4)
 		#print "--> len of recipeDatabase = %d" % len(recipeDatabase)
-		targetFileName = recipeFilename + "_" + str(startIndex/YUM_STEP + i) + ".json"
+		targetFileName = recipeFilename + "_" + str(startIndex/c.YUM_STEP + i) + ".json"
 		allRecipesFile = open(targetFileName, 'a')
 		allRecipesFile.write(jsonRecipeDatabase)
 		allRecipesFile.close()

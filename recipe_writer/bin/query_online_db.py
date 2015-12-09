@@ -33,19 +33,14 @@ def main(argv):
 		startNum = int(raw_input('Starting Recipe number: '))
 		apiNum = int(raw_input('API Number: '))
 
-<<<<<<< HEAD
 	database.setConstants(recipesInDatabase, remainingCalls, missedIngredients, apiNum, startNum)
 	#database.createDatabases(allRecipesFilename, allNutritionalFilename, numRecipes)
 	start_time = time.time()
 	
 	#Do threading here:
-	###############
+	#################################################
 	database.createOnlyRecipeDatabase(allRecipesFilename, allNutritionalFilename, numRecipes, startNum)
-	###############
+	#################################################
 
-=======
-	c.setDatabaseConstants(recipesInDatabase, remainingCalls, missedIngredients, apiNum)
-	database.createDatabases(allRecipesFilename, allNutritionalFilename, numRecipes)
->>>>>>> 9711532d7c7291f7a2c2b12014dc03e46a723450
 	# database.printMissedIngredients()
 	print("--- %s seconds ---" % (time.time() - start_time))
