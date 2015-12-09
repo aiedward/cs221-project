@@ -298,40 +298,40 @@ def test_database1():
 
     print
 
-def test_pool1():
+def test_threading1():
     printFunctionName()
-    
-    exitFlag = 0
 
-    class QueryThread (threading.Thread):
-        def __init__(self, threadID, name, delay):
-            threading.Thread.__init__(self)
-            self.threadID = threadID
-            self.name = name
-            self.delay = delay
-        def run(self):
-            print "Starting " + self.name
-            writeToFile(self.threadID, self.name)
-            print "Exiting " + self.name
-
-    def writeToFile(threadID, threadName, curFile):
+    def writeThreadNameToFile(threadName, message, curFile):
         filedir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "res", "threadtest")
         filename = os.path.join(filedir, threadName) + ".txt"
         with open(filename, 'w+') as f:
-            f.write(threadName)
+            f.write(message)
 
 
     # Create new threads
-    # for i in xrange(4):
-    #     threads_list.append(QueryThread(i, "Thread-" + str(i), i))
+    threads = []
     for i in xrange(4):
-        thread.start_new_thread(writeToFile, (i, "AwesomeThread-" + str(i), __file__))
+        threadName = "Thread-" + str(i)
+        message = "I, the " + str(i) + "th thread, am super duper awesome."
+
+        # Create a new thread that, when its start() method is called, will
+        # execute target(args)
+        newThread = threading.Thread(\
+            target=writeThreadNameToFile, 
+            args=(threadName, message, __file__)\
+        )
+
+        # Append the new thread to the list of all threads
+        # (you must keep track of all active threads)
+        threads.append(newThread)
+
 
     # Start new Threads
-    # for tid, t in threading.enumerate():
-    #     t.start()
+    for t in threads:
+        t.start()
 
-    for tid, t in threading.enumerate():
+    # Wait for all threads to finish
+    for t in threads:
         t.join()
 
     print "Exiting Main Thread"
@@ -354,7 +354,7 @@ def main(argv):
     # test_exception4()
 
     # test_database1()
-    test_pool1()
+    test_threading1()
 
 if __name__ == "__main__":
     main(sys.argv)
