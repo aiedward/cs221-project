@@ -190,34 +190,6 @@ class Recipe:
         self.goodInstructionSentences = []
         self.servingInstructionSentences = []
 
-    ## Setters
-    def setAllRecipeText(self, newAllRecipeText):
-        self.allRecipeText = newAllRecipeText
-    def setAllIngredientsText(self, newAllIngredientsText):
-        self.allIngredientsText = newAllIngredientsText
-    def setAllInstructionsText(self, newAllInstructionsText):
-        self.allInstructionsText = newAllInstructionsText
-    def setName(self, newName):
-        self.name = newName
-    def setNumServings(self, newNumServings):
-        self.numServings = newNumServings
-    def setNumInstructions(self, newNumInstructions):
-        self.numInstructions = newNumInstructions
-    def setNumIngredients(self, newNumIngredients):
-        self.numIngredients = newNumIngredients
-    # def setIndStartRecipe(self, newIndStartRecipe):
-    #     self.indStartRecipe = newIndStartRecipe
-    def setRecipeCharLength(self, newRecipeCharLength):
-        self.recipeCharLength = newRecipeCharLength
-    def setIngredients(self, newIngredients):
-        self.ingredients = newIngredients
-    def setInstructions(self, newInstructions):
-        self.instructions = newInstructions
-    def setEndSeeds(self, newEndSeeds):
-        self.endSeeds = newEndSeeds
-    def setInstructionSteps(self, newInstructionSteps):
-        self.instructionSteps = newInstructionSteps
-
     # Getters 
     def getAllRecipeText(self):
         return self.allRecipeText
@@ -233,8 +205,6 @@ class Recipe:
         return self.numInstructions
     def getNumIngredients(self):
         return self.numIngredients
-    # def getIndStartRecipe(self):
-    #     return self.indStartRecipe
     def getRecipeCharLength(self):
         return self.recipeCharLength
     def getIngredients(self):
@@ -298,6 +268,12 @@ class Recipe:
     def findFinalIngredientWords(self):
         self.finalIngredientWords = list(itertools.chain(*self.endSeeds))
 
+    ##
+    # Function Recipe::findSeedsInInstructionSentences
+    # ------------------------------------------------
+    # Iterate through the instruction sentences and find end seeds (key nouns)
+    # in them. Sentences with these keywords are aggregated.
+    ##
     def findSeedsInInstructionSentences(self):
         servingWords = ["Serve", "serve", "Served", "served"]
         for i, myInstructionStep in enumerate(self.instructionSteps):
@@ -332,6 +308,13 @@ class Recipe:
                 myInstructionStep.instructionSentences[j] = myInstructionSent
             self.instructionSteps[i] = myInstructionStep
 
+    ##
+    # Function: Recipe::separateInstructions
+    # --------------------------------------
+    # For a specific recipe, separate each instruction step from the
+    # other instruction steps. The resulting instruction steps are
+    # stored in self.instructionSteps.
+    ##
     def separateInstructions(self):
         myInstructionSteps = []
         if self.instructionsAreNumbered:
@@ -420,6 +403,11 @@ class Recipe:
     def isUnit(self, word):
         return word in self.NORMAL_UNITS or word in self.NORMAL_UNITS_PLURAL
 
+    ##
+    # Function: Recipe::findIngredientAmounts
+    # ---------------------------------------
+    # Get the amounts (e.g. 1, 5, 3/4) for each ingredient.
+    ##
     def findIngredientAmounts(self):
         for i, myIngredient in enumerate(self.ingredients):
             line = myIngredient.entireLine
@@ -450,6 +438,11 @@ class Recipe:
                 myIngredient.amount = "NO_LEADING_NUMBER"
             self.ingredients[i] = myIngredient
 
+    ##
+    # Function: Recipe::findIngredientUnits
+    # -------------------------------------
+    # Find the units used with each ingredient (e.g. cups, teaspoons).
+    ##
     def findIngredientUnits(self):
         for i, ingredient in enumerate(self.ingredients):
             line = ingredient.entireLine
@@ -462,6 +455,13 @@ class Recipe:
                     break
             self.ingredients[i] = ingredient
 
+    ##
+    # Function: Recipe::fillIngredientWords
+    # -------------------------------------
+    # For each ingredient in this recipe, get a list of words in the
+    # ingredient and a list of non-unit (i.e. not cups, teaspoons, etc.)
+    # words in the ingredient. Store these word lists for each ingredient.
+    ##
     def fillIngredientWords(self):
         for i, myIngredient in enumerate(self.ingredients):
             line = myIngredient.entireLine
