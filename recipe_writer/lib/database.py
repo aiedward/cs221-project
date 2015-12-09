@@ -8,7 +8,7 @@ This file is responsible for constructing the Recipe and the Nutritional Databas
 
 # -------------------- NOTES --------------------
 
-import collections, requests, json, time, pdb, sys
+import collections, requests, json, time, pdb, sys, time
 import lib.constants as c
 
 # Yummly API constants
@@ -226,7 +226,9 @@ def buildRecipeEntry(recipe):
 
 	while brokeRequest:
 		apiGetString = "http://api.yummly.com/v1/api/recipe/%s?_app_id=4d1d7424&_app_key=419a5ef2649eb3b6e359b7a9de93e905" % recipeId
-		getRequest = requests.get(apiGetString)
+		getRequest = safeConnect(requests.get, tuple([apiGetString]))
+		if getRequest == None:
+			return None
 		brokeRequest = not (getRequest.status_code == 200)
 
 	getRecipe = json.loads(getRequest.content)
@@ -305,7 +307,7 @@ def buildRecipeDatabase(recipeFilename, totalResults):
 		# allRecipesFile = open(recipeFilename, 'a')
 		while brokeRequest:
 			apiSearchString = "http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=&allowedCourse[]=%s&maxResult=%d&start=%d" % (YUM_APP_ID, YUM_APP_KEY, YUM_ALLOWED_COURSE, maxResults, start)
-			searchRequest = requests.get(apiSearchString)
+			searchRequest = requests.get(apiSearchString)			
 			brokeRequest = not (searchRequest.status_code == 200)
 		# check out BROKEREQUEST!!!
 		allRecipes = json.loads(searchRequest.content)
@@ -345,7 +347,11 @@ def buildOnlyRecipeDatabase(recipeFilename, totalResults, startIndex):
 
 		while brokeRequest:
 			apiSearchString = "http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=&allowedCourse[]=%s&maxResult=%d&start=%d" % (YUM_APP_ID, YUM_APP_KEY, YUM_ALLOWED_COURSE, maxResults, start)
-			searchRequest = requests.get(apiSearchString)
+			searchRequest = safeConnect(requests.get, tuple([apiSearchString]))
+			if searchRequest == None:
+				print "\n\nTHE FOLLOWING RANGE IS BAD: %d to %d" % (start + 1, start + maxResults)
+				print "\n\n"
+				#EXIT
 			brokeRequest = not (searchRequest.status_code == 200)
 
 		# check out BROKEREQUEST!!!
@@ -353,6 +359,10 @@ def buildOnlyRecipeDatabase(recipeFilename, totalResults, startIndex):
 		matches = allRecipes["matches"]
 		for recipe in matches:
 			recipeName, recipeObj = buildRecipeEntry(recipe)
+			if recipeObj == None:
+				print "\n\nTHE FOLLOWING RANGE IS BAD: %d to %d" % (start + 1, start + maxResults)
+				print "\n\n"
+				#EXIT
 			recipeDatabase[recipeName] = recipeObj
 			count += 1
 			#if PRINT_RECIPE_IN_DATABASE:
@@ -391,3 +401,15 @@ def createOnlyRecipeDatabase(recipeFilename, nutritionalFileName, numRecipes, st
 	#
 	#print "The recipe and nutritional databases are ready to go! Access them at %s and %s, respectively" % (recipeFilename, nutritionalFileName)
 	#print
+
+def safeConnect(fxn, args, tries=40):
+	returnVal = None
+	for i in range(tries):
+		try:
+			returnVal = fxn(*args)
+			break
+		except requests.exceptions.ConnectionError as e:
+			if i % 10 == 0:
+				time.sleep(2)
+			pass
+	return returnVal
