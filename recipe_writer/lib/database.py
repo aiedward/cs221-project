@@ -9,12 +9,14 @@ This file is responsible for constructing the Recipe and the Nutritional Databas
 # -------------------- NOTES --------------------
 
 import collections, requests, json, time, pdb
+import lib.constants as c
 
 # Global variables
 allIngredientIds = {}
 missedIngredients = []
 foundItems = 0
 missedItems = 0
+startNumber = 0
 
 # Function: printMissedIngredients
 # ---------------------
@@ -38,22 +40,23 @@ def printMissedIngredients():
 # Otherwise, it means that we have exceeded the gov 1K API requests/hour, and
 # thus we sleep for 10 min and keep trying until we can make API requests again.
 def nutritionalSearch(ingredient):
-	apiSearchString = "http://api.nal.usda.gov/ndb/search/?format=json&q=%s&max=1&api_key=%s" % (ingredient, GOV_NUT_API_KEY)
+	apiSearchString = "http://api.nal.usda.gov/ndb/search/?format=json&q=%s&max=1&api_key=%s" % (ingredient, c.GOV_NUT_API_KEY)
 	searchRequest = requests.get(apiSearchString)
 	remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
 
-	if PRINT_REMAINING_CALLS: print "SEARCH: Gov Nutrional Database requests remaining: %d" % remaining
+	if c.PRINT_REMAINING_CALLS: 
+		print "SEARCH: Gov Nutrional Database requests remaining: %d" % remaining
 
 	while searchRequest.status_code != 200:
-		if remaining >= SLEEP_THRESHOLD:
-			if PRINT_MISSED_INGREDIENTS: print "SEARCH: Could not find ingredient: %s" % ingredient
+		if remaining >= c.SLEEP_THRESHOLD:
+			if c.PRINT_MISSED_INGREDIENTS: print "SEARCH: Could not find ingredient: %s" % ingredient
 			return False, searchRequest
 
-		while remaining < SLEEP_THRESHOLD:
+		while remaining < c.SLEEP_THRESHOLD:
 			print "SEARCH: Gov Nutrional Database requests remaining: %d" % remaining
 			print "SEARCH: Request failed because exceeded Gov 1K API requests/hour"
 			print "... Sleeping for 10 min ..."
-			time.sleep(SLEEP_TIME)
+			time.sleep(c.SLEEP_TIME)
 			searchRequest = requests.get(apiSearchString)
 			remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
 	return True, searchRequest
@@ -104,9 +107,10 @@ def addIngredientToNutritionalList(ingredients):
 # Otherwise, it means that we have exceeded the gov 1K API requests/hour, and
 # thus we sleep for 10 min and keep trying until we can make API requests again.
 def getNutritionalRequest(ingredientId):
-	apiGetString = "http://api.nal.usda.gov/ndb/reports/?ndbno={0}&type=b&format=json&api_key={1}".format(ingredientId, GOV_NUT_API_KEY)
+	apiGetString = "http://api.nal.usda.gov/ndb/reports/?ndbno={0}&type=b&format=json&api_key={1}".format(ingredientId, c.GOV_NUT_API_KEY)
 	getRequest = requests.get(apiGetString)
-	if PRINT_REMAINING_CALLS: print "GET: Gov Nutrional Database requests remaining: %d" % int(getRequest.headers['X-RateLimit-Remaining'])
+	if c.PRINT_REMAINING_CALLS: 
+		print "GET: Gov Nutrional Database requests remaining: %d" % int(getRequest.headers['X-RateLimit-Remaining'])
 	while getRequest.status_code != 200:
 		print
 		print "[BROKE REQUEST] Status code != 200"
@@ -114,14 +118,14 @@ def getNutritionalRequest(ingredientId):
 		remaining = int(getRequest.headers['X-RateLimit-Remaining'])
 		print "GET: Gov Nutrional Database requests remaining: %d" % remaining
 
-		if remaining >= SLEEP_THRESHOLD:
-			print "[ERROR] GET: Status != 200 but remaining (%d) >= SLEEP_THRESHOLD (%d)" % (remaining, SLEEP_THRESHOLD)
+		if remaining >= c.SLEEP_THRESHOLD:
+			print "[ERROR] GET: Status != 200 but remaining (%d) >= SLEEP_THRESHOLD (%d)" % (remaining, c.SLEEP_THRESHOLD)
 			return None
 
-		while remaining < SLEEP_THRESHOLD:
+		while remaining < c.SLEEP_THRESHOLD:
 			print "GET: Request failed because exceeded Gov 1K API requests/hour"
 			print "... Sleeping for 10 min ..."
-			time.sleep(SLEEP_TIME)
+			time.sleep(c.SLEEP_TIME)
 			getRequest = requests.get(apiGetString)
 			remaining = int(getRequest.headers['X-RateLimit-Remaining'])
 			print "GET: Gov Nutrional Database requests remaining: %d" % remaining
@@ -207,8 +211,8 @@ def buildRecipeEntry(recipe):
 # Quick calculations to return the number of steps given totalResults
 # and YUM_STEP.
 def getNumSteps(totalResults):
-	numSteps = totalResults/YUM_STEP
-	if totalResults % YUM_STEP != 0:
+	numSteps = totalResults/c.YUM_STEP
+	if totalResults % c.YUM_STEP != 0:
 		numSteps += 1
 	return numSteps
 
@@ -218,8 +222,8 @@ def getNumSteps(totalResults):
 # maxResults number given the iteration we are in and the
 # totalResults.
 def getStartAndMaxResults(i, numSteps, totalResults):
-	start = YUM_STEP * i
-	maxResults = YUM_STEP
+	start = c.YUM_STEP * i + startNumber #Added offset into the recipe lists.
+	maxResults = c.YUM_STEP
 	if i == numSteps - 1:
 		maxResults = totalResults - start
 	if totalResults < YUM_STEP:
@@ -260,7 +264,7 @@ def buildRecipeDatabase(recipeFilename, totalResults):
 			recipeName, recipeObj = buildRecipeEntry(recipe)
 			recipeDatabase[recipeName] = recipeObj
 			count += 1
-			if PRINT_RECIPE_IN_DATABASE:
+			if c.PRINT_RECIPE_IN_DATABASE:
 				print "--> recipe %d: %s" % (count, recipeName)
 				print "--> len of recipeDatabase = %d" % len(recipeDatabase)
 

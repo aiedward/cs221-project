@@ -1,0 +1,744 @@
+{
+    "Sriracha": {
+        "foodCalories": [
+            "79", 
+            "kcal", 
+            [
+                {
+                    "eqv": 6.2, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "5"
+                }
+            ]
+        ], 
+        "ingredientId": "06633", 
+        "ingredientName": "Sriracha"
+    }, 
+    "bacon": {
+        "foodCalories": [
+            "898", 
+            "kcal", 
+            [
+                {
+                    "eqv": 85.0, 
+                    "label": "oz", 
+                    "qty": 3.0, 
+                    "value": "763"
+                }
+            ]
+        ], 
+        "ingredientId": "10864", 
+        "ingredientName": "bacon"
+    }, 
+    "beef broth": {
+        "foodCalories": [
+            "170", 
+            "kcal", 
+            [
+                {
+                    "eqv": 3.6, 
+                    "label": "cube", 
+                    "qty": 1.0, 
+                    "value": "6"
+                }
+            ]
+        ], 
+        "ingredientId": "06076", 
+        "ingredientName": "beef broth"
+    }, 
+    "bone-in pork chops": {
+        "foodCalories": [
+            "222", 
+            "kcal", 
+            [
+                {
+                    "eqv": 85.0, 
+                    "label": "oz", 
+                    "qty": 3.0, 
+                    "value": "189"
+                }, 
+                {
+                    "eqv": 206.0, 
+                    "label": "chop", 
+                    "qty": 1.0, 
+                    "value": "457"
+                }
+            ]
+        ], 
+        "ingredientId": "10033", 
+        "ingredientName": "bone-in pork chops"
+    }, 
+    "boneless beef chuck roast": {
+        "foodCalories": [
+            "172", 
+            "kcal", 
+            [
+                {
+                    "eqv": 85.0, 
+                    "label": "oz", 
+                    "qty": 3.0, 
+                    "value": "146"
+                }, 
+                {
+                    "eqv": 645.0, 
+                    "label": "roast", 
+                    "qty": 1.0, 
+                    "value": "1109"
+                }
+            ]
+        ], 
+        "ingredientId": "13823", 
+        "ingredientName": "boneless beef chuck roast"
+    }, 
+    "brown sugar": {
+        "foodCalories": [
+            "370", 
+            "kcal", 
+            [
+                {
+                    "eqv": 28.35, 
+                    "label": "oz", 
+                    "qty": 1.0, 
+                    "value": "105"
+                }, 
+                {
+                    "eqv": 51.0, 
+                    "label": "pastry", 
+                    "qty": 1.0, 
+                    "value": "189"
+                }
+            ]
+        ], 
+        "ingredientId": "18361", 
+        "ingredientName": "brown sugar"
+    }, 
+    "cheddar cheese": {
+        "foodCalories": [
+            "176", 
+            "kcal", 
+            [
+                {
+                    "eqv": 21.0, 
+                    "label": "piece", 
+                    "qty": 1.0, 
+                    "value": "37"
+                }, 
+                {
+                    "eqv": 566.0, 
+                    "label": "package", 
+                    "qty": 1.0, 
+                    "value": "996"
+                }
+            ]
+        ], 
+        "ingredientId": "01259", 
+        "ingredientName": "cheddar cheese"
+    }, 
+    "chicken breasts": {
+        "foodCalories": [
+            "263", 
+            "kcal", 
+            [
+                {
+                    "eqv": 15.0, 
+                    "label": "piece", 
+                    "qty": 1.0, 
+                    "value": "39"
+                }, 
+                {
+                    "eqv": 62.0, 
+                    "label": "pieces", 
+                    "qty": 4.0, 
+                    "value": "163"
+                }
+            ]
+        ], 
+        "ingredientId": "05327", 
+        "ingredientName": "chicken breasts"
+    }, 
+    "chicken broth": {
+        "foodCalories": [
+            "63", 
+            "kcal", 
+            [
+                {
+                    "eqv": 126.0, 
+                    "label": "serving 1/2 cup", 
+                    "qty": 1.0, 
+                    "value": "79"
+                }
+            ]
+        ], 
+        "ingredientId": "06357", 
+        "ingredientName": "chicken broth"
+    }, 
+    "corn starch": {
+        "foodCalories": [
+            "239", 
+            "kcal", 
+            [
+                {
+                    "eqv": 78.0, 
+                    "label": "roll", 
+                    "qty": 1.0, 
+                    "value": "186"
+                }
+            ]
+        ], 
+        "ingredientId": "28341", 
+        "ingredientName": "corn starch"
+    }, 
+    "diced onions": {
+        "foodCalories": [
+            "92", 
+            "kcal", 
+            [
+                {
+                    "eqv": 130.0, 
+                    "label": "serving 1/2 cup", 
+                    "qty": 1.0, 
+                    "value": "120"
+                }
+            ]
+        ], 
+        "ingredientId": "06222", 
+        "ingredientName": "diced onions"
+    }, 
+    "diet orange soda": {
+        "foodCalories": [
+            "48", 
+            "kcal", 
+            [
+                {
+                    "eqv": 31.0, 
+                    "label": "fl oz", 
+                    "qty": 1.0, 
+                    "value": "15"
+                }, 
+                {
+                    "eqv": 496.0, 
+                    "label": "can or bottle (16 fl oz)", 
+                    "qty": 1.0, 
+                    "value": "238"
+                }, 
+                {
+                    "eqv": 372.0, 
+                    "label": "can or bottle (12 fl oz)", 
+                    "qty": 1.0, 
+                    "value": "179"
+                }
+            ]
+        ], 
+        "ingredientId": "14150", 
+        "ingredientName": "diet orange soda"
+    }, 
+    "eggs": {
+        "foodCalories": [
+            "278", 
+            "kcal", 
+            [
+                {
+                    "eqv": 28.35, 
+                    "label": "oz", 
+                    "qty": 1.0, 
+                    "value": "79"
+                }, 
+                {
+                    "eqv": 26.0, 
+                    "label": "mini bagel (2-1/2\" dia)", 
+                    "qty": 1.0, 
+                    "value": "72"
+                }, 
+                {
+                    "eqv": 69.0, 
+                    "label": "small bagel (3\" dia)", 
+                    "qty": 1.0, 
+                    "value": "192"
+                }, 
+                {
+                    "eqv": 105.0, 
+                    "label": "medium bagel (3-1/2\" to 4\" dia)", 
+                    "qty": 1.0, 
+                    "value": "292"
+                }, 
+                {
+                    "eqv": 131.0, 
+                    "label": "large bagel (4-1/2\" dia)", 
+                    "qty": 1.0, 
+                    "value": "364"
+                }
+            ]
+        ], 
+        "ingredientId": "18003", 
+        "ingredientName": "eggs"
+    }, 
+    "garlic": {
+        "foodCalories": [
+            "331", 
+            "kcal", 
+            [
+                {
+                    "eqv": 3.1, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "10"
+                }, 
+                {
+                    "eqv": 9.7, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "32"
+                }
+            ]
+        ], 
+        "ingredientId": "02020", 
+        "ingredientName": "garlic"
+    }, 
+    "ginger": {
+        "foodCalories": [
+            "335", 
+            "kcal", 
+            [
+                {
+                    "eqv": 1.8, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "6"
+                }, 
+                {
+                    "eqv": 5.2, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "17"
+                }
+            ]
+        ], 
+        "ingredientId": "02021", 
+        "ingredientName": "ginger"
+    }, 
+    "green onions": {
+        "foodCalories": [
+            "41", 
+            "kcal", 
+            [
+                {
+                    "eqv": 250.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "102"
+                }, 
+                {
+                    "eqv": 411.0, 
+                    "label": "can, 15 oz (303 x 406)", 
+                    "qty": 1.0, 
+                    "value": "169"
+                }
+            ]
+        ], 
+        "ingredientId": "11557", 
+        "ingredientName": "green onions"
+    }, 
+    "heavy cream": {
+        "foodCalories": [
+            "340", 
+            "kcal", 
+            [
+                {
+                    "eqv": 120.0, 
+                    "label": "cup, whipped", 
+                    "qty": 1.0, 
+                    "value": "408"
+                }, 
+                {
+                    "eqv": 238.0, 
+                    "label": "cup, fluid (yields 2 cups whipped)", 
+                    "qty": 1.0, 
+                    "value": "809"
+                }, 
+                {
+                    "eqv": 15.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "51"
+                }, 
+                {
+                    "eqv": 29.8, 
+                    "label": "fl oz", 
+                    "qty": 1.0, 
+                    "value": "101"
+                }
+            ]
+        ], 
+        "ingredientId": "01053", 
+        "ingredientName": "heavy cream"
+    }, 
+    "large flour tortillas": {
+        "foodCalories": [
+            "306", 
+            "kcal", 
+            [
+                {
+                    "eqv": 48.0, 
+                    "label": "tortilla", 
+                    "qty": 1.0, 
+                    "value": "147"
+                }, 
+                {
+                    "eqv": 28.35, 
+                    "label": "oz", 
+                    "qty": 1.0, 
+                    "value": "87"
+                }, 
+                {
+                    "eqv": 30.0, 
+                    "label": "tortilla medium (approx 6\" dia)", 
+                    "qty": 1.0, 
+                    "value": "92"
+                }, 
+                {
+                    "eqv": 407.0, 
+                    "label": "package", 
+                    "qty": 1.0, 
+                    "value": "1245"
+                }, 
+                {
+                    "eqv": 72.0, 
+                    "label": "tortilla (approx 10\" dia)", 
+                    "qty": 1.0, 
+                    "value": "220"
+                }, 
+                {
+                    "eqv": 117.0, 
+                    "label": "tortilla (approx 12\" dia)", 
+                    "qty": 1.0, 
+                    "value": "358"
+                }, 
+                {
+                    "eqv": 49.0, 
+                    "label": "tortilla (approx 7-8\" dia)", 
+                    "qty": 1.0, 
+                    "value": "150"
+                }
+            ]
+        ], 
+        "ingredientId": "18364", 
+        "ingredientName": "large flour tortillas"
+    }, 
+    "mozzarella cheese": {
+        "foodCalories": [
+            "324", 
+            "kcal", 
+            [
+                {
+                    "eqv": 228.0, 
+                    "label": "serving", 
+                    "qty": 1.0, 
+                    "value": "739"
+                }, 
+                {
+                    "eqv": 27.0, 
+                    "label": "piece", 
+                    "qty": 1.0, 
+                    "value": "87"
+                }
+            ]
+        ], 
+        "ingredientId": "36611", 
+        "ingredientName": "mozzarella cheese"
+    }, 
+    "onion powder": {
+        "foodCalories": [
+            "341", 
+            "kcal", 
+            [
+                {
+                    "eqv": 2.4, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "8"
+                }, 
+                {
+                    "eqv": 6.9, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "24"
+                }
+            ]
+        ], 
+        "ingredientId": "02026", 
+        "ingredientName": "onion powder"
+    }, 
+    "onions": {
+        "foodCalories": [
+            "155", 
+            "kcal", 
+            [
+                {
+                    "eqv": 228.0, 
+                    "label": "inch sub", 
+                    "qty": 6.0, 
+                    "value": "353"
+                }, 
+                {
+                    "eqv": 457.0, 
+                    "label": "inch sub", 
+                    "qty": 12.0, 
+                    "value": "708"
+                }
+            ]
+        ], 
+        "ingredientId": "21151", 
+        "ingredientName": "onions"
+    }, 
+    "parsley": {
+        "foodCalories": [
+            "292", 
+            "kcal", 
+            [
+                {
+                    "eqv": 0.5, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "1"
+                }, 
+                {
+                    "eqv": 1.6, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "5"
+                }
+            ]
+        ], 
+        "ingredientId": "02029", 
+        "ingredientName": "parsley"
+    }, 
+    "pepper": {
+        "foodCalories": [
+            "318", 
+            "kcal", 
+            [
+                {
+                    "eqv": 1.8, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "6"
+                }, 
+                {
+                    "eqv": 5.3, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "17"
+                }
+            ]
+        ], 
+        "ingredientId": "02031", 
+        "ingredientName": "pepper"
+    }, 
+    "reduced sodium soy sauce": {
+        "foodCalories": [
+            "90", 
+            "kcal", 
+            [
+                {
+                    "eqv": 15.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "14"
+                }, 
+                {
+                    "eqv": 4.9, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "4"
+                }, 
+                {
+                    "eqv": 58.0, 
+                    "label": "cup", 
+                    "qty": 0.25, 
+                    "value": "52"
+                }
+            ]
+        ], 
+        "ingredientId": "16425", 
+        "ingredientName": "reduced sodium soy sauce"
+    }, 
+    "salt": {
+        "foodCalories": [
+            "0", 
+            "kcal", 
+            [
+                {
+                    "eqv": 6.0, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "0"
+                }, 
+                {
+                    "eqv": 18.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "0"
+                }, 
+                {
+                    "eqv": 292.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "0"
+                }, 
+                {
+                    "eqv": 0.4, 
+                    "label": "dash", 
+                    "qty": 1.0, 
+                    "value": "0"
+                }
+            ]
+        ], 
+        "ingredientId": "02047", 
+        "ingredientName": "salt"
+    }, 
+    "sesame oil": {
+        "foodCalories": [
+            "884", 
+            "kcal", 
+            [
+                {
+                    "eqv": 13.6, 
+                    "label": "tablespoon", 
+                    "qty": 1.0, 
+                    "value": "120"
+                }, 
+                {
+                    "eqv": 218.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "1927"
+                }, 
+                {
+                    "eqv": 4.5, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "40"
+                }
+            ]
+        ], 
+        "ingredientId": "04058", 
+        "ingredientName": "sesame oil"
+    }, 
+    "sesame seeds": {
+        "foodCalories": [
+            "573", 
+            "kcal", 
+            [
+                {
+                    "eqv": 144.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "825"
+                }, 
+                {
+                    "eqv": 9.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "52"
+                }
+            ]
+        ], 
+        "ingredientId": "12023", 
+        "ingredientName": "sesame seeds"
+    }, 
+    "shredded cheddar cheese": {
+        "foodCalories": [
+            "415", 
+            "kcal", 
+            [
+                {
+                    "eqv": 5.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "21"
+                }
+            ]
+        ], 
+        "ingredientId": "01146", 
+        "ingredientName": "shredded cheddar cheese"
+    }, 
+    "sour cream": {
+        "foodCalories": [
+            "181", 
+            "kcal", 
+            [
+                {
+                    "eqv": 12.0, 
+                    "label": "tablespoon", 
+                    "qty": 1.0, 
+                    "value": "22"
+                }, 
+                {
+                    "eqv": 230.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "416"
+                }
+            ]
+        ], 
+        "ingredientId": "01178", 
+        "ingredientName": "sour cream"
+    }, 
+    "soy sauce": {
+        "foodCalories": [
+            "53", 
+            "kcal", 
+            [
+                {
+                    "eqv": 16.0, 
+                    "label": "tbsp", 
+                    "qty": 1.0, 
+                    "value": "8"
+                }, 
+                {
+                    "eqv": 5.3, 
+                    "label": "tsp", 
+                    "qty": 1.0, 
+                    "value": "3"
+                }, 
+                {
+                    "eqv": 255.0, 
+                    "label": "cup", 
+                    "qty": 1.0, 
+                    "value": "135"
+                }, 
+                {
+                    "eqv": 8.9, 
+                    "label": "individual packet", 
+                    "qty": 1.0, 
+                    "value": "5"
+                }
+            ]
+        ], 
+        "ingredientId": "16123", 
+        "ingredientName": "soy sauce"
+    }, 
+    "white pepper": {
+        "foodCalories": [
+            "296", 
+            "kcal", 
+            [
+                {
+                    "eqv": 2.4, 
+                    "label": "tsp, ground", 
+                    "qty": 1.0, 
+                    "value": "7"
+                }, 
+                {
+                    "eqv": 7.1, 
+                    "label": "tbsp, ground", 
+                    "qty": 1.0, 
+                    "value": "21"
+                }
+            ]
+        ], 
+        "ingredientId": "02032", 
+        "ingredientName": "white pepper"
+    }
+}

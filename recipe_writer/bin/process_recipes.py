@@ -6,7 +6,7 @@ import json, unicodedata
 import thread
 
 from lib import constants as c
-c.init(os.path.dirname(os.path.dirname(__file__)))
+# c.init(os.path.dirname(os.path.dirname(__file__)))
 
 
 ##

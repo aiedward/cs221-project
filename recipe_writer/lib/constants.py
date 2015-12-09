@@ -29,6 +29,7 @@ SLEEP_TIME = None
 PRINT_REMAINING_CALLS = None
 PRINT_MISSED_INGREDIENTS = None
 
+
 ##
 # Function: init
 # -------------------
@@ -111,10 +112,13 @@ def init(pathToRoot):
 	PRINT_MISSED_INGREDIENTS = False
 
 
-def setDatabasePrintConstants(recipesInDatabase, remainingCalls, missedIngredients):
+def setDatabasePrintConstants(recipesInDatabase, remainingCalls, missedIngredients, apiNum):
 	global PRINT_RECIPE_IN_DATABASE
 	global PRINT_REMAINING_CALLS
 	global PRINT_MISSED_INGREDIENTS
+	global GOV_NUT_API_KEY
+	global startNumber
 	PRINT_RECIPE_IN_DATABASE = recipesInDatabase
 	PRINT_REMAINING_CALLS = remainingCalls
 	PRINT_MISSED_INGREDIENTS = missedIngredients
+	GOV_NUT_API_KEY = govAPIArray[apiNum]
