@@ -1,17 +1,12 @@
 import collections, itertools, copy, Queue
 import numpy, scipy, math, random
-import os, sys, time
+import os, sys, time, importlib
 import tokenize, re, string
 import json, unicodedata
 import thread
 
-##
-# Global Variables
-##
-PATH_TO_RESOURCES = "../res"
-PATH_TO_EXECUTABLES = "../bin"
-PATH_TO_LIBRARIES = "../lib"
-FILENAME_JSON_RECIPES = "allRecipes.json"
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from lib.constants import *
 
 ##
 # Function: main
@@ -204,17 +199,21 @@ def printAliasData(aliasData, numToPrint, randomize):
 def dumpDictToJsonFile(dict2dump, fileNamePrefix):
 	jsonDatabase = json.dumps(dict2dump, sort_keys=True, indent=4)
 	fileName = string_appendDateAndTime(fileNamePrefix)
-	fullFileName = os.path.join(PATH_TO_RESOURCES, fileName)
+	fullFileName = os.path.join(PATH_TO_ALIASDATA, fileName)
 	with open(fullFileName, "w") as f:
 		f.write(jsonDatabase)
 
 def string_appendDateAndTime(s):
 	return "_".join([s, time.strftime("%m-%d-%Y"), time.strftime("%Hh-%Mm-%Ss")]) + ".json"
 
+
 # If called from command line, call the main() function
 if __name__ == "__main__":
     main(sys.argv)
 
+# Otherwise, this file is being imported as a module
+else:
+	pass
 
 
 

@@ -293,20 +293,20 @@ def test_database1():
     print
 
 
+def main(argv):
+    # test_slicing()
+    # test_split1()
+    # test_chain1()
+    # test_chain2()
+    # test_split2()
+    # test_isupper()
+    # test_regex1()
 
-# test_slicing()
-# test_split1()
-# test_chain1()
-# test_chain2()
-# test_split2()
-# test_isupper()
-# test_regex1()
+    # test_split3()
+    # test_tuple1()
+    # test_exception1()
+    # test_exception2()
+    # test_exception3()
+    # test_exception4()
 
-# test_split3()
-# test_tuple1()
-# test_exception1()
-# test_exception2()
-# test_exception3()
-# test_exception4()
-
-test_database1()
+    test_database1()
