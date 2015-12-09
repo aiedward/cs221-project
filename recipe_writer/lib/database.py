@@ -18,11 +18,14 @@ YUM_ALLOWED_COURSE = "course^course-Main Dishes"
 PRINT_RECIPE_IN_DATABASE = False
 
 # Goverment Nutritional Database API constants
-GOV_NUT_API_KEY = "5YbfzajkZSaGWi7hibcD4Nq1EXSGHRtZP5Pvlkvv"
+GOV_NUT_API_KEY = "5YbfzajkZSaGWi7hibcD4Nq1EXSGHRtZP5Pvlkvv" #Default
+GOV_NUT_API_KEY_0 = "5YbfzajkZSaGWi7hibcD4Nq1EXSGHRtZP5Pvlkvv"
 GOV_NUT_API_KEY_1 = "svYYehDakYftfY9OsNtQuE30yFNotcWrb2db8MzH"
 GOV_NUT_API_KEY_2 = "e8AUBbuo2cPNt5nXONZ7ZHZrizZsoeLuAxonNA9z"
 GOV_NUT_API_KEY_3 = "IcpbZjpGGe81PQW0ruxgzwWe3lSEuqAKeG1N8UqV"
 GOV_NUT_API_KEY_4 = "6NxAEpCnVr3oCRAffO2DhDpcMrcTmGrBCgdtJX8q"
+govAPIArray = [GOV_NUT_API_KEY_0, GOV_NUT_API_KEY_1, GOV_NUT_API_KEY_2, \
+	GOV_NUT_API_KEY_3, GOV_NUT_API_KEY_4]
 SLEEP_THRESHOLD = 1
 SLEEP_TIME = 60*30
 PRINT_REMAINING_CALLS = False
@@ -33,14 +36,17 @@ allIngredientIds = {}
 missedIngredients = []
 foundItems = 0
 missedItems = 0
+startNumber = 0
 
-def setConstants(recipesInDatabase, remainingCalls, missedIngredients):
+def setConstants(recipesInDatabase, remainingCalls, missedIngredients, apiNum,startNum):
 	global PRINT_RECIPE_IN_DATABASE
 	global PRINT_REMAINING_CALLS
 	global PRINT_MISSED_INGREDIENTS
 	PRINT_RECIPE_IN_DATABASE = recipesInDatabase
 	PRINT_REMAINING_CALLS = remainingCalls
 	PRINT_MISSED_INGREDIENTS = missedIngredients
+	GOV_NUT_API_KEY = govAPIArray[apiNum]
+	startNumber = startNum
 
 
 # Function: printMissedIngredients
@@ -245,7 +251,7 @@ def getNumSteps(totalResults):
 # maxResults number given the iteration we are in and the
 # totalResults.
 def getStartAndMaxResults(i, numSteps, totalResults):
-	start = YUM_STEP * i
+	start = YUM_STEP * i + startNumber #Added offset into the recipe lists.
 	maxResults = YUM_STEP
 	if i == numSteps - 1:
 		maxResults = totalResults - start

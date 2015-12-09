@@ -1,0 +1,183 @@
+{
+    "AMAZING orange soda slow cooker chicken!": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.8333333333333334, 
+            "meaty": 0.5, 
+            "piquant": 0.0, 
+            "salty": 0.8333333333333334, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "4-5 Chicken Breasts", 
+            "1 Can Diet Orange Soda", 
+            "\u2153 Cup Soy Sauce"
+        ], 
+        "ingredients": [
+            "chicken breasts", 
+            "diet orange soda", 
+            "soy sauce"
+        ], 
+        "recipeId": "AMAZING-orange-soda-slow-cooker-chicken_-1414156", 
+        "recipeName": "AMAZING orange soda slow cooker chicken!", 
+        "totalTimeInSeconds": 1800
+    }, 
+    "Chicken Quesadillas": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.8333333333333334, 
+            "meaty": 0.8333333333333334, 
+            "piquant": 0.0, 
+            "salty": 0.8333333333333334, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "2 large flour tortillas", 
+            "1 chicken breast, sliced", 
+            "1/2 cup cheddar cheese", 
+            "1/2 mozzarella cheese", 
+            "1 tbsp parsley", 
+            "1/2 red onion, sliced", 
+            "Optional: guacamole & sour cream", 
+            "Optional: guacamole & sour cream"
+        ], 
+        "ingredients": [
+            "large flour tortillas", 
+            "chicken breasts", 
+            "cheddar cheese", 
+            "mozzarella cheese", 
+            "parsley", 
+            "purple onion", 
+            "guacamole", 
+            "sour cream"
+        ], 
+        "recipeId": "Chicken-Quesadillas-1414513", 
+        "recipeName": "Chicken Quesadillas", 
+        "totalTimeInSeconds": 1200
+    }, 
+    "Ham and Cheese Quiche": {
+        "course": [
+            "Breakfast and Brunch", 
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "1 pre-made pie shell (I recommend Marie Callender\u2019s in your grocer\u2019s freezer)", 
+            "6 eggs", 
+            "1 \u00bd cups heavy cream", 
+            "1 cup diced ham (I purchase this in a bag in the meat section)", 
+            "\u00bc cup diced onion", 
+            "1 cup freshly shredded cheddar cheese", 
+            "salt/pepper"
+        ], 
+        "ingredients": [
+            "pie shell", 
+            "eggs", 
+            "heavy cream", 
+            "diced ham", 
+            "diced onions", 
+            "shredded cheddar cheese", 
+            "salt"
+        ], 
+        "recipeId": "Ham-and-Cheese-Quiche-1397164", 
+        "recipeName": "Ham and Cheese Quiche", 
+        "totalTimeInSeconds": 3900
+    }, 
+    "Pork Chops with Cider Bacon Glaze": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.16666666666666666, 
+            "meaty": 0.6666666666666666, 
+            "piquant": 0.0, 
+            "salty": 0.16666666666666666, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.3333333333333333
+        }, 
+        "ingredientLines": [
+            "2 sliced bacon, diced", 
+            "1 pound Smithfield All Natural Bone In Pork Chops", 
+            "salt and pepper", 
+            "salt and pepper", 
+            "1 small onion, finely diced", 
+            "2 cloves garlic, minced", 
+            "3/4 cup apple cider", 
+            "1/2 cup chicken broth"
+        ], 
+        "ingredients": [
+            "bacon", 
+            "bone-in pork chops", 
+            "salt", 
+            "pepper", 
+            "onions", 
+            "garlic", 
+            "apple cider", 
+            "chicken broth"
+        ], 
+        "recipeId": "Pork-Chops-with-Cider-Bacon-Glaze-1413183", 
+        "recipeName": "Pork Chops with Cider Bacon Glaze", 
+        "totalTimeInSeconds": 2700
+    }, 
+    "Slow Cooker Korean Beef": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": [
+            "Asian"
+        ], 
+        "flavors": {
+            "bitter": 0.8333333333333334, 
+            "meaty": 0.8333333333333334, 
+            "piquant": 0.16666666666666666, 
+            "salty": 0.8333333333333334, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.3333333333333333
+        }, 
+        "ingredientLines": [
+            "1 cup beef broth", 
+            "1/2 cup reduced sodium soy sauce", 
+            "1/2 cup brown sugar, packed", 
+            "4 cloves garlic, minced", 
+            "1 tablespoon sesame oil", 
+            "1 tablespoon rice wine vinegar", 
+            "1 tablespoons freshly grated ginger", 
+            "1 teaspoon Sriracha, or more, to taste", 
+            "1/2 teaspoon onion powder", 
+            "1/2 teaspoon white pepper", 
+            "3 pound boneless beef chuck roast, cut into 1-inch cubes", 
+            "2 tablespoons cornstarch", 
+            "1 teaspoon sesame seeds", 
+            "2 green onions, thinly sliced"
+        ], 
+        "ingredients": [
+            "beef broth", 
+            "reduced sodium soy sauce", 
+            "brown sugar", 
+            "garlic", 
+            "sesame oil", 
+            "rice vinegar", 
+            "ginger", 
+            "Sriracha", 
+            "onion powder", 
+            "white pepper", 
+            "boneless beef chuck roast", 
+            "corn starch", 
+            "sesame seeds", 
+            "green onions"
+        ], 
+        "recipeId": "Slow-Cooker-Korean-Beef-1415674", 
+        "recipeName": "Slow Cooker Korean Beef", 
+        "totalTimeInSeconds": 3000
+    }
+}
