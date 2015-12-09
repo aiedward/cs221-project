@@ -34,6 +34,8 @@ missedIngredients = []
 foundItems = 0
 missedItems = 0
 
+##
+# 
 def setConstants(recipesInDatabase, remainingCalls, missedIngredients):
 	global PRINT_RECIPE_IN_DATABASE
 	global PRINT_REMAINING_CALLS
