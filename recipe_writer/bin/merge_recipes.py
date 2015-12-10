@@ -15,7 +15,7 @@ from lib import util
 from lib import constants as c
 
 def main(argv):
-	pathToRecipes = os.path.join(c.PATH_TO_RESOURCES, "jsonrecipes")
+	pathToRecipes = os.path.join(c.PATH_TO_RESOURCES, "jsontests")
 
 	# Get the full absolute file paths of all files in /res/jsonrecipes/
 	# that end in ".json"
@@ -29,7 +29,7 @@ def main(argv):
 	mergedDict = util.naivelyMergeDicts(listOfJSONDicts)
 
 	# Write the merged recipe dictionary to a file
-	allRecipesFilePath = os.path.join(c.PATH_TO_RESOURCES, "allRecipes.json")
+	allRecipesFilePath = os.path.join(c.PATH_TO_RESOURCES, "testRecipes.json")
 	util.dumpJSONDict(allRecipesFilePath, mergedDict)
 
 if __name__ == "__main__":
