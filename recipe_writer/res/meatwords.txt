@@ -54,3 +54,4 @@ prosciutto
 tenderloin
 thigh
 breast
+chorizo

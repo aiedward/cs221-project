@@ -223,11 +223,19 @@ def aliasBuddyScore(alias1, alias2):
     aliasData = getAliasData()
     freq1 = aliasData[alias1]["count"]
     freq2 = aliasData[alias2]["count"]
-    freqTogether = aliasData[alias1]["aliasBuddies"][alias2]
-    buddyScore = (freqTogether / freq1) + (freqTogether / freq2)
-    buddyScore /= 2
-    return buddyScore
+    freqTogether = aliasData[alias1]["aliasBuddies"].get(alias2, float(0))
+    buddyScore1 = (float(freqTogether) / float(freq1)) + (float(freqTogether) / float(freq2))
+    buddyScore1 /= float(2)
+    buddyScore2 = 2 * float(freqTogether) / (float(freq1) + float(freq2))
+    if False:
+        print
+        print "   Computing buddy score for %s and %s..." % (alias1, alias2)
+        print "   Freq of %s is %f" % (alias1, freq1)
+        print "   Freq of %s is %f" % (alias2, freq2)
+        print "   Freq together is %f" % freqTogether
+        print "   Final score is %f" % buddyScore2
 
+    return buddyScore2
 
 
 
@@ -354,6 +362,7 @@ class CSP:
                 for j in table[i]:
                     assert i in currentTable and j in currentTable[i]
                     currentTable[i][j] *= table[i][j]
+
 
 
 
