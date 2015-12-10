@@ -575,3 +575,4 @@ class BacktrackingSearch():
                     var_queue.append(neighbor_var)
 
         # END_YOUR_CODE
+

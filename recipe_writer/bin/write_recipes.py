@@ -5,7 +5,7 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 
-from lib import util, csp, kmeans, search
+from lib import util, kmeans, search #, csp
 from lib import constants as c
 # c.init(os.path.dirname(os.path.dirname(__file__)))
 
