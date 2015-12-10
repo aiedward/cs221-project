@@ -1,2 +1,3 @@
 recipe_writer/res/jsonrecipes
 recipe_writer/res/aliasdata
+*.pyc

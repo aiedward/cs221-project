@@ -9,7 +9,7 @@ import thread
 # need to create a Constants object with an initialization
 # argument that is the path of the folder __main__.py is in
 # because of some weird command line thing
-from lib import constants as c
+import lib.constants as c
 c.init(os.path.dirname(__file__))
 
 ##

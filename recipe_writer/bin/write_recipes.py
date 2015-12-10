@@ -1,11 +1,11 @@
 import collections, itertools, copy, Queue
 import numpy, scipy, math, random
-import os, sys, time
+import os, sys, time, importlib
 import tokenize, re, string
 import json, unicodedata
 import thread
 
-from lib import util
+from lib import util, csp, kmeans, search
 from lib import constants as c
 # c.init(os.path.dirname(os.path.dirname(__file__)))
 
@@ -17,22 +17,68 @@ from lib import constants as c
 # Second argument expected to be alias data file that we will import from.
 ##
 def main(argv):
-	# argd = processArgs(argv)
-	pathToRecipes = os.path.join(c.PATH_TO_RESOURCES, "jsonrecipes")
-	allRecipesFullFilePath = os.path.join(pathToRecipes, "allRecipes.json")
+	argd = processArgs(argv)
 
-	fullJsonString = None
-	with open(allRecipesFullFilePath, "r") as f:
-		fullJsonString = f.read()
+	results = runModule(argd)
 
+	if argd["verbose"]:
+		print results
 
+##
+# Function: processArgs
+# ---------------------
+# Pretty self-explanatory.
+#
+# Possible options include:
+#    --module=
+#    --verbose=
+#
+# By default, the module is set to None, verbose is set to True, and
+# args is set to an empty list. Module being None actually means all
+# modules' run() functions will be called. Verbose being True means
+# status updates will be printed. Verbose is included as the first
+# arguments in the args list to any module's run() function.
+##
+def processArgs(argv):
+	argd = {"module": None, "verbose": True, "args": []}
+	realArgs = argv[1:]
 
-# def processArgs(argv):
-# 	argd = {}
-# 	realArgs = argv[1:]
-# 	for arg in realArgs:
-# 		if arg.startswith("--data="):
-# 			argd["data"] = sorted(os.listdir(c.PATH_TO_ALIASDATA))[-1]
+	for arg in realArgs:
+		if arg.startswith("--module="):
+			argd["module"] = arg.replace("--module=", "")
+		elif arg.startswith("--verbose="):
+			argd["verbose"] = arg.replace("--verbose=", "")
+		else:
+			argd["args"].append(arg)
+
+	return argd
+
+##
+# Function: runModule
+# -------------------
+# Calls the run(args) function for the specified module. The module's run(..)
+# function is like a main() function but it receives somewhat cleaned-up
+# command-line arguments and is expected to return a value. The first
+# argument to a run() function will always be verbose, which will be True
+# or False to indicate whether progress updates should be printed as the
+# module chugs along.
+##
+def runModule(argd):
+	results = None
+	moduleName = argd["module"]
+	moduleArgs = tuple([argd["verbose"]] + argd["args"]])
+	if moduleName == "csp":
+		results = csp.run(*moduleArgs)
+	elif moduleName == "kmeans":
+		results = kmeans.run(*moduleArgs)
+	elif moduleName == "search":
+		results = search.run(*moduleArgs)
+	elif moduleName == None:
+		results = [kmeans.run(*moduleArgs), 
+			search.run(*moduleArgs), 
+			csp.run(*moduleArgs)]
+	return results
+
 
 # If called from command line, call the main() function
 if __name__ == "__main__":
