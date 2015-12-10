@@ -27,6 +27,9 @@ DEFAULT_EXE_CHOICE = "process_recipes"
 # argv = ["main.py", <executable>, <args..>]
 # <executable> is one of: "process_recipes", "query_online_db", "write_recipes"
 def main(argv):
+	print "In __main__.py, c.PATH_TO_ROOT: ", c.PATH_TO_ROOT
+	print "In __main__.py, os.path.dirname(__file__): ", os.path.dirname(__file__)
+
 	exe_name = argv[c.EXE_ARG_POS]
 	exe = importlib.import_module("." + exe_name, "bin")
 	new_argv = [exe_name + ".py"] + argv[c.EXE_ARG_POS+1:]
