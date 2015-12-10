@@ -11,6 +11,23 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 
+# Function: safeConnect
+# ---------------------
+# Wrapper for a function requesting info from a server.  Returns the
+# requested value on success, None on error.  It retries a default
+# of 40 times before breaking and returning none, attempting to circumvent
+# connection errors and server overload by integrating a sleep call.
+def safeConnect(fxn, args, tries=40):
+	returnVal = None
+	for i in range(tries):
+		try:
+			returnVal = fxn(*args)
+			break
+		except requests.exceptions.ConnectionError as e:
+			if i % 10 == 0:
+				time.sleep(2)
+			pass
+	return returnVal
 
 ##
 # Function: loadJSONDict
