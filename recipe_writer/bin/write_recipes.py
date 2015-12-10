@@ -47,7 +47,7 @@ def processArgs(argv):
 		if "module=" in arg:
 			argd["module"] = arg.split("=")[-1]
 		elif "verbose=" in arg:
-			argd["verbose"] = arg.split("=")[-1]
+			argd["verbose"] = (arg.split("=")[-1].lower() == "true")
 		else:
 			argd["args"].append(arg)
 
@@ -69,7 +69,7 @@ def runModule(argd):
 	moduleArgs = tuple([argd["verbose"]] + argd["args"])
 
 	if argd["verbose"]:
-		print "Executing %s%s%r" % (moduleName, ".run", moduleArgs)
+		print "\nExecuting %s.run%r\n" % (moduleName, moduleArgs)
 
 	if moduleName == "csp":
 		results = csp.run(*moduleArgs)

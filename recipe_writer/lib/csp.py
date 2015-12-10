@@ -50,12 +50,14 @@ def run(verbose):
 # a set of constraints.
 ##
 def solveAliasCSP(verbose, traits):
-	csp = CSP()
+	csp = util.CSP()
 	addVariables(csp, traits, "alias")
 	addFactors(csp, traits, "alias")
 
+	solver = util.BacktrackingSearch(numSolutions=100, verbose=False)
+	solver.solve(csp)
 
-	traits["alias_choices"] = 
+	traits["alias_choices"] = solver.optimalAssignment
 
 ##
 # Function: solveAmountCSP
@@ -67,6 +69,11 @@ def solveAmountCSP(verbose, traits):
 	csp = util.CSP()
 	addVariables(csp, traits, "amount")
 	addFactors(csp, traits, "amount")
+
+	solver = util.BacktrackingSearch(numSolutions=10, verbose=False)
+	solver.solve(csp)
+
+	traits["amount_choices"] = solver.optimalAssignment
 
 ##
 # Function: addVariables
