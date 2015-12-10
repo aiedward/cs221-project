@@ -1,0 +1,7 @@
+recipe
+markov
+CSP
+ingredients
+nutrition
+random writing
+HMM

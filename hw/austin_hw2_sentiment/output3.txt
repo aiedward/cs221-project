@@ -1,0 +1,1410 @@
+====== Cluster 0
+--- Centers:
+bad	1.140969163
+filler0	0.506607929515
+filler1	0.493392070485
+worst	0.361233480176
+terrible	0.251101321586
+awful	0.246696035242
+music14	0.114537444934
+music13	0.11013215859
+music12	0.101321585903
+music11	0.0969162995595
+music16	0.0925110132159
+acting8	0.0925110132159
+plot5	0.0881057268722
+music9	0.0837004405286
+music19	0.0837004405286
+music5	0.0837004405286
+music6	0.0837004405286
+music0	0.0837004405286
+music2	0.0837004405286
+acting10	0.0837004405286
+music18	0.079295154185
+acting1	0.079295154185
+music1	0.079295154185
+acting13	0.079295154185
+music10	0.0748898678414
+music17	0.0748898678414
+acting6	0.0748898678414
+acting4	0.0748898678414
+music8	0.0748898678414
+plot16	0.0748898678414
+plot0	0.0704845814978
+plot4	0.0704845814978
+acting2	0.0704845814978
+music4	0.0704845814978
+music7	0.0704845814978
+music3	0.0704845814978
+acting7	0.0660792951542
+acting15	0.0660792951542
+music15	0.0616740088106
+plot1	0.0616740088106
+plot6	0.0616740088106
+acting9	0.0616740088106
+plot17	0.0616740088106
+plot13	0.0616740088106
+plot7	0.057268722467
+acting0	0.057268722467
+plot15	0.057268722467
+plot12	0.057268722467
+acting16	0.057268722467
+acting14	0.057268722467
+plot3	0.0528634361233
+acting3	0.0484581497797
+plot14	0.0484581497797
+plot10	0.0484581497797
+acting5	0.0440528634361
+plot19	0.0440528634361
+plot18	0.0440528634361
+acting19	0.0440528634361
+acting11	0.0440528634361
+plot2	0.0396475770925
+plot8	0.0396475770925
+plot11	0.0396475770925
+acting17	0.0396475770925
+acting12	0.0396475770925
+acting18	0.0352422907489
+plot9	0.0308370044053
+--- Assigned points:
+plot10 plot12 bad worst plot3 filler1 plot4
+acting7 acting5 acting4 bad awful filler1
+music5 music2 music9 terrible music10 bad filler1
+music4 music6 bad music12 worst music19 filler0
+plot11 plot8 plot12 terrible bad filler1
+music5 music11 bad music12 music14 awful filler0
+music2 terrible music11 music10 bad music16 filler0
+music5 music7 music19 bad music12 awful filler1
+acting6 bad worst acting16 acting15 acting13 filler0
+acting8 acting1 acting12 bad acting16 filler0
+filler1 plot10 plot2 bad awful plot6 plot4
+acting1 acting7 acting6 acting4 bad worst filler1
+acting9 acting3 acting4 bad acting15 filler1
+plot18 plot16 plot8 bad plot9 awful filler0
+music4 music0 music11 bad music15 awful filler1
+terrible bad music14 music17 music19 filler1
+acting9 acting13 terrible bad filler1 acting11
+acting8 acting0 acting7 bad acting19 awful filler1
+terrible plot13 bad plot3 plot0 filler0 plot5
+acting9 acting8 terrible bad acting18 acting13 filler0
+plot19 filler1 plot10 plot12 bad worst plot6
+music13 bad music15 music14 music17 worst filler0
+acting8 acting1 bad awful acting13 filler0
+music1 terrible bad music14 music16 filler1
+plot14 bad awful plot3 plot0 filler1 plot7
+acting2 acting6 bad acting18 awful filler1 acting10
+music1 bad music12 music17 awful filler1
+music6 music3 music10 bad music14 filler0
+music2 bad music15 music17 music16 filler0
+acting3 terrible bad acting16 acting15 filler0
+acting1 acting0 terrible acting6 bad filler0 acting10
+acting2 acting0 terrible acting4 bad filler0 acting10
+plot10 bad plot18 plot19 filler0
+music6 bad music17 music16 awful music18 filler0
+acting1 acting7 terrible acting4 bad acting19 filler0
+plot18 plot15 plot8 plot13 bad awful filler1
+music5 music4 bad worst music14 filler0
+music5 music9 music10 bad worst music19 filler1
+acting2 acting1 acting6 bad worst acting13 filler0
+acting9 acting8 bad worst filler1 acting10
+music1 terrible music8 bad music14 filler1
+music4 music0 music8 bad worst music14 filler0
+acting1 acting6 acting4 bad acting18 awful filler1
+music6 music9 bad music14 music16 awful filler1
+music2 terrible bad music16 music18 filler0 music13
+music5 music7 music8 bad worst filler1
+plot17 bad plot9 worst plot0 filler0
+acting2 acting0 acting6 bad worst acting14 filler0
+plot8 plot11 bad awful plot0 filler0
+plot11 plot12 bad awful plot3 filler0 plot4
+acting9 acting8 acting6 bad awful acting13 filler0
+plot17 plot10 terrible bad plot9 filler1 plot5
+filler0 bad acting19 awful acting13 acting12 acting11
+filler1 plot10 bad plot6 plot7 plot5
+music5 music7 music13 bad worst filler1
+plot19 plot16 plot8 plot13 bad worst filler0
+acting8 filler1 acting0 terrible bad acting14 acting13
+plot15 plot10 plot12 bad awful plot1 filler1
+acting6 acting5 filler0 bad worst acting12 acting10
+music8 terrible music11 bad music14 music18 filler0
+acting0 acting7 bad awful acting16 acting13 filler0
+music5 music4 music0 bad music12 awful filler0
+music1 music10 music19 bad music15 awful filler1
+music3 bad music12 music15 music19 filler1
+acting9 bad acting19 acting17 acting14 filler0
+music5 bad music14 filler0
+plot16 plot7 bad plot1 plot6 filler0
+music6 music1 music13 music10 bad awful filler1
+terrible music10 bad music16 music18 filler1 music13
+music2 music8 terrible bad music16 music19 filler1
+music2 music11 bad worst music18 filler0
+music5 music13 bad music12 worst music17 filler0
+music4 music6 terrible bad music12 filler0 music13
+music5 music11 bad worst music14 filler0
+music7 music3 music13 music11 bad worst filler0
+plot14 plot10 bad filler0 plot4 plot5
+plot18 plot16 terrible plot13 bad plot0 filler1
+music5 music4 music2 bad worst music19 filler0
+plot14 plot16 bad plot6 filler0 plot5
+acting7 terrible acting5 bad acting19 acting17 filler1
+acting0 terrible acting5 acting6 bad acting14 filler1
+acting9 acting8 acting4 bad worst acting16 filler1
+acting8 acting2 acting0 bad awful filler0 acting11
+plot16 terrible plot13 bad filler1 plot5
+terrible music11 bad music14 music17 filler0
+acting8 acting2 bad worst filler0 acting11
+plot18 filler1 plot12 bad worst plot1 plot6
+filler1 bad worst plot6 plot7 plot4
+bad music12 music15 music18 music19 worst filler1
+acting2 acting6 bad worst acting13 filler1
+plot14 plot16 plot8 bad plot2 filler1
+music5 music7 music9 terrible music10 bad filler1
+acting9 acting0 terrible bad acting19 filler0
+plot14 plot16 bad plot9 worst filler0
+terrible plot12 plot11 bad plot3 plot0 filler1
+music0 music11 bad music14 awful filler1
+music3 bad music12 music17 music16 awful filler1
+music1 music2 music8 music10 bad filler0
+music7 music6 music3 music13 bad worst filler0
+bad acting19 acting14 filler1 acting12 acting10
+plot18 plot19 plot16 bad awful filler1 plot5
+plot19 plot12 plot13 bad worst plot1 filler0
+music4 bad music12 worst filler0
+music7 music9 music10 bad worst filler1
+acting2 bad acting19 awful acting16 filler0
+music6 music9 music8 bad music12 worst filler0
+filler1 plot16 plot11 plot12 bad worst plot6
+bad filler0 plot12 plot5
+plot17 terrible plot13 bad plot3 plot6 filler0
+music6 music0 music13 bad worst music17 filler0
+plot14 bad worst filler0 plot4 plot5
+music0 music9 terrible music8 bad music14 filler1
+awful plot15 bad plot0 filler0
+plot14 filler1 plot16 bad worst plot6 plot5
+music4 music13 terrible music10 bad music14 filler0
+music5 terrible music11 bad filler1 music13
+plot16 plot11 filler0 bad awful plot7 plot4
+acting2 acting1 acting4 bad awful filler1 acting10
+acting1 acting4 bad worst acting15 acting14 filler0
+music0 music13 music11 bad worst filler0
+music4 music6 music2 terrible music10 bad filler1
+plot15 plot8 bad plot0 filler1 plot5
+music7 music6 bad music12 music14 awful filler1
+acting7 bad awful acting15 filler1 acting10
+acting4 bad awful filler1 acting12 acting11 acting10
+plot16 plot17 plot13 bad worst filler1 plot5
+music13 music11 bad music12 music15 awful filler0
+music0 bad music12 worst music19 filler0
+music2 music10 bad worst music14 music15 filler1
+acting7 acting6 acting4 bad awful filler0 acting10
+acting9 acting3 filler0 bad awful acting15 acting12
+acting3 filler1 acting6 bad worst acting13 acting11
+acting1 bad awful acting16 acting14 filler0 acting10
+music1 music9 music8 bad music19 filler1
+acting8 acting4 bad worst acting16 filler1 acting10
+acting8 acting3 acting5 bad acting16 filler1
+bad worst acting15 acting14 filler0 acting11
+acting1 acting0 bad worst acting16 acting13 filler0
+plot18 plot13 bad awful plot0 plot1 filler1
+acting2 acting1 terrible bad acting18 acting14 filler1
+music2 music9 terrible bad music17 filler1 music13
+music3 music9 music11 bad music16 awful filler0
+bad terrible music13 music16 music19 music8 filler0
+plot15 plot10 bad worst filler1 plot7 plot4
+awful bad music12 music15 filler0
+acting9 acting0 terrible bad acting15 filler1 acting10
+plot11 bad awful plot3 plot0 filler0 plot5
+music6 music9 music19 bad music14 awful filler0
+plot18 plot12 filler0 bad worst plot7
+music6 music9 music11 bad worst music16 filler0
+music7 music6 music9 terrible bad music16 filler1
+plot15 bad plot1 filler1 plot13
+acting2 acting1 terrible acting5 bad filler1
+plot2 bad filler1 plot19
+plot19 plot13 bad worst plot1 filler0
+filler1 acting7 acting4 bad awful acting13 acting12
+music6 music1 bad worst music16 filler0
+music9 music8 music11 bad music12 filler0
+music3 music13 music19 bad music17 awful filler0
+acting8 acting7 terrible bad acting18 acting17 filler1
+acting8 acting3 acting2 bad worst acting19 filler0
+acting8 acting2 filler0 bad worst acting15 acting12
+music13 bad music15 music16 worst filler1
+music9 music13 terrible bad music18 music8 filler0
+music0 music8 music19 bad awful music18 filler0
+music0 bad terrible music13 music17 filler0
+music1 music3 terrible bad music15 music17 filler0
+acting1 acting5 bad worst filler0 acting10
+plot19 plot17 bad plot0 filler1 plot4
+music4 music9 music11 bad worst music17 filler1
+acting3 acting0 terrible bad acting17 acting16 filler0
+filler1 bad worst plot0 plot6 plot7 plot5
+acting8 bad worst acting18 acting14 acting13 filler0
+acting3 filler1 acting7 bad worst acting15 acting13
+acting9 acting8 terrible bad acting17 acting15 filler0
+music6 music1 bad music19 music18 filler0
+acting0 terrible acting4 bad acting17 filler1
+music8 music11 bad awful music18 filler1
+plot14 plot15 plot17 terrible bad filler0 plot4
+plot2 bad awful plot3 plot1 filler0 plot5
+filler0 bad worst plot0 plot1 plot6 plot7
+bad acting8 filler1 acting9 acting4
+music5 music0 music19 bad awful music18 filler0
+acting3 filler1 bad worst acting19 acting15 acting13
+music1 music2 music8 bad awful music18 filler0
+filler1 acting1 bad awful acting16 acting13 acting10
+filler1 bad music6 music15 music13
+plot14 bad filler1 plot12 plot4
+plot19 filler0 bad worst plot0 plot1 plot7
+filler1 bad worst music0 music3
+music4 music6 terrible bad music16 filler1 music13
+filler0 bad plot6 plot16 plot13
+bad worst acting15 acting14 filler0 acting10
+acting2 acting1 bad worst acting17 filler0 acting11
+music3 music2 music8 music10 bad worst filler0
+music7 bad worst music14 music17 filler0
+plot15 plot16 plot17 bad worst plot3 filler0
+acting3 acting4 bad acting18 awful filler0 acting10
+acting9 acting1 acting7 acting6 bad awful filler1
+terrible plot12 bad plot2 plot1 filler1 plot4
+bad plot9 worst plot3 plot0 filler1
+acting8 acting3 terrible acting5 bad filler1 acting11
+music7 music6 bad worst music16 music19 filler0
+music7 music0 terrible bad music16 filler1
+plot15 plot13 bad worst plot1 filler0 plot4
+music1 music13 bad worst music17 music18 filler1
+music2 music9 terrible bad music12 filler1
+music7 music2 music11 bad music15 worst filler1
+music0 music3 terrible music11 bad music16 filler1
+acting7 acting6 acting5 bad worst acting17 filler0
+plot14 bad worst plot2 plot1 filler1 plot7
+music1 music3 bad music14 music18 filler1
+music4 music2 music10 bad music15 awful filler0
+acting6 acting4 bad worst acting18 filler1 acting12
+plot8 bad worst plot3 filler1 plot7 plot5
+music3 music9 bad awful music18 filler1
+plot19 plot15 plot17 bad worst filler1 plot4
+music1 music8 bad music12 music18 filler0
+plot17 plot11 bad worst filler1 plot5
+plot15 plot17 plot13 bad plot9 filler1
+music2 terrible music10 bad music14 music16 filler1
+music4 music1 music0 terrible bad music12 filler0
+plot18 plot16 plot10 terrible bad plot2 filler0
+plot16 plot17 filler0 bad worst plot7
+music7 music2 bad music12 music18 filler1
+acting7 terrible acting6 bad acting15 acting14 filler0
+music3 music2 bad worst music14 filler1
+====== Cluster 1
+--- Centers:
+worst	1.16883116883
+filler1	0.5
+filler0	0.5
+awful	0.428571428571
+terrible	0.402597402597
+plot10	0.123376623377
+plot7	0.11038961039
+plot14	0.11038961039
+plot9	0.0974025974026
+plot3	0.0909090909091
+music10	0.0909090909091
+plot8	0.0909090909091
+plot15	0.0909090909091
+music15	0.0844155844156
+acting7	0.0844155844156
+plot12	0.0844155844156
+plot2	0.0779220779221
+music12	0.0779220779221
+music16	0.0779220779221
+acting4	0.0779220779221
+music1	0.0779220779221
+plot18	0.0779220779221
+plot13	0.0779220779221
+music11	0.0714285714286
+plot1	0.0714285714286
+plot6	0.0714285714286
+plot4	0.0714285714286
+acting1	0.0714285714286
+acting5	0.0714285714286
+music6	0.0714285714286
+acting15	0.0714285714286
+acting10	0.0714285714286
+music14	0.0649350649351
+plot5	0.0649350649351
+acting8	0.0649350649351
+acting6	0.0649350649351
+music13	0.0649350649351
+music0	0.0649350649351
+plot16	0.0649350649351
+plot17	0.0649350649351
+music17	0.0584415584416
+plot0	0.0584415584416
+acting3	0.0584415584416
+acting2	0.0584415584416
+acting0	0.0584415584416
+music4	0.0584415584416
+music3	0.0584415584416
+acting18	0.0584415584416
+acting12	0.0584415584416
+acting9	0.0519480519481
+plot19	0.0519480519481
+music5	0.0519480519481
+music7	0.0519480519481
+music2	0.0519480519481
+music9	0.0519480519481
+acting14	0.0519480519481
+acting13	0.0519480519481
+music19	0.0454545454545
+acting11	0.0454545454545
+music8	0.038961038961
+acting19	0.038961038961
+acting17	0.038961038961
+plot11	0.0324675324675
+music18	0.0324675324675
+acting16	0.0194805194805
+--- Assigned points:
+music7 terrible music10 worst music14 music19 filler1
+acting1 terrible acting4 worst acting19 filler0 acting10
+acting1 acting7 terrible worst acting19 filler1 acting10
+music5 worst music17 music16 awful filler1
+terrible plot8 worst plot6 filler0 plot5
+music6 music0 terrible music10 music12 worst filler0
+acting9 acting8 acting4 worst acting18 filler1
+plot16 terrible plot9 worst filler1 plot4
+acting0 acting8 worst filler0 acting4
+plot15 plot17 plot12 worst plot2 filler1
+acting3 acting0 acting4 acting17 worst awful filler1
+plot18 plot14 terrible worst plot0 plot1 filler0
+music2 music9 terrible worst music17 filler1
+plot14 plot9 worst awful filler1 plot4
+music5 music6 music13 worst awful music18 filler1
+acting2 acting6 terrible worst filler1 acting11 acting10
+music1 music0 music12 worst music17 awful filler1
+plot18 terrible plot9 worst plot2 filler0 plot5
+terrible music12 worst music16 music19 filler1
+music1 music3 music11 worst awful filler1
+music7 music0 music11 worst awful filler0
+music6 terrible music8 music13 worst music16 filler0
+filler1 plot8 worst awful plot6 plot7 plot5
+plot14 plot8 worst awful filler1 plot5
+music5 music2 terrible music12 worst music16 filler1
+music6 music0 music10 worst music14 filler1
+acting8 acting5 worst awful filler1 acting11
+terrible plot8 plot9 worst plot1 filler0
+plot15 plot10 plot11 worst awful plot1 filler0
+plot2 plot6 filler1 plot9 worst
+music4 music2 terrible music11 music12 worst filler1
+acting2 worst acting6 filler0 acting10
+acting6 acting4 worst awful acting16 filler0 acting10
+acting1 acting7 acting5 worst acting18 awful filler1
+acting8 acting7 worst acting15 filler1 acting11
+terrible plot12 plot8 worst plot3 filler0
+plot14 plot15 plot10 plot9 worst awful filler0
+acting9 acting1 acting17 worst awful filler1 acting12
+plot10 plot8 worst awful filler0 plot4
+plot15 plot17 plot2 worst awful filler1 plot6
+music1 music2 music11 worst awful music15 filler0
+plot19 plot14 plot15 plot10 worst filler0
+plot17 plot10 worst plot0 filler0 plot4
+plot18 plot10 worst awful plot3 filler1 plot7
+acting9 worst awful acting15 filler0 acting11
+plot18 plot14 plot17 plot10 terrible worst filler0
+plot10 terrible plot8 plot9 worst plot3 filler1
+acting3 acting0 worst acting18 acting17 filler0
+terrible plot13 plot8 worst filler1 plot7 plot5
+music5 music1 terrible worst music18 filler0
+acting3 terrible worst acting17 acting14 acting13 filler0
+plot14 plot15 filler0 worst awful plot6 plot7
+acting3 filler1 acting6 worst awful acting13 acting12
+filler1 acting9 acting2 worst awful acting14 acting13
+plot18 plot12 plot7 worst plot3 filler0
+music5 worst music14 music17 awful filler1
+music4 music6 music1 music3 worst awful filler1
+filler1 acting0 worst awful acting13 acting12 acting10
+music1 music0 music10 worst awful filler0
+plot12 worst plot3 plot1 filler0 plot4
+plot14 filler1 plot17 worst awful plot6
+plot16 terrible plot13 worst plot1 filler1 plot4
+acting0 terrible filler0 worst acting15 acting12 acting10
+acting0 terrible acting4 worst acting13 filler0 acting11
+plot14 filler0 worst awful plot7 plot5
+music4 music2 worst music19 music15 filler1
+acting5 acting4 worst acting18 acting15 filler1
+music6 music10 music11 music19 worst awful filler0
+music3 terrible music13 music15 music16 worst filler1
+acting2 acting7 acting5 acting4 worst awful filler0
+terrible plot13 worst plot0 filler1 plot7 plot5
+plot18 plot10 terrible plot9 worst plot0 filler0
+plot19 terrible plot12 plot7 worst filler0
+acting0 acting7 acting5 filler0 worst acting12
+terrible filler0 worst plot1 plot7 plot5
+music9 music13 worst music19 music18 filler0
+acting8 terrible acting6 worst acting15 acting14 filler1
+acting4 acting17 worst awful acting15 acting13 filler0
+music7 terrible music13 music15 worst filler1
+plot19 plot16 terrible worst plot2 plot1 filler1
+plot18 plot16 plot17 plot12 worst awful filler0
+music2 music9 terrible music13 worst filler1
+plot19 plot10 terrible plot9 worst plot1 filler1
+plot14 plot11 plot9 worst plot3 filler0
+acting8 acting1 acting0 worst acting18 awful filler1
+acting0 acting6 worst awful acting16 acting15 filler1
+music6 music1 worst music14 music17 awful filler0
+plot18 plot17 terrible plot13 worst plot2 filler0
+filler1 plot10 plot2 plot9 worst awful plot6
+acting2 terrible acting5 worst acting19 filler0 acting10
+plot18 plot17 plot12 worst awful filler0 plot4
+acting8 acting6 worst awful acting16 acting13 filler0
+plot19 plot16 terrible plot13 worst filler0
+plot18 plot8 plot9 worst awful plot6 filler0
+acting3 acting1 terrible worst acting15 filler1
+acting3 acting2 acting6 worst acting18 awful filler0
+terrible music11 music10 worst music15 filler0
+acting8 acting3 worst acting19 filler0 acting11
+music1 music3 music9 worst music16 awful filler1
+plot14 plot15 terrible plot11 worst filler1 plot5
+acting9 acting2 acting5 worst awful acting15 filler0
+acting7 acting6 filler0 worst awful acting15 acting12
+plot16 plot10 terrible plot8 worst filler0 plot4
+plot18 plot14 plot10 terrible worst plot2 filler1
+plot15 plot16 plot13 worst awful plot3 filler0
+plot17 plot2 worst awful plot0 filler1
+music10 music11 music19 worst awful filler1
+acting9 acting8 acting5 worst acting18 awful filler0
+acting1 terrible worst acting18 acting14 filler1 acting12
+music4 terrible music8 music10 worst music15 filler1
+plot19 plot14 plot15 terrible worst plot2 filler0
+plot14 plot13 plot2 worst awful filler0 plot5
+music4 music6 terrible music10 worst music14 filler1
+acting9 acting7 acting5 worst awful filler0 acting10
+music10 filler1 worst music9 music8
+acting7 terrible acting4 worst acting19 filler1 acting10
+plot15 terrible plot11 plot8 worst plot6 filler0
+plot12 plot13 plot9 worst awful plot0 filler1
+filler0 music7 worst terrible music16
+plot16 plot17 terrible worst plot3 filler1 plot7
+acting2 acting1 worst acting13 filler0 acting11
+music4 music0 music3 music12 worst awful filler1
+plot15 plot10 plot12 worst awful filler0
+plot18 plot15 terrible worst plot3 plot0 filler1
+acting7 acting4 worst acting19 acting17 filler1
+plot16 plot12 worst plot3 filler1 plot4
+music4 music9 music13 worst music14 awful filler1
+terrible plot13 worst filler0 plot0 plot7 plot4
+acting3 acting1 acting7 terrible acting5 worst filler0
+music5 music6 terrible music12 worst music14 filler1
+music0 music15 music16 awful worst filler0
+music5 music9 terrible music13 music12 worst filler1
+worst music0 terrible music12 music15 music18 filler0
+acting3 acting7 acting14 worst filler0
+music1 music0 music2 worst awful music15 filler1
+acting8 acting1 worst acting18 awful filler1 acting12
+music4 music7 music10 music12 worst awful filler1
+plot19 plot10 terrible filler0 worst plot7
+terrible music10 music12 worst music17 filler1
+acting7 acting6 filler0 worst awful acting12
+music6 music15 music14 music17 awful worst filler1
+music5 music9 music8 worst music14 awful filler1
+music3 terrible music11 music10 worst music19 filler1
+plot10 plot12 plot9 worst awful plot6 filler0
+plot14 plot15 plot10 terrible filler0 worst plot7
+plot15 plot11 plot13 worst plot0 filler1
+music7 music3 terrible music15 worst filler0
+acting1 worst awful acting14 filler0 acting10
+music1 music3 worst music17 awful filler0
+plot3 worst plot7 plot12 filler0
+filler1 plot13 worst awful plot3 plot1 plot6
+plot19 terrible filler0 worst plot3 plot1 plot7
+music4 music6 music13 worst music16 awful filler0
+music11 filler1 music7 worst music8
+====== Cluster 2
+--- Centers:
+excellent	0.815476190476
+fantastic	0.785714285714
+filler0	0.714285714286
+great	0.39880952381
+filler1	0.285714285714
+acting0	0.113095238095
+acting4	0.10119047619
+acting7	0.0952380952381
+acting6	0.0952380952381
+acting9	0.0892857142857
+acting12	0.0892857142857
+plot2	0.0833333333333
+music10	0.0833333333333
+plot8	0.0833333333333
+music15	0.0833333333333
+plot1	0.0833333333333
+plot6	0.0833333333333
+acting19	0.0833333333333
+music11	0.077380952381
+plot4	0.077380952381
+plot5	0.077380952381
+acting5	0.077380952381
+music13	0.077380952381
+plot14	0.077380952381
+plot13	0.077380952381
+acting14	0.077380952381
+plot10	0.0714285714286
+plot11	0.0714285714286
+music0	0.0714285714286
+music3	0.0714285714286
+plot9	0.0714285714286
+acting18	0.0714285714286
+acting16	0.0714285714286
+acting15	0.0714285714286
+acting13	0.0714285714286
+music18	0.0654761904762
+music12	0.0654761904762
+music7	0.0654761904762
+plot18	0.0654761904762
+plot19	0.0654761904762
+acting17	0.0654761904762
+acting10	0.0654761904762
+music14	0.0595238095238
+music16	0.0595238095238
+plot3	0.0595238095238
+plot0	0.0595238095238
+acting8	0.0595238095238
+music2	0.0595238095238
+plot16	0.0595238095238
+music9	0.0595238095238
+music19	0.0535714285714
+acting2	0.0535714285714
+acting1	0.0535714285714
+music5	0.0535714285714
+plot17	0.0535714285714
+music17	0.047619047619
+acting3	0.047619047619
+music8	0.047619047619
+acting11	0.047619047619
+music1	0.0416666666667
+plot7	0.0357142857143
+plot12	0.0357142857143
+music6	0.0297619047619
+music4	0.0178571428571
+plot15	0.0178571428571
+--- Assigned points:
+fantastic acting0 acting5 acting4 excellent acting14 filler0
+plot6 excellent plot0 filler1 plot4 plot5
+great music1 music3 music8 excellent filler0
+fantastic plot17 plot8 excellent plot6 filler0 plot4
+music4 music3 excellent music9 music16 filler0
+fantastic plot19 plot11 excellent plot3 plot1 filler1
+music11 filler0 great fantastic music2
+great acting7 fantastic acting5 acting14 filler0 acting11
+music7 fantastic music1 music13 filler0
+fantastic excellent music10 music12 music14 music16 filler1
+acting0 acting7 excellent acting17 acting15 filler1
+fantastic music0 music3 excellent music18 filler0
+music5 fantastic music8 music14 excellent music19 filler1
+fantastic acting1 acting4 acting15 acting13 filler0
+great fantastic acting5 acting6 acting14 filler0
+fantastic plot13 excellent plot3 filler0 plot4
+fantastic acting8 excellent acting18 filler1 acting12 acting10
+fantastic acting8 acting1 acting0 acting6 excellent filler0
+great music3 music9 fantastic music11 music12 filler0
+great excellent music8 music10 music16 music18 filler0
+acting9 acting8 excellent acting14 filler1 acting10
+great acting5 excellent acting14 acting13 filler0 acting11
+music18 fantastic music12 filler0 music6
+plot14 plot16 plot9 filler0 excellent
+great excellent acting2 acting9 acting6 acting18 filler0
+great acting0 fantastic acting4 acting15 filler0 acting11
+fantastic plot14 great plot12 plot0 filler0 plot4
+great acting8 acting2 fantastic acting5 acting15 filler0
+filler1 plot0 plot17 plot18 excellent
+fantastic acting2 acting0 acting6 acting16 filler1
+fantastic acting3 acting7 great acting4 acting18 filler0
+fantastic plot6 plot8 plot0 filler1 plot5
+great acting0 acting7 fantastic acting19 acting17 filler0
+great music7 music11 music10 music12 excellent filler0
+fantastic acting2 acting4 excellent acting15 filler0
+plot19 plot12 plot13 plot8 excellent filler0
+fantastic plot18 plot19 plot8 excellent plot1 filler0
+music11 fantastic filler1 music0 music16
+fantastic acting9 acting5 excellent filler1 acting12
+great plot14 plot8 excellent plot6 filler0 plot5
+fantastic plot16 plot17 plot10 excellent filler0
+fantastic plot18 plot12 excellent plot2 filler0 plot5
+fantastic music6 music0 great music11 music14 filler0
+fantastic plot14 plot10 great filler0 plot4
+fantastic great acting19 acting18 acting15 acting13 filler0
+fantastic acting2 acting4 excellent filler1 acting12
+fantastic acting0 acting6 acting19 acting17 filler1
+great music3 music9 music12 music15 excellent filler0
+music4 great music0 music10 music14 excellent filler0
+fantastic acting0 filler1 acting9 acting11
+fantastic plot18 plot19 filler1 plot11 excellent plot6
+fantastic acting8 acting9 acting19 acting14 filler0
+acting9 acting13 acting4 excellent filler1 acting12
+great acting1 filler0 excellent acting15 acting13 acting12
+acting16 fantastic acting14 acting12 filler0
+great fantastic acting0 acting9 acting6 acting13 filler0
+fantastic plot14 plot10 excellent filler0 plot5
+acting18 acting9 acting10 filler0 excellent
+music19 music18 music7 filler0 excellent
+plot11 plot13 excellent plot3 plot6 filler0
+acting0 filler1 acting12 acting19 excellent
+fantastic music9 music8 music10 music17 excellent filler1
+music10 music6 filler0 music3 excellent
+great acting8 acting7 acting6 acting5 excellent filler0
+music5 music7 music0 fantastic music8 filler1
+plot16 excellent plot2 plot1 filler1 plot5
+great plot17 excellent plot2 plot1 filler0 plot4
+great plot14 plot15 plot12 plot9 excellent filler0
+music7 music0 music3 great fantastic filler0
+great music3 music7 excellent music18 filler0
+great plot14 plot16 fantastic plot2 filler0
+fantastic music6 music10 music13 music14 filler0
+fantastic acting7 great acting4 acting19 acting13 filler0
+music5 great music15 excellent music19 filler0
+fantastic great plot11 plot13 plot9 filler0 plot7
+great excellent acting7 acting19 acting18 filler0
+fantastic acting3 acting5 acting19 excellent acting15 filler1
+music0 music8 music13 excellent music18 filler1
+fantastic plot18 plot10 filler0 excellent plot7
+fantastic plot18 plot15 plot2 plot6 filler0
+acting3 acting8 acting10 filler1 excellent
+fantastic acting1 acting7 acting9 acting4 excellent filler0
+music5 fantastic music3 music10 music13 excellent filler0
+fantastic excellent acting7 acting18 acting17 filler0 acting10
+fantastic acting0 acting7 acting4 excellent filler1 acting10
+great music1 music2 fantastic music13 music15 filler0
+fantastic acting5 acting4 excellent acting16 acting13 filler0
+music11 music19 fantastic music15 filler0
+great music9 music17 excellent music19 music18 filler0
+great fantastic plot12 plot7 plot9 filler0
+great plot11 excellent plot2 plot3 filler0 plot4
+acting16 fantastic acting6 filler0 acting10
+great plot8 excellent plot0 filler0 plot4 plot5
+great acting2 fantastic acting6 filler0 acting12 acting10
+fantastic acting1 great acting4 acting18 filler0 acting12
+fantastic music1 great music11 music15 filler0
+fantastic acting3 acting2 acting0 excellent acting16 filler0
+fantastic music0 excellent music11 music17 music16 filler0
+great music2 music10 excellent music19 filler0
+great acting8 excellent acting18 acting17 filler0
+acting9 acting0 acting19 excellent acting16 filler1
+acting0 acting6 acting12 excellent filler0 acting11
+fantastic plot8 plot9 excellent plot0 filler0 plot4
+fantastic plot14 plot10 plot9 excellent filler0
+fantastic plot10 plot13 plot9 plot0 filler0
+great plot8 excellent plot3 plot6 filler0 plot5
+great music10 music13 music15 excellent music19 filler0
+fantastic acting6 excellent acting16 acting15 filler0 acting11
+acting17 acting1 filler1 acting9 excellent
+fantastic plot19 plot9 plot3 plot1 filler1
+plot2 fantastic plot17 filler1 plot13
+fantastic plot18 plot12 plot9 excellent filler0
+fantastic music9 music8 music15 music16 filler1
+fantastic plot13 excellent plot2 plot1 filler1
+great music9 music7 music12 music17 excellent filler0
+fantastic great acting18 acting16 acting15 filler0
+fantastic plot18 plot11 plot13 plot8 excellent filler1
+fantastic music2 great music11 music10 music16 filler0
+fantastic plot11 plot13 excellent plot1 filler1
+music4 great music0 excellent music17 music16 filler0
+plot18 excellent plot3 plot1 filler1 plot7
+great plot14 plot10 plot11 excellent filler0 plot4
+great acting7 acting9 filler0 acting19 excellent acting12
+great plot14 plot17 plot11 excellent plot0 filler0
+fantastic great plot13 plot8 plot3 plot6 filler0
+fantastic plot19 filler1 plot11 excellent plot6 plot7
+fantastic acting7 filler0 excellent acting16 acting14 acting12
+filler1 fantastic plot1 plot6 plot4
+acting0 acting5 acting12 excellent acting14 filler0
+plot16 plot13 plot9 excellent plot1 filler1
+fantastic acting8 acting9 excellent acting17 filler1 acting11
+fantastic acting7 great acting19 acting13 filler0
+great music6 music3 music9 fantastic filler0
+fantastic plot17 great plot8 plot9 plot1 filler0
+great fantastic plot3 plot6 filler0 plot4 plot5
+music5 fantastic music12 music15 music16 filler1
+plot14 plot10 plot8 excellent filler0 plot5
+acting3 acting0 filler1 acting6 excellent
+acting12 excellent acting17 filler0 acting11 acting10
+fantastic music11 music15 music14 excellent filler0
+great music10 music12 music15 excellent filler0
+fantastic acting2 acting6 acting5 acting4 filler0
+fantastic acting8 great acting4 acting15 acting14 filler0
+music1 music2 music15 excellent music18 filler0
+great fantastic plot11 filler0 plot8 plot1 plot7
+music5 music0 music14 excellent music18 filler1
+music5 fantastic music1 music0 music2 filler0
+music5 fantastic music9 music11 music14 excellent filler1
+acting7 acting6 excellent acting17 acting14 filler0
+fantastic filler1 plot16 excellent plot0 plot6 plot4
+acting9 acting3 acting5 excellent acting14 filler0
+fantastic great music13 music14 music18 filler0
+fantastic filler1 plot16 plot8 excellent plot6 plot5
+great acting3 acting7 fantastic acting5 acting17 filler0
+great excellent music7 music13 music12 music16 filler0
+music5 music3 music2 music10 excellent filler1
+plot2 plot14 fantastic plot19 filler0
+fantastic filler1 acting7 acting19 excellent acting15 acting13
+fantastic great plot13 plot2 filler0 plot5
+fantastic filler1 acting0 acting9 acting4 excellent acting13
+great fantastic music13 music15 music17 filler0
+fantastic acting1 acting4 excellent acting16 filler0 acting10
+great fantastic music11 music12 music17 filler0
+fantastic plot19 plot16 plot10 excellent plot1 filler0
+music7 music2 music13 music14 excellent filler1
+fantastic plot15 plot16 plot11 excellent filler0 plot5
+great acting1 acting0 fantastic acting17 acting16 filler0
+fantastic plot19 plot10 great plot2 filler0
+====== Cluster 3
+--- Centers:
+good	1.16256157635
+filler0	0.571428571429
+filler1	0.428571428571
+fantastic	0.349753694581
+excellent	0.315270935961
+great	0.172413793103
+music15	0.103448275862
+acting15	0.103448275862
+music11	0.0985221674877
+plot6	0.0985221674877
+acting19	0.0985221674877
+plot14	0.0935960591133
+music19	0.0886699507389
+acting14	0.0886699507389
+acting6	0.0837438423645
+music7	0.0837438423645
+music6	0.0837438423645
+plot11	0.0837438423645
+acting18	0.0788177339901
+music9	0.0738916256158
+music12	0.0738916256158
+music14	0.0738916256158
+acting0	0.0738916256158
+plot18	0.0738916256158
+plot10	0.0738916256158
+plot13	0.0738916256158
+music8	0.0689655172414
+plot1	0.0689655172414
+plot8	0.0689655172414
+music1	0.0689655172414
+music2	0.0689655172414
+plot15	0.0689655172414
+plot16	0.0689655172414
+acting16	0.0689655172414
+acting13	0.0689655172414
+music18	0.064039408867
+plot2	0.064039408867
+music13	0.064039408867
+music17	0.064039408867
+music16	0.064039408867
+acting1	0.064039408867
+music3	0.064039408867
+acting12	0.064039408867
+acting11	0.064039408867
+music10	0.0591133004926
+plot4	0.0591133004926
+plot5	0.0591133004926
+acting3	0.0591133004926
+acting7	0.0591133004926
+music4	0.0591133004926
+plot17	0.0591133004926
+plot7	0.0541871921182
+acting9	0.0541871921182
+acting2	0.0541871921182
+acting4	0.0541871921182
+plot19	0.0541871921182
+plot3	0.0492610837438
+music5	0.0492610837438
+acting17	0.0492610837438
+acting8	0.0443349753695
+acting5	0.0443349753695
+music0	0.0443349753695
+plot9	0.0443349753695
+plot12	0.0394088669951
+plot0	0.0246305418719
+acting10	0.0246305418719
+--- Assigned points:
+great good plot14 plot17 plot13 plot1 filler0
+music6 music3 good excellent music19 filler0
+fantastic good music3 music7 music12 music19 filler1
+music5 fantastic good music2 music10 music12 filler0
+fantastic good music0 music10 music15 filler0
+acting1 good filler1 acting11 acting4
+fantastic good plot19 plot14 plot10 plot11 filler0
+fantastic good filler1 plot13 plot6 plot7 plot5
+great good music13 music12 music14 music19 filler0
+fantastic good acting9 acting5 acting18 acting16 filler0
+music5 good music3 music2 excellent music19 filler0
+great good acting2 acting0 acting15 filler0
+fantastic good music3 music12 music15 music14 filler0
+good plot19 filler1 plot13 excellent plot6 plot7
+good acting2 acting6 acting19 acting15 filler1
+fantastic acting8 acting6 good acting19 acting17 filler1
+good plot14 plot11 plot2 filler1 plot5
+good music2 excellent music9 music16 filler1
+fantastic good plot14 plot10 plot2 plot3 filler1
+good plot18 plot17 plot11 filler0 plot4
+great good music8 music14 music18 filler0
+fantastic good acting3 acting7 acting19 filler0
+good filler1 plot17 excellent plot2 plot6 plot4
+great good plot14 plot10 plot1 filler0
+fantastic good acting0 acting18 acting17 acting15 filler1
+music4 music7 good music11 music10 excellent filler0
+good plot15 plot12 plot13 excellent plot3 filler0
+fantastic good filler1 plot8 plot1 plot6 plot5
+fantastic good plot14 plot13 filler1 plot5
+music5 good music15 excellent music18 filler0
+great good music2 music12 music15 music16 filler0
+music5 fantastic good music1 music0 music8 filler1
+fantastic good music1 music10 music13 music6 filler0
+good acting7 acting19 excellent acting16 acting13 filler0
+good plot15 plot11 excellent filler1 plot7
+fantastic good plot18 plot10 plot3 filler0
+great good acting9 acting6 acting15 filler0 acting10
+fantastic good music7 music6 music15 music18 filler1
+fantastic good acting19 acting15 filler1 acting11
+fantastic good acting2 acting0 acting16 filler1 acting13
+plot10 good plot6 filler0 plot13
+fantastic good acting2 acting0 acting15 acting14 filler1
+fantastic good acting3 acting18 acting14 filler1
+plot15 good filler1 plot4 plot5
+fantastic good music1 music9 music10 filler0
+good music0 music8 music15 excellent filler1
+fantastic good music0 music8 music15 music17 filler0
+fantastic good plot14 filler1 plot16 plot11 plot6
+fantastic good plot17 plot12 plot13 filler0 plot5
+good excellent acting4 acting18 filler1 acting12
+fantastic good music1 music13 music15 music17 filler0
+good plot15 plot11 plot8 plot9 filler1
+great good plot16 plot17 filler0 plot7 plot4
+good music1 music8 music10 excellent music19 filler1
+fantastic good acting2 acting1 acting9 acting6 filler0
+music4 great good music6 music19 filler0
+acting8 filler1 excellent good acting18 acting13 acting10
+music7 good music8 music15 excellent music19 filler0
+great good plot18 plot19 plot8 plot2 filler0
+good acting3 acting4 acting19 excellent acting13 filler0
+fantastic good acting4 acting16 acting15 acting14 filler0
+good plot10 plot13 plot3 plot6 filler0
+music7 good music11 music12 music14 excellent filler0
+music4 good excellent music15 music14 music16 filler1
+good filler1 acting7 acting19 excellent acting15 acting13
+acting9 good acting6 acting14 filler1 acting12
+fantastic good acting7 acting9 filler0 acting11
+good acting6 acting5 excellent acting16 filler0 acting11
+good filler1 plot16 plot8 excellent plot6 plot4
+music4 fantastic good music2 music10 music14 filler0
+good plot16 plot11 plot8 plot1 filler1
+music7 good music11 music12 excellent filler0
+good music2 music8 music16 music18 filler0
+good acting1 excellent acting5 acting18 acting16 filler1
+good music3 music11 excellent music18 filler1
+music6 music0 good music16 music18 filler1
+music4 fantastic good music2 music14 music19 filler0
+fantastic acting8 acting5 acting4 good acting17 filler0
+fantastic good plot17 filler0 plot8 plot7 plot5
+music4 fantastic good music6 music14 music18 filler1
+good plot16 plot9 excellent filler1 plot4
+fantastic good plot18 plot15 plot10 plot13 filler1
+great good music3 music9 music15 filler0
+acting8 acting3 acting7 good excellent filler1 acting12
+good music1 music3 music8 excellent music18 filler1
+fantastic good filler1 acting0 acting7 acting16 acting13
+great good music7 music11 music16 music19 filler0
+music4 good music1 music9 music17 excellent filler1
+fantastic good acting18 acting16 acting15 filler0 acting11
+excellent good acting0 acting18 acting16 filler0 acting10
+good acting2 acting7 excellent acting14 filler1 acting12
+fantastic good plot19 plot6 plot13 filler1
+good filler1 acting1 acting0 excellent acting15 acting13
+music7 good music15 music14 excellent music18 filler1
+fantastic good plot18 filler1 plot10 plot11 plot6
+fantastic good plot14 plot11 plot9 plot6 filler0
+acting9 good acting2 excellent filler1 acting12
+good plot18 plot8 excellent plot2 plot1 filler0
+fantastic good plot3 plot0 filler1 plot4
+acting9 good excellent acting17 acting14 acting13 filler0
+fantastic good plot17 plot10 plot2 plot1 filler0
+great good acting3 acting5 filler0 acting12
+good plot16 plot9 excellent plot3 filler1
+great good music2 music9 music7 music17 filler0
+good plot12 plot7 plot0 filler0 plot5
+good plot16 plot11 plot9 excellent plot1 filler1
+good plot18 plot11 plot8 excellent filler1 plot7
+fantastic good plot14 plot12 plot8 plot3 filler0
+fantastic good acting0 acting6 filler0 acting11
+good plot18 plot16 plot17 excellent filler0
+great good plot10 filler0 plot4
+music4 music7 good music12 excellent music19 filler0
+music5 music4 good music11 music12 filler0
+music6 music9 good music17 excellent music19 filler0
+good music2 music9 music8 music13 excellent filler0
+fantastic good filler1 acting5 acting18 acting15 acting13
+good plot18 plot6 plot13 plot15 filler1
+great good plot18 plot15 plot8 filler0
+great good plot12 plot8 plot2 plot6 filler0
+acting3 acting16 good filler1 acting11
+acting9 good acting1 fantastic acting18 filler1 acting11
+music6 music7 good filler1 excellent
+fantastic good music1 music6 music15 filler0
+good acting6 acting4 excellent acting14 filler1 acting12
+good acting6 acting15 acting14 filler0 acting10
+acting8 excellent good acting19 acting18 acting17 filler0
+music7 good music9 music11 excellent music18 filler1
+good acting3 filler0 acting17 acting13 acting12
+acting9 good acting0 acting18 acting14 filler0
+fantastic good music11 music6 music15 filler0
+good acting3 filler1 acting1 acting0 excellent acting13
+good acting6 acting12 acting19 acting15 filler0
+good acting2 excellent acting17 acting14 filler0 acting11
+good excellent music9 music11 music16 music19 filler0
+fantastic good plot17 plot11 plot2 filler1
+great good acting2 acting0 acting18 acting14 filler0
+great good plot14 plot17 plot0 filler0
+great good acting1 acting4 acting19 acting14 filler0
+great good acting0 acting7 acting19 acting15 filler0
+fantastic good plot16 plot8 plot1 filler0
+music5 fantastic good music0 music8 music10 filler1
+acting17 acting1 good filler1 acting19
+good plot19 plot14 plot11 plot1 filler1
+good plot18 plot19 plot10 filler0 plot5
+fantastic good filler1 plot12 plot2 plot6 plot5
+music6 music1 music11 good excellent music19 filler1
+plot15 fantastic good plot1 filler0
+acting16 good acting12 acting5 filler0
+good music12 music15 music17 music18 filler0
+music5 good music3 music8 excellent filler0
+music5 good music2 music9 music17 excellent filler1
+good acting6 acting19 excellent acting14 filler1
+acting1 good acting6 acting19 filler0
+fantastic acting8 acting6 good acting16 acting13 filler0
+good acting1 acting5 acting17 filler0 acting11
+fantastic good plot13 plot9 plot2 plot3 filler1
+acting16 good filler1 acting19 acting14
+good acting2 acting6 acting8 acting19 filler0
+good acting0 acting18 acting16 acting15 filler0
+good plot15 plot10 plot11 excellent plot1 filler0
+great good music1 music17 music16 filler0
+good plot18 plot14 plot9 excellent filler1 plot7
+great good acting3 acting0 acting7 acting19 filler0
+acting9 good acting3 acting1 fantastic filler1 acting11
+good acting8 acting19 excellent acting15 filler1 acting10
+fantastic acting8 acting0 acting4 good acting18 filler0
+great good acting9 acting6 acting4 acting14 filler0
+great good plot12 plot3 plot1 plot6 filler0
+fantastic good acting1 acting7 acting5 acting15 filler0
+fantastic good acting6 acting17 acting15 filler1 acting12
+music19 great good filler0 music17
+filler1 plot17 good plot6 plot7
+great good music10 music12 music15 music18 filler0
+music4 great good music8 music11 music13 filler0
+good plot6 plot16 plot8 excellent filler1
+great good plot19 plot13 filler0 plot4 plot5
+good plot15 plot9 excellent filler1 plot6 plot5
+good music11 music13 excellent music19 filler1
+music7 good fantastic music6 music12 music14 filler0
+good plot14 excellent plot6 filler0 plot4
+fantastic good plot18 plot19 plot15 plot12 filler0
+fantastic good music10 music13 music6 music17 filler0
+music5 music4 good music9 music15 excellent filler1
+plot14 plot18 good plot1 filler0
+fantastic good music3 music9 music7 music19 filler1
+fantastic good music2 music11 music13 music19 filler1
+fantastic good plot16 plot11 plot2 filler0
+music7 good music3 fantastic music13 filler1
+great good music1 music0 music8 music12 filler0
+fantastic good acting3 acting19 acting15 acting14 filler1
+great good plot10 plot9 plot3 plot1 filler0
+fantastic good music1 music10 music6 music14 filler1
+music4 great good music0 music3 music11 filler0
+music6 music2 good music14 excellent filler0
+fantastic good acting3 acting13 filler0 acting11
+great good music13 music14 music16 music18 filler0
+fantastic good plot19 plot11 plot0 filler1
+good plot19 plot14 filler0 excellent plot2 plot7
+fantastic good music11 music13 music17 music16 filler1
+music11 good music9 filler0 music16
+good music1 music3 music2 music12 excellent filler1
+great good music0 music11 music15 filler0
+great good music3 music2 music11 music16 filler0
+====== Cluster 4
+--- Centers:
+terrible	1.19417475728
+awful	0.805825242718
+filler0	0.582524271845
+filler1	0.417475728155
+music15	0.106796116505
+music9	0.0970873786408
+plot8	0.0970873786408
+music14	0.0970873786408
+music5	0.0970873786408
+music4	0.0970873786408
+music16	0.0873786407767
+plot9	0.0873786407767
+music17	0.0873786407767
+plot3	0.0873786407767
+music18	0.0873786407767
+plot1	0.0873786407767
+plot7	0.0873786407767
+music1	0.0873786407767
+music8	0.0873786407767
+plot17	0.0873786407767
+plot13	0.0873786407767
+acting18	0.0873786407767
+acting0	0.0776699029126
+acting6	0.0776699029126
+music13	0.0776699029126
+music2	0.0776699029126
+plot15	0.0776699029126
+plot16	0.0776699029126
+acting19	0.0776699029126
+acting11	0.0776699029126
+acting10	0.0776699029126
+acting5	0.0679611650485
+music6	0.0679611650485
+plot19	0.0679611650485
+music12	0.0679611650485
+acting14	0.0679611650485
+music19	0.0582524271845
+plot6	0.0582524271845
+plot4	0.0582524271845
+acting1	0.0582524271845
+plot18	0.0582524271845
+music3	0.0582524271845
+plot11	0.0582524271845
+plot12	0.0582524271845
+acting16	0.0582524271845
+acting15	0.0582524271845
+plot2	0.0485436893204
+plot0	0.0485436893204
+acting9	0.0485436893204
+acting3	0.0485436893204
+acting2	0.0485436893204
+music10	0.0485436893204
+music0	0.0485436893204
+music7	0.0485436893204
+plot10	0.0485436893204
+acting17	0.0485436893204
+acting13	0.0485436893204
+plot5	0.0388349514563
+plot14	0.0388349514563
+music11	0.0291262135922
+acting4	0.0291262135922
+acting12	0.0291262135922
+acting8	0.0194174757282
+acting7	0.0194174757282
+--- Assigned points:
+plot18 plot17 plot10 terrible plot3 filler0
+music6 music1 terrible music17 music18 filler0
+plot2 filler1 terrible plot4 plot13
+plot18 plot17 plot11 plot8 awful filler0
+plot19 plot15 terrible plot8 plot9 awful filler1
+music5 music4 music1 terrible awful music18 filler1
+music4 filler1 terrible music17 music2
+plot15 plot16 terrible plot9 plot6 filler0
+plot19 plot10 terrible plot0 plot1 filler0
+acting5 acting13 terrible acting19 filler0
+acting13 terrible acting17 awful filler1 acting12
+acting2 terrible awful acting15 filler0 acting11 acting10
+music6 music3 terrible music8 music11 filler1
+plot11 terrible plot9 awful filler1 plot7 plot4
+plot14 plot3 plot6 terrible filler0
+music7 music9 terrible music19 awful music18 filler0
+music1 terrible music12 music15 music16 awful filler0
+plot17 terrible plot8 plot9 awful filler0
+plot12 plot7 awful plot1 filler0 plot5
+plot19 terrible plot13 plot2 filler1 plot7
+acting9 filler1 terrible acting19 acting18
+acting8 acting2 terrible acting4 filler0 acting11
+acting0 terrible acting5 acting19 acting15 filler0
+music1 terrible music13 music12 music15 awful filler1
+awful acting16 filler1 terrible acting6
+plot16 plot2 awful plot0 filler1 plot7
+acting0 terrible acting16 acting14 filler1 acting10
+plot19 plot16 terrible plot8 plot6 filler0
+music1 terrible music19 music13 music15 awful filler1
+music6 music0 terrible music15 music14 awful filler1
+music4 music0 music13 music14 awful filler0
+music5 music0 terrible music15 music16 awful filler0
+awful music5 music6 music14 filler0
+awful plot3 plot16 filler0 plot13
+music4 music2 music9 music16 awful filler0
+acting3 acting16 filler1 terrible acting11
+plot14 plot10 terrible awful plot3 filler1 plot7
+filler0 acting17 awful acting15 acting12 acting10
+plot17 terrible plot13 plot9 awful plot1 filler0
+plot0 plot18 terrible plot12 filler0
+acting1 terrible acting17 acting18 awful filler1 acting11
+music5 music0 terrible music10 music14 awful filler0
+awful plot15 plot1 plot11 filler0
+music9 terrible music10 music19 music18 filler0
+music3 terrible music8 music15 music14 awful filler1
+filler1 terrible acting5 acting17 acting18 awful acting13
+terrible acting6 acting15 acting14 filler1 acting11
+awful plot16 plot9 plot6 filler0
+music5 terrible music13 music14 music16 filler0
+music6 music9 music19 music15 awful filler1
+acting7 terrible acting6 acting19 awful filler1
+music3 terrible music11 music13 music17 awful filler0
+acting13 acting0 terrible acting6 awful filler1
+acting9 acting14 acting13 terrible filler0
+plot15 plot10 terrible plot12 plot8 filler0
+acting8 acting3 terrible awful filler0 acting11 acting10
+acting3 acting2 acting1 terrible acting18 filler0
+plot15 terrible filler0 plot3 plot1 plot7
+acting9 acting3 terrible filler0 acting18 awful acting12
+plot18 terrible plot12 plot13 awful filler1 plot5
+music4 music8 terrible music10 music12 filler1
+music7 music2 music9 awful music18 filler0
+terrible acting4 acting19 awful acting14 filler0
+plot19 plot16 plot17 terrible plot8 filler0
+acting2 terrible awful acting15 acting14 filler0 acting11
+music9 terrible music8 music13 music17 awful filler0
+plot18 terrible plot8 awful plot3 filler0 plot5
+terrible plot13 plot2 plot8 awful plot1 filler0
+music5 music0 terrible music10 music19 filler0
+acting7 terrible acting5 acting19 acting18 filler0
+music9 terrible music8 music14 music16 filler1
+music4 music12 filler1 terrible music18
+terrible acting5 acting18 awful filler1 acting11 acting10
+plot15 plot17 terrible plot13 plot1 filler0
+acting1 acting0 terrible acting5 filler0
+music2 terrible music14 music16 awful filler0
+plot15 terrible plot11 plot9 awful filler1 plot4
+music7 music9 terrible music15 music17 awful filler0
+plot11 awful plot3 plot0 plot1 filler1
+music11 music12 music15 terrible filler0
+music6 music2 terrible music15 music17 awful filler0
+music5 music9 music8 music14 awful filler1
+plot14 terrible plot8 plot9 filler1 plot4
+music4 music1 music9 terrible music10 awful filler1
+plot10 terrible plot2 plot0 filler0 plot5
+music4 music7 music1 terrible music8 filler1
+acting1 acting5 acting19 awful acting15 filler0
+music1 music3 terrible music15 awful filler0
+music19 music13 music16 awful music18 filler0
+plot14 plot17 plot13 plot9 awful filler0
+acting1 acting0 terrible acting16 filler1 acting10
+plot3 plot1 filler1 terrible plot19
+music4 music7 music2 terrible music12 awful filler1
+awful music5 filler1 music1 music8
+acting3 acting2 terrible acting18 awful acting14 filler0
+music6 terrible music17 music16 awful music18 filler0
+acting9 acting14 filler1 terrible acting10
+plot17 terrible plot7 plot8 awful filler0
+awful acting1 acting0 filler1 acting6
+plot18 terrible filler0 awful plot3 plot6 plot7
+plot15 plot16 terrible plot12 filler1 plot4
+music5 music2 terrible music17 music16 awful filler1
+music5 music3 music13 music17 awful filler0
+====== Cluster 5
+--- Centers:
+great	1.21379310345
+filler1	0.862068965517
+fantastic	0.337931034483
+good	0.248275862069
+excellent	0.2
+filler0	0.137931034483
+music12	0.110344827586
+acting1	0.110344827586
+acting0	0.103448275862
+plot19	0.103448275862
+music8	0.103448275862
+music13	0.0965517241379
+plot12	0.0965517241379
+acting16	0.0965517241379
+acting10	0.0965517241379
+music19	0.0896551724138
+music2	0.0896551724138
+plot7	0.0827586206897
+acting17	0.0827586206897
+acting12	0.0827586206897
+music16	0.0758620689655
+plot3	0.0758620689655
+acting9	0.0758620689655
+acting6	0.0758620689655
+acting5	0.0758620689655
+acting4	0.0758620689655
+music3	0.0758620689655
+acting19	0.0758620689655
+music9	0.0689655172414
+music11	0.0689655172414
+music10	0.0689655172414
+music17	0.0689655172414
+acting2	0.0689655172414
+music0	0.0689655172414
+music6	0.0689655172414
+plot17	0.0689655172414
+acting18	0.0689655172414
+acting15	0.0689655172414
+plot2	0.0620689655172
+plot11	0.0620689655172
+plot4	0.0620689655172
+acting7	0.0620689655172
+plot10	0.0620689655172
+plot13	0.0620689655172
+music18	0.0551724137931
+plot8	0.0551724137931
+music14	0.0551724137931
+plot0	0.0551724137931
+plot6	0.0551724137931
+music7	0.0551724137931
+plot15	0.0551724137931
+acting14	0.0551724137931
+acting13	0.0551724137931
+acting11	0.0551724137931
+music5	0.048275862069
+music4	0.048275862069
+plot16	0.048275862069
+acting3	0.0413793103448
+plot1	0.0344827586207
+plot5	0.0344827586207
+acting8	0.0344827586207
+music1	0.0344827586207
+plot18	0.0344827586207
+music15	0.0275862068966
+plot9	0.0275862068966
+plot14	0.0206896551724
+--- Assigned points:
+great fantastic acting9 acting5 acting4 acting18 filler1
+great plot18 plot19 plot16 plot17 fantastic filler1
+fantastic plot15 plot10 great plot12 filler1 plot4
+great acting8 acting4 good acting18 filler1
+great good acting2 acting0 acting7 filler1 acting12
+acting16 great acting6 filler0 acting10
+music5 great music1 music17 music16 filler1
+fantastic great plot3 plot0 filler1 plot4
+filler1 great plot10 plot19 plot8
+great good acting4 acting15 filler1 acting12
+great plot19 fantastic plot12 plot3 filler1 plot4
+music4 great music7 music11 excellent music18 filler1
+great acting0 acting9 acting19 excellent acting16 filler1
+fantastic plot17 great plot12 plot13 plot8 filler1
+great plot15 plot12 excellent filler1 plot7
+fantastic plot15 plot17 great plot13 filler1 plot7
+fantastic acting2 great acting4 acting13 filler1
+great music8 music11 music12 excellent music18 filler1
+great plot19 filler1 fantastic plot13 plot6 plot7
+filler1 great music14 music13 music16
+great good acting1 acting19 filler1 acting10
+fantastic acting0 great acting5 acting19 filler1 acting12
+great good music2 music7 music6 music17 filler1
+great music9 music10 excellent music18 filler1
+great acting1 excellent acting17 filler1 acting10
+great acting1 acting6 acting19 excellent filler1 acting12
+music7 music2 fantastic great music17 music19 filler1
+fantastic acting8 great acting17 acting16 acting14 filler1
+great plot19 plot14 filler1 fantastic plot6 plot5
+music7 great fantastic music11 music13 music19 filler1
+filler0 great music12 music14 music13
+great music6 music3 music9 excellent music19 filler1
+great good plot9 plot3 filler1 plot5
+great filler1 excellent acting7 acting18 acting17 acting13
+great fantastic acting1 acting9 acting5 filler1 acting10
+fantastic filler1 plot16 great plot9 plot6 plot7
+great acting1 acting0 excellent acting16 filler1 acting12
+great plot16 fantastic plot2 filler1 plot7
+great fantastic acting0 acting9 acting16 filler1 acting1
+music4 great good music0 music8 music19 filler1
+great good plot11 plot12 plot1 filler1
+great plot19 plot10 plot11 plot9 excellent filler1
+fantastic acting13 acting1 great acting16 filler1
+great good plot10 plot13 filler1 plot7 plot5
+great good plot17 plot10 plot12 plot3 filler1
+filler0 great acting10 acting1 acting4
+great good music1 music3 music13 filler1
+great acting0 acting9 acting5 acting12 filler0
+great plot12 plot8 excellent plot3 filler1 plot4
+great acting2 acting0 acting7 excellent filler1 acting12
+great plot16 plot10 plot13 excellent filler1 plot7
+great good plot19 plot17 plot12 filler1 plot5
+great good music12 music17 music16 filler1
+great plot19 fantastic plot13 plot0 filler1
+great music0 music2 excellent music10 music16 filler1
+great good acting18 acting17 acting16 acting15 filler1
+great music0 music3 music8 music17 excellent filler1
+great acting2 acting7 acting9 filler1 acting10
+great acting3 acting4 acting16 filler0 acting10
+great acting7 acting6 acting11 filler0
+great plot16 plot11 plot12 plot3 filler1
+great music9 fantastic music11 music10 music19 filler1
+plot15 great plot8 filler0 plot13
+great filler1 fantastic plot11 plot8 plot6 plot4
+filler0 great acting14 acting1 acting10
+music5 great music3 music12 excellent music18 filler1
+great plot19 plot17 excellent plot2 plot3 filler1
+great music0 music3 fantastic music8 music14 filler1
+fantastic acting3 filler1 great acting19 acting13 acting11
+great music6 music0 music12 excellent filler1
+great plot17 fantastic plot2 filler1 plot4
+great good plot18 plot19 plot12 plot1 filler1
+great good plot18 plot19 filler1 plot1 plot6
+acting17 acting3 great acting8 filler0
+music4 great music0 music13 music12 excellent filler1
+great good plot15 plot10 plot2 filler1
+great plot6 plot12 filler1 plot7 plot4
+great acting2 excellent acting6 acting18 acting17 filler1
+great acting7 fantastic acting14 filler1 acting12 acting10
+great acting2 acting1 acting16 filler0 acting10
+filler0 great music12 music8 music2
+music4 great music0 music10 music17 filler1
+music5 great good music10 music13 filler1
+music7 music2 fantastic great music11 music10 filler1
+great good music7 music11 music12 music16 filler1
+great acting1 acting0 acting6 acting19 excellent filler1
+great good acting3 acting19 acting18 acting16 filler1
+great acting0 fantastic acting5 acting19 acting15 filler1
+great good acting2 acting5 acting17 filler1
+great good music0 music8 music13 music18 filler1
+great music1 music0 fantastic music8 music19 filler1
+great good music3 music9 music13 music19 filler1
+great good acting5 acting18 acting15 filler1 acting10
+music5 great good music2 music19 filler1
+great plot19 plot17 plot1 filler1 plot7
+great acting0 acting19 acting17 filler0 acting10
+great acting0 acting9 acting17 filler0 acting11
+great good music2 music9 music13 filler1
+great good plot14 filler1 plot16 plot0 plot6
+great good acting0 acting6 acting17 acting9 filler1
+great acting7 fantastic acting19 filler1 acting11
+fantastic great music8 music10 music12 music15 filler1
+music4 great music6 music2 excellent music16 filler1
+great music6 music8 music13 music19 filler1
+great music0 fantastic music12 music16 music19 filler1
+great acting8 acting2 fantastic acting5 filler1
+great acting2 acting0 fantastic acting6 filler1 acting13
+music5 great music6 music12 music15 excellent filler1
+great music1 filler0 music17 music2
+acting9 great acting0 fantastic acting4 acting6 filler1
+fantastic music3 great music14 music17 filler1
+great filler0 acting16 acting13 acting12 acting11
+music5 great music2 fantastic music13 music14 filler1
+music4 great good music8 music15 filler1
+great music6 music11 music14 music18 filler0
+fantastic plot17 great plot8 plot0 filler1
+great acting0 excellent filler1 acting12 acting11 acting10
+great plot11 plot8 plot2 filler1 plot5
+great fantastic acting9 acting5 acting4 acting15 filler1
+great acting1 fantastic acting18 filler1 acting12
+great plot15 plot11 plot2 plot1 filler0
+great music3 music9 fantastic music8 music12 filler1
+great plot18 plot16 fantastic plot0 filler1
+great acting3 acting7 acting6 acting16 filler0
+great acting9 acting15 acting13 filler0 acting10
+great plot18 plot11 excellent filler1 plot7 plot4
+great good plot19 filler1 plot11 plot2 plot6
+great music6 music9 fantastic music17 filler1
+great plot19 fantastic plot12 plot11 filler1 plot4
+great music9 music7 music12 excellent music19 filler1
+great acting1 acting17 acting14 filler1 acting12
+music7 great fantastic music11 music12 music14 filler1
+great fantastic acting4 acting6 acting19 acting16 filler1
+great good plot10 plot13 plot9 plot0 filler1
+great music3 music9 fantastic music8 music12 filler1
+great acting2 fantastic acting15 acting14 filler1
+great good music8 music10 music13 music15 filler1
+great music11 music10 music16 music19 filler0
+fantastic acting14 filler1 great acting18
+great plot10 excellent plot2 plot3 plot0 filler1
+great good music2 music11 music14 filler1
+great music1 music8 excellent music18 filler1
+music4 great good music3 music16 music19 filler1
+great good acting1 acting6 acting15 filler1 acting11
+great good plot14 plot15 plot3 filler1 plot7

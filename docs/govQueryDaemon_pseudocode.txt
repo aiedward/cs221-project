@@ -1,0 +1,11 @@
+while True:
+	Merge all new recipe json files into existing /res/jsonrecipes/allRecipes.json file
+	Run /bin/process_recipes on /res/jsonrecipes/allRecipes.json
+	Delete all aliasData files in /res/aliasdata except for the newest file
+	Import the newest aliasData from /res/aliasdata/ as a dict
+	Using aliasData, update the list of all aliases you haven't queried from the government yet
+	for govKey in govKeys:
+		Query government for 1000 of the remaining aliases
+		Save info to json file
+		Update list of aliases not yet queried by removing ones that were successfully queried
+	sleep(30)

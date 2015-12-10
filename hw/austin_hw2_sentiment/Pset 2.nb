@@ -1,0 +1,709 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     24959,        700]
+NotebookOptionsPosition[     23683,        651]
+NotebookOutlinePosition[     24039,        667]
+CellTagsIndexPosition[     23996,        664]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["CS 221", "Chapter",
+ CellChangeTimes->{{3.651960808298555*^9, 3.6519608095144978`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Problem Set 2", "Section",
+ CellChangeTimes->{{3.651950311666026*^9, 3.651950319210602*^9}, 
+   3.651960803596537*^9, {3.653095133551879*^9, 3.653095133691145*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["1 (a)", "Subsection",
+ CellChangeTimes->{{3.6530951914216146`*^9, 3.653095194417591*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"w", " ", "=", " ", 
+    RowBox[{"Association", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\"\<pretty\>\"", "\[Rule]", "0"}], ",", " ", 
+       RowBox[{"\"\<good\>\"", "\[Rule]", "0"}], ",", " ", 
+       RowBox[{"\"\<bad\>\"", "\[Rule]", "0"}], ",", " ", 
+       RowBox[{"\"\<plot\>\"", "\[Rule]", "0"}], ",", " ", 
+       RowBox[{"\"\<not\>\"", "\[Rule]", "0"}], ",", " ", 
+       RowBox[{"\"\<scenery\>\"", "\[Rule]", "0"}]}], "}"}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"phi", "[", "1", "]"}], " ", "=", " ", 
+   RowBox[{"Association", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<pretty\>\"", "\[Rule]", "1"}], ",", " ", 
+      RowBox[{"\"\<good\>\"", "\[Rule]", "1"}]}], "}"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"phi", "[", "2", "]"}], " ", "=", " ", 
+   RowBox[{"Association", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<bad\>\"", "\[Rule]", "1"}], ",", " ", 
+      RowBox[{"\"\<plot\>\"", "\[Rule]", "1"}]}], "}"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"phi", "[", "3", "]"}], " ", "=", " ", 
+   RowBox[{"Association", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<bad\>\"", "\[Rule]", "1"}], ",", " ", 
+      RowBox[{"\"\<not\>\"", "\[Rule]", "1"}]}], "}"}], "]"}]}], ";"}], "\n", 
+
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"phi", "[", "4", "]"}], " ", "=", " ", 
+    RowBox[{"Association", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\"\<pretty\>\"", "\[Rule]", "1"}], ",", " ", 
+       RowBox[{"\"\<scenery\>\"", "\[Rule]", "1"}]}], "}"}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"y", "[", "1", "]"}], " ", "=", " ", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"y", "[", "2", "]"}], " ", "=", " ", 
+   RowBox[{"-", "1"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"y", "[", "3", "]"}], " ", "=", " ", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"y", "[", "4", "]"}], " ", "=", " ", "1"}], ";"}]}], "Code",
+ CellChangeTimes->{{3.653095316888856*^9, 3.6530953794951687`*^9}, {
+  3.653095421192182*^9, 3.653095686125527*^9}, {3.653095716191749*^9, 
+  3.6530957623330183`*^9}, {3.653095853545719*^9, 3.653095921087689*^9}, {
+  3.653095976167952*^9, 3.6530960806680183`*^9}, {3.653096134069281*^9, 
+  3.653096304911621*^9}, {3.6530963373483458`*^9, 3.653096352850326*^9}, {
+  3.653097441032485*^9, 3.653097496538577*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"assocDot", "[", 
+     RowBox[{"assoc1_Association", ",", " ", "assoc2_Association"}], "]"}], ":=",
+     "\n", "\t", 
+    RowBox[{"Total", "[", "\n", "\t\t", 
+     RowBox[{"Map", "[", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"Function", "[", 
+        RowBox[{"key", ",", "\n", "\t\t\t\t", 
+         RowBox[{
+          RowBox[{"Lookup", "[", 
+           RowBox[{"assoc1", ",", " ", "key"}], "]"}], " ", "*", " ", 
+          RowBox[{"Lookup", "[", 
+           RowBox[{"assoc2", ",", " ", "key", ",", " ", "0"}], "]"}]}]}], 
+        "\n", "\t\t\t", "]"}], ",", "\n", "\t\t\t", 
+       RowBox[{"Keys", "[", "assoc1", "]"}]}], "\n", "\t\t", "]"}], "\n", 
+     "\t", "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"score", "[", 
+     RowBox[{"w_", ",", " ", "phi_"}], "]"}], " ", ":=", " ", 
+    RowBox[{"assocDot", "[", 
+     RowBox[{"w", ",", " ", "phi"}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"assocMult", "[", 
+     RowBox[{"assoc_Association", ",", " ", 
+      RowBox[{"num_", "?", "NumericQ"}]}], "]"}], ":=", "\n", "\t", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "assocCopy", "}"}], ",", "\n", "\t\t", 
+      RowBox[{
+       RowBox[{"assocCopy", " ", "=", " ", 
+        RowBox[{"Association", "[", 
+         RowBox[{"{", "}"}], "]"}]}], ";", "\n", "\t\t", 
+       RowBox[{"Map", "[", "\n", "\t\t\t", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"key", ",", "\n", "\t\t\t\t", 
+           RowBox[{"AssociateTo", "[", 
+            RowBox[{"assocCopy", ",", "\n", "\t\t\t\t\t", 
+             RowBox[{"Rule", "[", 
+              RowBox[{"key", ",", " ", 
+               RowBox[{
+                RowBox[{"Lookup", "[", 
+                 RowBox[{"assoc", ",", " ", "key"}], "]"}], " ", "*", " ", 
+                "num"}]}], "]"}]}], "\n", "\t\t\t\t", "]"}]}], "\n", "\t\t\t",
+           "]"}], ",", "\n", "\t\t\t", 
+         RowBox[{"Keys", "[", "assoc", "]"}]}], "\n", "\t\t", "]"}], ";", 
+       "\n", "\t\t", "assocCopy"}]}], "\n", "\t", "]"}]}], ";"}], "\n", 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"addMissingFeatures", "[", 
+     RowBox[{"assoc_Association", ",", " ", "keys_List"}], "]"}], ":=", "\n", 
+    "\t", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "assocCopy", "}"}], ",", "\n", "\t\t", 
+      RowBox[{
+       RowBox[{"assocCopy", " ", "=", " ", 
+        RowBox[{"Association", "[", 
+         RowBox[{"{", "}"}], "]"}]}], ";", "\n", "\t\t", 
+       RowBox[{"Map", "[", "\n", "\t\t\t", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"key", ",", "\n", "\t\t\t\t", 
+           RowBox[{"AssociateTo", "[", 
+            RowBox[{"assocCopy", ",", "\n", "\t\t\t\t\t", 
+             RowBox[{"Rule", "[", 
+              RowBox[{"key", ",", " ", 
+               RowBox[{"Lookup", "[", 
+                RowBox[{"assoc", ",", " ", "key", ",", " ", "0"}], "]"}]}], 
+              "]"}]}], "\n", "\t\t\t\t", "]"}]}], "\n", "\t\t\t", "]"}], ",", 
+         "\n", "\t\t\t", "keys"}], "\n", "\t\t", "]"}], ";", "\n", "\t\t", 
+       "assocCopy"}]}], "\n", "\t", "]"}]}], ";"}], "\n", "\t\t", "\n", 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"margin", "[", 
+    RowBox[{"phi_", ",", " ", "y_", ",", " ", "w_"}], "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{"assocDot", "[", 
+     RowBox[{"w", ",", " ", "phi"}], "]"}], "*", "y"}]}], "\n", "\n"}], "\n", 
+
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"hingeLoss", "[", 
+     RowBox[{
+     "phi_Association", ",", " ", "y_Integer", ",", " ", "w_Association"}], 
+     "]"}], ":=", "\n", "\t", 
+    RowBox[{"Max", "[", "\n", "\t\t", 
+     RowBox[{"0", ",", "\n", "\t\t", 
+      RowBox[{"1", " ", "-", " ", 
+       RowBox[{"margin", "[", 
+        RowBox[{"phi", ",", " ", "y", ",", " ", "w"}], "]"}]}]}], " ", 
+     RowBox[{"(*", " ", 
+      RowBox[{"This", " ", "is", " ", "the", " ", "residual"}], " ", "*)"}], 
+     "\n", "\t", "]"}]}], ";"}], "\n", "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"dHingeLoss", "[", 
+     RowBox[{"phi_", ",", " ", "y_", ",", " ", "w_"}], "]"}], ":=", "\n", 
+    "\t", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "hloss", "}"}], ",", "\n", "\t\t", 
+      RowBox[{
+       RowBox[{"hloss", " ", "=", " ", 
+        RowBox[{"hingeLoss", "[", 
+         RowBox[{"phi", ",", " ", "y", ",", " ", "w"}], "]"}]}], ";", "\n", 
+       "\t\t", 
+       RowBox[{"Which", "[", "\n", "\t\t\t", 
+        RowBox[{
+         RowBox[{"hloss", " ", ">", " ", "0"}], ",", "\n", "\t\t\t\t", 
+         RowBox[{"-", 
+          RowBox[{"assocMult", "[", 
+           RowBox[{"phi", ",", " ", "y"}], "]"}]}], ",", "\n", "\t\t\t", 
+         RowBox[{"hloss", " ", "<=", " ", "0"}], ",", "\n", "\t\t\t\t", 
+         RowBox[{"assocMult", "[", 
+          RowBox[{"phi", ",", " ", "0"}], "]"}]}], "\n", "\t\t", "]"}]}]}], 
+     "\n", "\t", "]"}]}], ";"}], "\n", "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"updatedWeight", "[", 
+     RowBox[{
+     "weight_Association", ",", " ", "phi_Association", ",", " ", "y_Integer",
+       ",", " ", "stepSize_"}], "]"}], " ", ":=", " ", "\n", "\t", 
+    RowBox[{"(", 
+     RowBox[{"weight", " ", "-", " ", 
+      RowBox[{"stepSize", " ", "*", " ", 
+       RowBox[{"dHingeLoss", "[", 
+        RowBox[{"phi", ",", " ", "y", ",", " ", "weight"}], "]"}]}]}], 
+     ")"}]}], ";"}], "\n", "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"StochasticGradientDescent", "[", 
+   RowBox[{"weight_Association", ",", " ", "phi_", ",", " ", "y_", ",", " ", 
+    RowBox[{"stepSize_", "?", "NumericQ"}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "allFeatureNames", ",", " ", "phiBuffered", ",", " ", "newWeight"}], 
+     "}"}], ",", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"allFeatureNames", " ", "=", " ", 
+      RowBox[{"Keys", "[", "weight", "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"newWeight", " ", "=", " ", "weight"}], ";", "\n", "\t\t", 
+     RowBox[{"Table", "[", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"phiBuffered", " ", "=", " ", 
+         RowBox[{"addMissingFeatures", "[", 
+          RowBox[{
+           RowBox[{"phi", "[", "i", "]"}], ",", " ", "allFeatureNames"}], 
+          "]"}]}], ";", "\n", "\t\t\t", 
+        RowBox[{"newWeight", " ", "=", " ", 
+         RowBox[{"updatedWeight", "[", 
+          RowBox[{"newWeight", ",", " ", "phiBuffered", ",", " ", 
+           RowBox[{"y", "[", "i", "]"}], ",", " ", "stepSize"}], "]"}]}], ";",
+         "\n", "\t\t\t", 
+        RowBox[{"Print", "[", 
+         RowBox[{
+         "\"\<After iteration \>\"", ",", " ", "i", ",", " ", 
+          "\"\<, new weight is \>\"", ",", " ", "newWeight"}], "]"}], ";"}], 
+       ",", "\n", "\t\t\t", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", " ", "1", ",", " ", "4"}], "}"}]}], "\n", "\t\t", 
+      "]"}], ";", "\n", "\t\t", "newWeight"}]}], "\n", "\t", "]"}]}]}], "Code",\
+
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQAWIQ3VQ459NO89eOOTfyf4HoaLVl/0F0IMsRhV1A+rxS
+mwqIFlvhpQWiO8o2moLoyHNKdiD6bjyrK4jOSBANAtG95ociQDSDjmweiF6m
+ql0Eps3mtYJolT/pXSBa59jruSDaSqltMYhm8+3bCqItLvzYCaJrtL12g+gH
+H2WugWgJ1n03QLST0tN7IHr3iv6fIFrurgrLbiAtrRcpD6LL5tqrguiArSyO
+IHpp5DMXEH12YWs4iBZwvJkGojcpm2eC6DQdxTwQPX0neyWIZjpxvQlET2q8
+1waiufhr94LoJx8fHwDRVX4XboDoH4VPb4NoAG02oWs=
+  "]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"assocDot", "[", 
+  RowBox[{
+   RowBox[{"phi", "[", "1", "]"}], ",", 
+   RowBox[{"phi", "[", "4", "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.653098192001803*^9, 3.653098197923253*^9}}],
+
+Cell[BoxData["1"], "Output",
+ CellChangeTimes->{3.653098198671207*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"assocMult", "[", 
+  RowBox[{
+   RowBox[{"phi", "[", "1", "]"}], ",", "4"}], "]"}]], "Input",
+ CellChangeTimes->{{3.653098210868078*^9, 3.653098222691442*^9}}],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"pretty\"\>", "\[Rule]", "4"}], ",", 
+   RowBox[{"\<\"good\"\>", "\[Rule]", "4"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.653098223952249*^9, 3.653098323957546*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"StochasticGradientDescent", "[", 
+  RowBox[{"w", ",", "phi", ",", "y", ",", "1"}], "]"}]], "Input",
+ CellChangeTimes->{{3.653098336934999*^9, 3.653098345752046*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"After iteration \"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\", new weight is \"\>", "\[InvisibleSpace]", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"pretty\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"good\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"bad\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"plot\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"not\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"scenery\"\>", "\[Rule]", "0"}]}], "\[RightAssociation]"}]}],
+  
+  SequenceForm["After iteration ", 1, ", new weight is ", 
+   Association[
+   "pretty" -> 1, "good" -> 1, "bad" -> 0, "plot" -> 0, "not" -> 0, "scenery" -> 
+    0]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.653098445997076*^9, {3.653098546272056*^9, 3.653098553691943*^9}, {
+   3.6530992132456284`*^9, 3.6530992467358227`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"After iteration \"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "\<\", new weight is \"\>", "\[InvisibleSpace]", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"pretty\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"good\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"bad\"\>", "\[Rule]", 
+      RowBox[{"-", "1"}]}], ",", 
+     RowBox[{"\<\"plot\"\>", "\[Rule]", 
+      RowBox[{"-", "1"}]}], ",", 
+     RowBox[{"\<\"not\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"scenery\"\>", "\[Rule]", "0"}]}], "\[RightAssociation]"}]}],
+  
+  SequenceForm["After iteration ", 2, ", new weight is ", 
+   Association[
+   "pretty" -> 1, "good" -> 1, "bad" -> -1, "plot" -> -1, "not" -> 0, 
+    "scenery" -> 0]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.653098445997076*^9, {3.653098546272056*^9, 3.653098553691943*^9}, {
+   3.6530992132456284`*^9, 3.653099246741995*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"After iteration \"\>", "\[InvisibleSpace]", "3", 
+   "\[InvisibleSpace]", "\<\", new weight is \"\>", "\[InvisibleSpace]", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"pretty\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"good\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"bad\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"plot\"\>", "\[Rule]", 
+      RowBox[{"-", "1"}]}], ",", 
+     RowBox[{"\<\"not\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"scenery\"\>", "\[Rule]", "0"}]}], "\[RightAssociation]"}]}],
+  
+  SequenceForm["After iteration ", 3, ", new weight is ", 
+   Association[
+   "pretty" -> 1, "good" -> 1, "bad" -> 0, "plot" -> -1, "not" -> 1, 
+    "scenery" -> 0]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.653098445997076*^9, {3.653098546272056*^9, 3.653098553691943*^9}, {
+   3.6530992132456284`*^9, 3.653099246748248*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"After iteration \"\>", "\[InvisibleSpace]", "4", 
+   "\[InvisibleSpace]", "\<\", new weight is \"\>", "\[InvisibleSpace]", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"pretty\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"good\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"bad\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"plot\"\>", "\[Rule]", 
+      RowBox[{"-", "1"}]}], ",", 
+     RowBox[{"\<\"not\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"scenery\"\>", "\[Rule]", "0"}]}], "\[RightAssociation]"}]}],
+  
+  SequenceForm["After iteration ", 4, ", new weight is ", 
+   Association[
+   "pretty" -> 1, "good" -> 1, "bad" -> 0, "plot" -> -1, "not" -> 1, 
+    "scenery" -> 0]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.653098445997076*^9, {3.653098546272056*^9, 3.653098553691943*^9}, {
+   3.6530992132456284`*^9, 3.6530992467548122`*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"pretty\"\>", "\[Rule]", "1"}], ",", 
+   RowBox[{"\<\"good\"\>", "\[Rule]", "1"}], ",", 
+   RowBox[{"\<\"bad\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"plot\"\>", "\[Rule]", 
+    RowBox[{"-", "1"}]}], ",", 
+   RowBox[{"\<\"not\"\>", "\[Rule]", "1"}], ",", 
+   RowBox[{"\<\"scenery\"\>", "\[Rule]", "0"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{{3.653098347113702*^9, 3.653098355768221*^9}, 
+   3.653098388392284*^9, 3.653098446010049*^9, {3.6530985463916273`*^9, 
+   3.653098553712262*^9}, {3.653099213323319*^9, 3.653099246761023*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["1 (b)", "Subsection",
+ CellChangeTimes->{{3.653098566021747*^9, 3.653098567257221*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"w", " ", "=", " ", 
+    RowBox[{"Association", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\"\<not\>\"", "\[Rule]", "0"}], ",", " ", 
+       RowBox[{"\"\<good\>\"", "\[Rule]", "0"}], ",", " ", 
+       RowBox[{"\"\<bad\>\"", "\[Rule]", "0"}]}], "}"}], "]"}]}], ";"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"phi", "[", "1", "]"}], " ", "=", " ", 
+   RowBox[{"Association", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<not\>\"", "\[Rule]", "1"}], ",", " ", 
+      RowBox[{"\"\<good\>\"", "\[Rule]", "1"}]}], "}"}], "]"}]}], ";", " ", 
+  RowBox[{
+   RowBox[{"y", "[", "1", "]"}], " ", "=", " ", 
+   RowBox[{"-", "1"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"phi", "[", "2", "]"}], " ", "=", " ", 
+   RowBox[{"Association", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<not\>\"", "\[Rule]", "1"}], ",", " ", 
+      RowBox[{"\"\<bad\>\"", "\[Rule]", "1"}]}], "}"}], "]"}]}], ";", "  ", 
+  RowBox[{
+   RowBox[{"y", "[", "2", "]"}], " ", "=", " ", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"phi", "[", "3", "]"}], " ", "=", " ", 
+   RowBox[{"Association", "[", 
+    RowBox[{"{", 
+     RowBox[{"\"\<bad\>\"", "\[Rule]", "1"}], "}"}], "]"}]}], ";", 
+  "           ", 
+  RowBox[{
+   RowBox[{"y", "[", "3", "]"}], " ", "=", " ", 
+   RowBox[{"-", "1"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"phi", "[", "4", "]"}], " ", "=", " ", 
+   RowBox[{"Association", "[", 
+    RowBox[{"{", 
+     RowBox[{"\"\<good\>\"", "\[Rule]", "1"}], "}"}], "]"}]}], ";", 
+  "          ", 
+  RowBox[{
+   RowBox[{"y", "[", "4", "]"}], " ", "=", " ", "1"}], ";"}]}], "Code",
+ CellChangeTimes->{{3.653098573233419*^9, 3.653098811893118*^9}}],
+
+Cell["\<\
+Intuitive proof that no weight vector can be correct 100% of the time with \
+this feature set:
+\tThe weight for \[OpenCurlyDoubleQuote]bad\[CloseCurlyDoubleQuote] must be \
+-1 to make test case 3 work
+\t\t{not_weight, good_weight, bad_weight} . {0, 0, 1} == -1
+\t\t
+\t\tbad_weight == -1
+\tThe weight for \[OpenCurlyDoubleQuote]good\[CloseCurlyDoubleQuote] must be \
+1 to make test case 4 work
+\t\t{not_weight, good_weight, bad_weight} . {0, 1, 0} == 1
+\t\t
+\t\tgood_weight == 1
+\tSo we know cases 3 and 4 work - let\[CloseCurlyQuote]s focus on 1 and 2.
+\tWe want these two equations to be true:
+\t\tw . phi[1] == y[1]
+\t\tw . phi[2] == y[2]
+\tSimplified with known information, these equations are:
+\t\t{not_weight, 1, -1} . {1, 1, 0} == -1
+\t\t{not_weight, 1, -1} . {1, 0, 1} == 1
+\t\t
+\t\tnot_weight + 1 == -1
+\t\tnot_weight - 1 == 1
+\t\t
+\t\tnot_weight == -2
+\t\tnot_weight == 2
+\t\t
+\t\tThese two equations are incompatible, therefore there is no weight vector \
+that can satisfy this set of features.\
+\>", "Text",
+ CellChangeTimes->{{3.653099053893303*^9, 3.653099116460064*^9}, {
+  3.653099464932469*^9, 3.653099509145961*^9}, {3.653100333405261*^9, 
+  3.6531004124478207`*^9}, {3.653100444584015*^9, 3.6531005783091507`*^9}, {
+  3.653100644642934*^9, 3.653101010602044*^9}}],
+
+Cell["\<\
+A simple augmentation that could help this feature vector would be an extra \
+feature that is simply the negative of the number of \
+\[OpenCurlyDoubleQuote]not\[CloseCurlyDoubleQuote]\[CloseCurlyQuote]s in the \
+sentence. The solution w vector (and new phi values) are:\
+\>", "Text",
+ CellChangeTimes->{{3.6530988666284*^9, 3.653098874865116*^9}, {
+  3.653098909194141*^9, 3.6530989401433992`*^9}, {3.653101039722746*^9, 
+  3.653101126118491*^9}, {3.65310115779967*^9, 3.653101202172772*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"w", " ", "=", " ", 
+    RowBox[{"Association", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\"\<not\>\"", "\[Rule]", 
+        RowBox[{"-", "2"}]}], ",", " ", 
+       RowBox[{"\"\<good\>\"", "\[Rule]", "1"}], ",", " ", 
+       RowBox[{"\"\<bad\>\"", "\[Rule]", 
+        RowBox[{"-", "1"}]}], ",", " ", 
+       RowBox[{"\"\<#not * #bad\>\"", "\[Rule]", "4"}]}], "}"}], "]"}]}], 
+   ";"}], "\n", "\n", "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"phi", "[", "1", "]"}], " ", "=", " ", 
+    RowBox[{"Association", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\"\<not\>\"", "\[Rule]", "1"}], ",", " ", 
+       RowBox[{"\"\<good\>\"", "\[Rule]", "1"}], ",", " ", 
+       RowBox[{"\"\<bad\>\"", "\[Rule]", "0"}], ",", " ", 
+       RowBox[{"\"\<#not * #bad\>\"", "\[Rule]", "0"}]}], "}"}], "]"}]}], ";",
+    "           ", 
+   RowBox[{
+    RowBox[{"y", "[", "1", "]"}], " ", "=", " ", 
+    RowBox[{"-", "1"}]}], ";"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Predicted", " ", "score", " ", "is"}], " ", "-", "1"}], ",", 
+    " ", 
+    RowBox[{
+     RowBox[{"actual", " ", "score", " ", "is"}], " ", "-", "1"}]}], " ", 
+   "*)"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"phi", "[", "2", "]"}], " ", "=", " ", 
+    RowBox[{"Association", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\"\<not\>\"", "\[Rule]", "1"}], ",", " ", 
+       RowBox[{"\"\<good\>\"", "\[Rule]", "0"}], ",", " ", 
+       RowBox[{"\"\<bad\>\"", "\[Rule]", "1"}], ",", " ", 
+       RowBox[{"\"\<#not * #bad\>\"", "\[Rule]", "1"}]}], "}"}], "]"}]}], ";",
+    "           ", 
+   RowBox[{
+    RowBox[{"y", "[", "2", "]"}], " ", "=", " ", "1"}], ";"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Predicted", " ", "score", " ", "is", " ", "1"}], ",", " ", 
+    RowBox[{"actual", " ", "score", " ", "is", " ", "1"}]}], " ", "*)"}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"phi", "[", "3", "]"}], " ", "=", " ", 
+    RowBox[{"Association", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\"\<not\>\"", "\[Rule]", "0"}], ",", " ", 
+       RowBox[{"\"\<good\>\"", "\[Rule]", "0"}], ",", " ", 
+       RowBox[{"\"\<bad\>\"", "\[Rule]", "1"}], ",", " ", 
+       RowBox[{"\"\<#not * #bad\>\"", "\[Rule]", "0"}]}], "}"}], "]"}]}], ";",
+    "           ", 
+   RowBox[{
+    RowBox[{"y", "[", "3", "]"}], " ", "=", " ", 
+    RowBox[{"-", "1"}]}], ";"}], "\n", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Predicted", " ", "score", " ", "is"}], " ", "-", "1"}], ",", 
+    " ", 
+    RowBox[{
+     RowBox[{"actual", " ", "score", " ", "is"}], " ", "-", "1"}]}], " ", 
+   "*)"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"phi", "[", "4", "]"}], " ", "=", " ", 
+   RowBox[{"Association", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<not\>\"", "\[Rule]", "0"}], ",", " ", 
+      RowBox[{"\"\<good\>\"", "\[Rule]", "1"}], ",", " ", 
+      RowBox[{"\"\<bad\>\"", "\[Rule]", "0"}], ",", " ", 
+      RowBox[{"\"\<#not * #bad\>\"", "\[Rule]", "0"}]}], "}"}], "]"}]}], ";", 
+  "           ", 
+  RowBox[{
+   RowBox[{"y", "[", "4", "]"}], " ", "=", " ", "1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Predicted", " ", "score", " ", "is", " ", "1"}], ",", " ", 
+    RowBox[{"actual", " ", "score", " ", "is", " ", "1"}]}], " ", 
+   "*)"}]}]}], "Code",
+ CellChangeTimes->{{3.653101078336277*^9, 3.653101086388857*^9}, {
+  3.653101129991515*^9, 3.653101151857983*^9}, {3.653101204711076*^9, 
+  3.653101221806499*^9}, {3.653101278164076*^9, 3.653101278436223*^9}, {
+  3.6531014459598837`*^9, 3.653101727049245*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{893, 970},
+WindowMargins->{{25, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (December 4, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 93, 1, 65, "Chapter"],
+Cell[CellGroupData[{
+Cell[698, 27, 170, 2, 64, "Section"],
+Cell[CellGroupData[{
+Cell[893, 33, 95, 1, 44, "Subsection"],
+Cell[991, 36, 2456, 67, 210, "Code"],
+Cell[3450, 105, 7408, 186, 1311, "Code"],
+Cell[CellGroupData[{
+Cell[10883, 295, 212, 5, 28, "Input"],
+Cell[11098, 302, 70, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11205, 308, 182, 4, 28, "Input"],
+Cell[11390, 314, 259, 6, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11686, 325, 189, 3, 28, "Input"],
+Cell[CellGroupData[{
+Cell[11900, 332, 907, 20, 22, "Print"],
+Cell[12810, 354, 951, 22, 22, "Print"],
+Cell[13764, 378, 928, 21, 22, "Print"],
+Cell[14695, 401, 930, 21, 22, "Print"]
+}, Open  ]],
+Cell[15640, 425, 632, 13, 28, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16321, 444, 93, 1, 44, "Subsection"],
+Cell[16417, 447, 1729, 51, 130, "Code"],
+Cell[18149, 500, 1292, 33, 467, "Text"],
+Cell[19444, 535, 502, 8, 49, "Text"],
+Cell[19949, 545, 3694, 101, 272, "Code"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

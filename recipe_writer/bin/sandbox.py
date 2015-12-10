@@ -18,6 +18,8 @@ from contextlib import closing
 import thread
 import threading
 import time
+from lib import util
+from lib import constants as c
 
 def printFunctionName():
     print ""
@@ -347,8 +349,71 @@ def safeConnect(fxn, args, tries=20):
             pass
     return returnVal
 
-[]
+def hasNumbers(inputString):
+    return any(char.isdigit() for char in inputString)
 
+def buildNutrientDict(givenIngredient):
+ 
+    #Flags
+    ignoreNumericalLipids = True
+
+    returnDict = {}
+    measureDict = {}
+    loadedMeasures = False
+    nutrientDict = {}
+    nutrientDict['proximates'] = {}
+    nutrientDict['minerals'] = {}
+    nutrientDict['vitamins'] = {}
+    nutrientDict['lipids'] = {}
+    nutrientDict['amino acids'] = {}
+    nutrientDict['other'] = {}
+
+    #Loop through each nutrient in the given ingredient
+    for nutrient in givenIngredient['report']['food']['nutrients']:
+        nutrientGroup = nutrient['group'].lower()
+        nutrientName =  nutrient['name'].lower()
+        nutrientVal = nutrient['value']
+        nutrientUnit = nutrient['unit'].encode('ascii', errors='ignore')
+
+        #Saves the nutrient value and unit per 100g
+        if ignoreNumericalLipids and nutrientGroup == 'lipids' \
+            and hasNumbers(nutrientName):
+            continue                
+
+        #Saves the info of the current nutrient to the dictionary
+        nutrientDict[nutrientGroup][nutrientName] = tuple((nutrientVal, nutrientUnit))
+
+        #Load the measurement conversions for each ingredient exactly once.
+        if not loadedMeasures:
+            for measureKey in nutrient['measures']:
+                equivUnit = measureKey['label'].encode('ascii', errors='ignore')
+                equivValue = measureKey['eqv']
+                measureDict[equivUnit] = equivValue
+            loadedMeasures = True
+    # print "\n\nMeasures: \n"
+    # print measureDict
+    # print "\n\nNutrients: \n"
+    # for group in nutrientDict:
+    #     print "\nGroup: " + group
+    #     for nutrient in nutrientDict[group]:
+    #        print "Nutrient " + nutrient + "  Value: " +  str(nutrientDict[group][nutrient])
+    returnDict[curIngredient] = {}
+    returnDict[curIngredient]['measure'] = measureDict
+    returnDict[curIngredient]['nutrients'] = nutrientDict
+    return returnDict
+    #util.dumpJSONDict(os.path.join(c.PATH_TO_RESOURCES, "testNutrients", "testcheesedump.json"), returnDict)
+    #print returnDict;
+    
+
+    # mergeList = []
+    # if getProximates: mergeList.append(nutrientDict['Proximates'])
+    # if getMinerals: mergeList.append(nutrientDict['Minerals'])
+    # if getVitamins: mergeList.append(nutrientDict['Vitamins'])
+    # if getLipids: mergeList.append(nutrientDict['Lipids'])
+    # if getAminoAcids: mergeList.append(nutrientDict['Amino Acids'])
+    # if getOther: mergeList.append(nutrientDict['Other'])
+    # returnDict['nutrients'] = util.naivelyMergeDicts([mergeList])
+[]
 
 
 
@@ -370,7 +435,8 @@ def main(argv):
     # test_exception4()
 
     # test_database1()
-    test_threading1()
+    # test_threading1()
+    saveNutrientInfo()
 
 if __name__ == "__main__":
     main(sys.argv)

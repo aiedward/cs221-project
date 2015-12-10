@@ -5,7 +5,7 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 
-from lib import util, csp, kmeans, search
+from lib import util, kmeans, search #, csp
 from lib import constants as c
 # c.init(os.path.dirname(os.path.dirname(__file__)))
 
@@ -66,7 +66,7 @@ def processArgs(argv):
 def runModule(argd):
 	results = None
 	moduleName = argd["module"]
-	moduleArgs = tuple([argd["verbose"]] + argd["args"]])
+	moduleArgs = tuple([[argd["verbose"]] + argd["args"]])
 	if moduleName == "csp":
 		results = csp.run(*moduleArgs)
 	elif moduleName == "kmeans":

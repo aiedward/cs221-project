@@ -82,7 +82,7 @@ def cluster(jsonFilePath, K):
             final reconstruction loss)
     '''
 	# dataMatrix = createDatapoints(jsonFilePath)
-	est = testDatapoints()
+	dataMatrix = testDatapoints()
 	est = KMeans(n_clusters = K)
 	est.fit_predict(dataMatrix)
 
@@ -92,5 +92,13 @@ def cluster(jsonFilePath, K):
 	print 30 * '-'
 	print est.inertia_
 
+def run(verbose):
+
+	print "hello cluster_kmeans.py"
+	print 30 * '*'
+
+	# jsonFilePath = os.path.join(c.PATH_TO_ROOT, "res", "allRecipes.json")
+
+	cluster('test', 2)
 
 
