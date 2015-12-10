@@ -44,10 +44,10 @@ def processArgs(argv):
 	realArgs = argv[1:]
 
 	for arg in realArgs:
-		if arg.startswith("--module="):
+		if "module=" in arg:
 			argd["module"] = arg.split("=")[-1]
-		elif arg.startswith("--verbose="):
-			argd["verbose"] = arg.replace("--verbose=", "")
+		elif "verbose=" in arg:
+			argd["verbose"] = arg.split("=")[-1]
 		else:
 			argd["args"].append(arg)
 
