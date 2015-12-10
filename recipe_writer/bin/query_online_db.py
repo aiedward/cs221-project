@@ -41,8 +41,8 @@ def main(argv):
 	#################################################
 	# Create new threads
 	threads = []
-	numThreads = 4
-	numRecipes = 100
+	numThreads = 2
+	numRecipes = 5000
 	for i in xrange(numThreads):
 		threadName = "Thread-" + str(i)
 		#message = "I, the " + str(i) + "th thread, am super duper awesome."
