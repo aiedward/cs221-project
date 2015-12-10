@@ -32,6 +32,12 @@ def main(argv):
 # Possible options include:
 #    --module=
 #    --verbose=
+#
+# By default, the module is set to None, verbose is set to True, and
+# args is set to an empty list. Module being None actually means all
+# modules' run() functions will be called. Verbose being True means
+# status updates will be printed. Verbose is included as the first
+# arguments in the args list to any module's run() function.
 ##
 def processArgs(argv):
 	argd = {"module": None, "verbose": True, "args": []}
