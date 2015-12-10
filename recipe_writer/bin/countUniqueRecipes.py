@@ -3,9 +3,7 @@ import os, json
 def main():
 	pathToRoot = os.path.dirname(os.path.dirname(__file__))
 	pathToRecipes = os.path.join(pathToRoot, "res", "jsonrecipes")
-	#print "path: " + pathToRecipes
 	allFiles = sorted(os.listdir(pathToRecipes))
-	#print allFiles
 	allRecipes = []
 	for filename in allFiles:
 		if filename[0] == ".":
@@ -14,7 +12,6 @@ def main():
 		fullJsonString = None 
 		with open(jsonFileName, 'r') as f: 
 			fullJsonString = f.read()
-		#print filename
 		d = json.JSONDecoder()
 		
 		myDict = d.decode(fullJsonString)

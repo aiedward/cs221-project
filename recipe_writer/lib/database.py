@@ -9,7 +9,7 @@ This file is responsible for constructing the Recipe and the Nutritional Databas
 # -------------------- NOTES --------------------
 
 import collections, requests, json, time, pdb, sys, time
-import lib.constants as c
+from lib import constants as c
 
 # Yummly API constants
 YUM_APP_ID = "4d1d7424"
