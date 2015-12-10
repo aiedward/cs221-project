@@ -11,8 +11,8 @@ import json, unicodedata
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction import DictVectorizer
 # import matplotlib.pyplot as plt
-import util
-import constants as c
+from lib import util
+from lib import constants as c
 
 # NOTE
 # K-Means
