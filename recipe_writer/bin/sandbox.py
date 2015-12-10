@@ -426,8 +426,11 @@ def testAliasExtraction():
     aliasData = {}
 
     # Read in and parse recipe data structures (dictionaries) from a json file.
-    extractRecipesFromJSON(allRecipes)
-    print allRecipes
+    aliasList = util.listAllAliases()
+    for alias in aliasList:
+        print alias.encode('ascii', errors='ignore')
+
+    print str(len(aliasList)) + " ingredients found!"
 
 
 ##
