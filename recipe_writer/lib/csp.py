@@ -30,11 +30,18 @@ def run(verbose):
 	# These variables will likely be fed through run()'s arguments later
 	traits = util.loadJSONDict(constants.PATH_TO_RESOURCES, "csp_defaultTraits.json")
 
-	traits["alias_choices"] = solveAliasCSP(verbose, traits)
+	# Solve the csp of choosing aliases (identities) for each ingredient
+	solveAliasCSP(verbose, traits)
 
-	ingredientAliasAmountPairs = solveAmountCSP(verbose, traits)
+	# With each ingredient now assigned an alias, solve the csp of choosing
+	# amounts (mass in grams) for each ingredient
+	solveAmountCSP(verbose, traits)
 
-	return "csp.py ran successfully"
+	# Print status update
+	if verbose:
+		print "csp.py ran successfully"
+
+	return {k: v for k, v in traits.items() if k in ["alias_choices", "amount choices"]}
 
 ##
 # Function: solveAliasCSP
@@ -44,49 +51,45 @@ def run(verbose):
 ##
 def solveAliasCSP(verbose, traits):
 	csp = CSP()
-	addVariables(csp, traits, "name")
-	addFactors(csp, traits, "name")
+	addVariables(csp, traits, "alias")
+	addFactors(csp, traits, "alias")
+
+
+	traits["alias_choices"] = 
 
 ##
-# Function: solveAliasCSP
+# Function: solveAmountCSP
 # ---------------------------
 # Solve the problem of picking amounts for the ingredients given pre-picked
 # aliases and a set of constraints.
 ##
-def solveAmountCSP(verbose, traits, ingredientAliases):
-	csp = CSP()
-	addAmountVariables(csp, traits, ingredientAliases)
-
-
+def solveAmountCSP(verbose, traits):
+	csp = util.CSP()
+	addVariables(csp, traits, "amount")
+	addFactors(csp, traits, "amount")
 
 ##
-# Function: addNameVariables
+# Function: addVariables
 # ---------------------------
-# Add a variable for the alias (name) of each ingredient.
+# 
 ##
-def addNameVariables(csp, traits):
+def addVariables(csp, traits, whichCSP):
 	num_ingredients = traits["num_ingredients"]
 
-	nameVariables = ['name_%d'%i for i in xrange(0, num_ingredients)]
-	nameDomain = util.listAllAliases()
-	for var in nameVariables:
-		csp.add_variable(var, nameDomain)
+	if whichCSP == "alias":
+		nameVariables = ['alias_%d'%i for i in xrange(0, num_ingredients)]
+		nameDomain = util.listAllAliases()
+		for var in nameVariables:
+			csp.add_variable(var, nameDomain)
 
-##
-# Function: addAmountVariables
-# --------------------------
-# Add a variable for the mass of each ingredient.
-##
-def addAmountVariables(csp, traits):
-	num_ingredients = traits["num_ingredients"]
+	elif whichCSP == "amount":
+		amountVariables = ['amount_%d'%i for i in xrange(0, num_ingredients)]
 
-	amountVariables = ['amount_%d'%i for i in xrange(0, num_ingredients)]
-
-	# Every number from 0 to max_ingredient_mass in intervals of 5, not
-	# including 0, but yes including max_ingredient_mass.
-	amountDomain = getAmountDomain(traits)
-	for var in amountVariables:
-		csp.add_variable(var, amountDomain)
+		# Every number from 0 to max_ingredient_mass in intervals of 5, not
+		# including 0, but yes including max_ingredient_mass.
+		amountDomain = getAmountDomain(traits)
+		for var in amountVariables:
+			csp.add_variable(var, amountDomain)
 
 ##
 # Function: getAmountDomain
@@ -97,23 +100,17 @@ def getAmountDomain(traits):
 	range(*tuple(traits["amount_range"].values())) + [traits["amount_range"]["max"]]
 
 ##
-# Function: addAliasFactors
+# Function: addFactors
 # --------------------------
 #
 ##
-def addAliasFactors(csp, traits):
-	addSameNameFactors(csp, traits)
+def addFactors(csp, traits, whichCSP):
+	if whichCSP == "alias":
+		addSameNameFactors(csp, traits)
 
-##
-# Function: addAmountFactors
-# --------------------------
-# Factors:
-#	- No two variable names can be the same.
-#	- The total
-##
-def addAmountFactors(csp, traits):
-	if util.hasDeepKey(traits, ["max", "total", "kcal"]):
-		addMaxTotalCaloriesFactor(csp, traits)
+	if whichCSP == "amount":
+		if util.hasDeepKey(traits, ["max", "total", "kcal"]):
+			addMaxTotalCaloriesFactor(csp, traits)
 	
 
 ##
@@ -129,141 +126,28 @@ def addSameNameFactors(csp, traits):
         for j in xrange(i+1, n):
 			csp.add_binary_factor(nameVars[i], nameVars[j], lambda x, y: x != y)
 
+##
+# Function: addMaxTotalCaloriesFactor
+# -----------------------------------
+#
+##
 def addMaxTotalCaloriesFactor(csp, traits):
 	def conversionFxn(nameAssignment, amountAssignment):
 		return nutrition.unitConvert(nameAssignment, amountAssignment, "grams", "kcal")
 	sumVal = traits["max"]["total"]["kcal"]
 	get_ingredient_sum_variable(csp, traits, "kcal", sumVal, "max", conversionFxn)
 
+##
+# Function: addMaxTotalCaloriesFactor
+# -----------------------------------
+##
 def getNameVars(csp):
-	return sorted([var for var in csp.variables if var.startswith("name")])
+	return sorted([var for var in csp.variables if var.startswith("alias")])
 
 def getAmountVars(csp):
 	return sorted([var for var in csp.variables if var.startswith("amount")])
 
-# General code for representing a weighted CSP (Constraint Satisfaction Problem).
-# All variables are being referenced by their index instead of their original
-# names.
-class CSP:
-    def __init__(self):
-        # Total number of variables in the CSP.
-        self.numVars = 0
 
-        # The list of variable names in the same order as they are added. A
-        # variable name can be any hashable objects, for example: int, str,
-        # or any tuple with hashtable objects.
-        self.variables = []
-
-        # Each key K in this dictionary is a variable name.
-        # values[K] is the list of domain values that variable K can take on.
-        self.values = {}
-
-        # Each entry is a unary factor table for the corresponding variable.
-        # The factor table corresponds to the weight distribution of a variable
-        # for all added unary factor functions. If there's no unary function for 
-        # a variable K, there will be no entry for K in unaryFactors.
-        # E.g. if B \in ['a', 'b'] is a variable, and we added two
-        # unary factor functions f1, f2 for B,
-        # then unaryFactors[B]['a'] == f1('a') * f2('a')
-        self.unaryFactors = {}
-
-        # Each entry is a dictionary keyed by the name of the other variable
-        # involved. The value is a binary factor table, where each table
-        # stores the factor value for all possible combinations of
-        # the domains of the two variables for all added binary factor
-        # functions. The table is represented as a dictionary of dictionary.
-        #
-        # As an example, if we only have two variables
-        # A \in ['b', 'c'],  B \in ['a', 'b']
-        # and we've added two binary functions f1(A,B) and f2(A,B) to the CSP,
-        # then binaryFactors[A][B]['b']['a'] == f1('b','a') * f2('b','a').
-        # binaryFactors[A][A] should return a key error since a variable
-        # shouldn't have a binary factor table with itself.
-
-        self.binaryFactors = {}
-
-    def add_variable(self, var, domain):
-        """
-        Add a new variable to the CSP.
-        """
-        if var in self.variables:
-            raise Exception("Variable name already exists: %s" % str(var))
-
-        self.numVars += 1
-        self.variables.append(var)
-        self.values[var] = domain
-        self.unaryFactors[var] = None
-        self.binaryFactors[var] = dict()
-
-
-    def get_neighbor_vars(self, var):
-        """
-        Returns a list of variables which are neighbors of |var|.
-        """
-        return self.binaryFactors[var].keys()
-
-    def add_unary_factor(self, var, factorFunc):
-        """
-        Add a unary factor function for a variable. Its factor
-        value across the domain will be *merged* with any previously added
-        unary factor functions through elementwise multiplication.
-
-        How to get unary factor value given a variable |var| and
-        value |val|?
-        => csp.unaryFactors[var][val]
-        """
-        factor = {val:float(factorFunc(val)) for val in self.values[var]}
-        if self.unaryFactors[var] is not None:
-            assert len(self.unaryFactors[var]) == len(factor)
-            self.unaryFactors[var] = {val:self.unaryFactors[var][val] * \
-                factor[val] for val in factor}
-        else:
-            self.unaryFactors[var] = factor
-
-    def add_binary_factor(self, var1, var2, factor_func):
-        """
-        Takes two variable names and a binary factor function
-        |factorFunc|, add to binaryFactors. If the two variables already
-        had binaryFactors added earlier, they will be *merged* through element
-        wise multiplication.
-
-        How to get binary factor value given a variable |var1| with value |val1| 
-        and variable |var2| with value |val2|?
-        => csp.binaryFactors[var1][var2][val1][val2]
-        """
-        # never shall a binary factor be added over a single variable
-        try:
-            assert var1 != var2
-        except:
-            print '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-            print '!! Tip:                                                                       !!'
-            print '!! You are adding a binary factor over a same variable...                  !!'
-            print '!! Please check your code and avoid doing this.                               !!'
-            print '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-            raise
-
-        self.update_binary_factor_table(var1, var2,
-            {val1: {val2: float(factor_func(val1, val2)) \
-                for val2 in self.values[var2]} for val1 in self.values[var1]})
-        self.update_binary_factor_table(var2, var1, \
-            {val2: {val1: float(factor_func(val1, val2)) \
-                for val1 in self.values[var1]} for val2 in self.values[var2]})
-
-    def update_binary_factor_table(self, var1, var2, table):
-        """
-        Private method you can skip for 0c, might be useful for 1c though.
-        Update the binary factor table for binaryFactors[var1][var2].
-        If it exists, element-wise multiplications will be performed to merge
-        them together.
-        """
-        if var2 not in self.binaryFactors[var1]:
-            self.binaryFactors[var1][var2] = table
-        else:
-            currentTable = self.binaryFactors[var1][var2]
-            for i in table:
-                for j in table[i]:
-                    assert i in currentTable and j in currentTable[i]
-                    currentTable[i][j] *= table[i][j]
 
 ############################################################
 # CSP examples.
@@ -405,4 +289,7 @@ def get_ingredient_sum_variable(csp, traits, name, sumVal, minOrMax, conversionF
         csp.add_unary_factor(finalSumVar, lambda bn: bn == 0)
 
     return sumVar
+
+
+
 
