@@ -52,12 +52,15 @@ def processArgs(argv):
 # -------------------
 # Calls the run(args) function for the specified module. The module's run(..)
 # function is like a main() function but it receives somewhat cleaned-up
-# command-line arguments and is expected to return a value.
+# command-line arguments and is expected to return a value. The first
+# argument to a run() function will always be verbose, which will be True
+# or False to indicate whether progress updates should be printed as the
+# module chugs along.
 ##
 def runModule(argd):
 	results = None
 	moduleName = argd["module"]
-	moduleArgs = tuple(argd["args"])
+	moduleArgs = tuple([argd["verbose"]] + argd["args"]])
 	if moduleName == "csp":
 		results = csp.run(*moduleArgs)
 	elif moduleName == "kmeans":
