@@ -228,9 +228,10 @@ def meatStringQ(alias):
 ##
 def aliasBuddyScore(alias1, alias2):
     aliasData = getAliasData()
-    freq1 = aliasData[alias1]["count"]
-    freq2 = aliasData[alias2]["count"]
-    freqTogether = aliasData[alias1]["aliasBuddies"].get(alias2, float(0))
+    laplaceSmooth = 0.0
+    freq1 = aliasData[alias1]["count"] + laplaceSmooth
+    freq2 = aliasData[alias2]["count"] + laplaceSmooth
+    freqTogether = aliasData[alias1]["aliasBuddies"].get(alias2, float(0)) + laplaceSmooth
     buddyScore1 = (float(freqTogether) / float(freq1)) + (float(freqTogether) / float(freq2))
     buddyScore1 /= float(2)
     buddyScore2 = 2 * float(freqTogether) / (float(freq1) + float(freq2))

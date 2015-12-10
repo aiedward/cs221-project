@@ -392,7 +392,10 @@ class AliasCSPSolver:
         curVarsAssigned = list(self.curVarsAssigned)
         oldVal = self.curAssignment[var]
 
-        oldScore = 0.0
+        oldWeight = 1.0
+        newWeight = 1.0
+
+        oldScore = None
 
         # Add in unary factors
         for factorFunc in self.csp.unaryFactors[var]:
@@ -401,10 +404,8 @@ class AliasCSPSolver:
             else:
                 oldScore = float(factorFunc(oldVal))
             newScore = float(factorFunc(newVal))
-            if newScore == 0:
-                return float(-1)
-            else:
-                weight += newScore - oldScore
+            oldWeight *= oldScore
+            newWeight *= newScore
 
 
         # Add in binary factors
@@ -418,19 +419,17 @@ class AliasCSPSolver:
                         oldScore = 0.0
                     else:
                         oldScore = factorFunc(oldVal, neighborVal)
+
+                    # The evaluation of aliasBuddyScore should never be 0,
+                    # since laplace smoothing is implemented
                     newScore = factorFunc(newVal, neighborVal)
                     
-                    # If you delete the second part of this predicate, recipes will
-                    # generally be much more cohesive, but they will also only contain
-                    # ingredients that have been seen in at least one recipe with every
-                    # other ingredient in the recipe - not much ingenuity.
-                    if newScore == 0 and factorFunc.__name__ != "aliasBuddyScore":
-                        return float(-1)
-                    else:
-                        weight += newScore - oldScore
+                    oldWeight *= oldScore
+                    newWeight *= newScore
 
-
-        return weight
+        # print "newWeight: ", newWeight
+        # print "oldWeight: ", oldWeight
+        return newWeight - oldWeight
         
 
     def calculateCurrentWeight(self):
