@@ -23,16 +23,16 @@ aliasData = None
 # of 40 times before breaking and returning none, attempting to circumvent
 # connection errors and server overload by integrating a sleep call.
 def safeConnect(fxn, args, tries=40):
-	returnVal = None
-	for i in range(tries):
-		try:
-			returnVal = fxn(*args)
-			break
-		except requests.exceptions.ConnectionError as e:
-			if i % 10 == 0:
-				time.sleep(2)
-			pass
-	return returnVal
+    returnVal = None
+    for i in range(tries):
+        try:
+            returnVal = fxn(*args)
+            break
+        except requests.exceptions.ConnectionError as e:
+            if i % 10 == 0:
+                time.sleep(2)
+            pass
+    return returnVal
 
 ##
 # Function: loadJSONDict
@@ -40,19 +40,12 @@ def safeConnect(fxn, args, tries=40):
 # Loads a JSON file into a python dictionary and returns that dictionary.
 ##
 def loadJSONDict(jsonFilePath):
-<<<<<<< HEAD
-	global aliasData
-	print "Loading json"
-	# Read in the JSON file containing recipe data
-	fullJsonString = None
-	with open(jsonFilePath, 'r') as f:
-=======
+
     global aliasData
     # Read in the JSON file containing recipe data
     fullJsonString = None
     with open(jsonFilePath, 'r') as f:
->>>>>>> bf3ba50842624e3baf93f63290b91c86c744529c
-		fullJsonString = f.read()
+        fullJsonString = f.read()
 
     # This is dead code I was trying to use to remove all escaped unicode
     # characters (e.g. \u00bd) or convert them to ascii
@@ -63,10 +56,10 @@ def loadJSONDict(jsonFilePath):
     d = json.JSONDecoder()
     returnDict = d.decode(fullJsonString)
 
-	if "aliasData_" in jsonFilePath:
-		aliasData = copy.deepcopy(returnDict)
+    if "aliasData_" in jsonFilePath:
+        aliasData = copy.deepcopy(returnDict)
 
-	return returnDict
+    return returnDict
 
     return returnDict
 
@@ -77,7 +70,7 @@ def loadJSONDict(jsonFilePath):
 # a list of those dictionaries.
 ##
 def loadJSONDicts(jsonFilePaths):
-	return [loadJSONDict(f) for f in jsonFilePaths]
+    return [loadJSONDict(f) for f in jsonFilePaths]
 
 ##
 # Function: dumpDictToJSONFile
@@ -85,9 +78,9 @@ def loadJSONDicts(jsonFilePaths):
 # Writes a dictionary to a JSON file with the full path 'fullFilePath'
 ##
 def dumpJSONDict(fullFilePath, dict2dump):
-	jsonDatabase = json.dumps(dict2dump, sort_keys=True, indent=4)
-	with open(fullFilePath, "w") as f:
-		f.write(jsonDatabase)
+    jsonDatabase = json.dumps(dict2dump, sort_keys=True, indent=4)
+    with open(fullFilePath, "w") as f:
+        f.write(jsonDatabase)
 
 ##
 # Function: naivelyMergeDicts
@@ -96,11 +89,11 @@ def dumpJSONDict(fullFilePath, dict2dump):
 # value it keeps for keys that have multiple values.
 ##
 def naivelyMergeDicts(listOfDicts):
-	masterList = []
-	for d in listOfDicts:
-		masterList += d.items()
-	return dict(masterList)
-	# return dict(deleteDuplicatesBy(masterList, lambda x, y: x[0] == y[0]))
+    masterList = []
+    for d in listOfDicts:
+        masterList += d.items()
+    return dict(masterList)
+    # return dict(deleteDuplicatesBy(masterList, lambda x, y: x[0] == y[0]))
 
 ##
 # Function: listFilesWtihSuffix
@@ -111,8 +104,8 @@ def naivelyMergeDicts(listOfDicts):
 # Example suffixStr's are ".json", ".txt", ".py"
 ##
 def listFilesWithSuffix(directoryPath, suffixStr):
-	allFiles = os.listdir(directoryPath)
-	return [os.path.join(directoryPath, f) for f in allFiles if f.endswith(suffixStr)]
+    allFiles = os.listdir(directoryPath)
+    return [os.path.join(directoryPath, f) for f in allFiles if f.endswith(suffixStr)]
 
 ##
 # Function: deleteDuplicates
@@ -121,11 +114,11 @@ def listFilesWithSuffix(directoryPath, suffixStr):
 # with only the first appearance of all duplicate elements saved.
 ##
 def deleteDuplicates(li):
-	new_li = []
-	for elem in li:
-		if elem not in new_li:
-			new_li.append(elem)
-	return new_li
+    new_li = []
+    for elem in li:
+        if elem not in new_li:
+            new_li.append(elem)
+    return new_li
 
 ##
 # Function: deleteDuplicatesBy
@@ -136,16 +129,16 @@ def deleteDuplicates(li):
 # Duplicates are decided by the lambda function given.
 ##
 def deleteDuplicatesBy(li, duplicatesQ):
-	new_li = []
-	for e1 in li:
-		shouldAppend = True
-		for e2 in new_li:
-			if duplicatesQ(e1, e2):
-				shouldAppend = False
-				break
-		if shouldAppend:
-			new_li.append(e1)
-	return new_li
+    new_li = []
+    for e1 in li:
+        shouldAppend = True
+        for e2 in new_li:
+            if duplicatesQ(e1, e2):
+                shouldAppend = False
+                break
+        if shouldAppend:
+            new_li.append(e1)
+    return new_li
 
 ##
 # Function: loadLatestAliasData
@@ -169,7 +162,7 @@ def loadLatestAliasData():
 def getAliasData():
     global aliasData
     if aliasData == None:
-    	print "Loading new data"
+        print "Loading new data"
         return loadLatestAliasData()
     else:
         return aliasData
@@ -180,13 +173,7 @@ def getAliasData():
 # Return a list of all aliases found in recipes.
 ##
 def listAllAliases():
-<<<<<<< HEAD
-    aliasDict = getAliasData()
-    #print aliasDict
-    return aliasDict.keys()
-=======
     return getAliasData().keys()
->>>>>>> bf3ba50842624e3baf93f63290b91c86c744529c
 
 ##
 # Function: string_appendDateAndTime
@@ -194,7 +181,7 @@ def listAllAliases():
 # Return a string with the current date and time appended.
 ##
 def string_appendDateAndTime(s):
-	return "_".join([s, time.strftime("%m-%d-%Y"), time.strftime("%Hh-%Mm-%Ss")]) + ".json"
+    return "_".join([s, time.strftime("%m-%d-%Y"), time.strftime("%Hh-%Mm-%Ss")]) + ".json"
 
 ##
 # Function: hasDeepKey
@@ -204,18 +191,18 @@ def string_appendDateAndTime(s):
 # sub-dictionary that doesn't have the current key in the key list.
 #
 # Example:
-#	myDict = {"a": {"b": {"c": 1}, "d": 9}, "e": {"f": 3}}
+#   myDict = {"a": {"b": {"c": 1}, "d": 9}, "e": {"f": 3}}
 #   hasDeepKey(myDict, ["a", "b", "c"]) returns True
 #   hasDeepKey(myDict, ["a", "d"]) returns True
 #   hasDeepKey(myDict, ["a", "b", "h"]) returns False
 ##
 def hasDeepKey(myDict, keyList):
-	curDict = myDict
-	for key in keyList:
-		if (type(curDict) is not dict) or (key not in curDict):
-			return False
-		curDict = curDict[key]
-	return True
+    curDict = myDict
+    for key in keyList:
+        if (type(curDict) is not dict) or (key not in curDict):
+            return False
+        curDict = curDict[key]
+    return True
 
 def nutStringQ(alias):
     nutdict = loadJSONDict(os.path.join(c.PATH_TO_ROOT, "res", "nutwords.json"))
@@ -257,6 +244,15 @@ def aliasBuddyScore(alias1, alias2):
 
     return buddyScore2
 
+def averageAliasBuddyScore(aliasList):
+    n = len(aliasList)
+    count = 0.0
+    total = 0.0
+    for i in xrange(0, n-1):
+        for j in xrange(i+1, n):
+            count += 1.0
+            total += aliasBuddyScore(aliasList[i], aliasList[j])
+    return total / count
 
 
 # General code for representing a weighted CSP (Constraint Satisfaction Problem).

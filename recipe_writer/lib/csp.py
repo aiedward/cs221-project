@@ -118,9 +118,9 @@ def addFactors(csp, traits, whichCSP):
     if whichCSP == "alias":
         constraints = traits["alias_constraints"]
         addFactors_sameName(csp, traits)
-        if "free_of_nuts" in constraints:
+        if constraints.get("free_of_nuts", "False").lower() == "true":
             addFactors_freeOfNuts(csp, traits)
-        if "free_of_meat" in constraints:
+        if constraints.get("free_of_meat", "False").lower() == "true":
             addFactors_freeOfMeat(csp, traits)
         addFactors_buddyScore(csp, traits)
 
@@ -153,7 +153,7 @@ def addFactors_sameName(csp, traits):
 ##
 def addFactors_freeOfNuts(csp, traits):
     for var in csp.variables:
-            csp.add_unary_factor(var, lambda a: not util.nutStringQ(a))
+        csp.add_unary_factor(var, lambda a: not util.nutStringQ(a))
 
 ##
 # Function: addFactors_freeOfMeat
@@ -162,7 +162,7 @@ def addFactors_freeOfNuts(csp, traits):
 ##
 def addFactors_freeOfMeat(csp, traits):
     for var in csp.variables:
-            csp.add_unary_factor(var, lambda a: not util.meatStringQ(a))
+        csp.add_unary_factor(var, lambda a: not util.meatStringQ(a))
 
 ##
 # Function: addFactors_buddyScore
@@ -337,8 +337,8 @@ class AliasCSPSolver:
             print "Solved alias csp with optimal assignment: "
             print self.curAssignment.values()
             print 
-            print "And score:"
-            print self.calculateCurrentWeight()
+            print "And average alias buddy score:"
+            print util.averageAliasBuddyScore(self.curAssignment.values())
             print
         return self.curAssignment
 
