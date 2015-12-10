@@ -413,6 +413,37 @@ def buildNutrientDict(givenIngredient):
     # if getAminoAcids: mergeList.append(nutrientDict['Amino Acids'])
     # if getOther: mergeList.append(nutrientDict['Other'])
     # returnDict['nutrients'] = util.naivelyMergeDicts([mergeList])
+
+
+def testAliasExtraction():
+    print "Hello world!"
+    allRecipes = []
+
+    # Each alias has 3 main fields:
+    #   "count"
+    #   "aliasBuddies"
+    #   "lines"
+    aliasData = {}
+
+    # Read in and parse recipe data structures (dictionaries) from a json file.
+    extractRecipesFromJSON(allRecipes)
+    print allRecipes
+
+
+##
+# Function: extractRecipesFromJSON
+# --------------------------------
+# Reads in all data from the json file containing all recipe data.
+##
+def extractRecipesFromJSON(allRecipes):
+    jsonFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasdata", "miniAliases.json")
+    myDict = util.loadJSONDict(jsonFilePath)
+
+    # Fill allRecipes with just the values for each JSON member,
+    # as the values actually contain the keys as a member
+    for _, val in myDict.items():
+        allRecipes.append(val)
+
 []
 
 
@@ -436,7 +467,8 @@ def main(argv):
 
     # test_database1()
     # test_threading1()
-    saveNutrientInfo()
+    #saveNutrientInfo()
+    testAliasExtraction()
 
 if __name__ == "__main__":
     main(sys.argv)
