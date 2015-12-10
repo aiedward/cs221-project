@@ -1,0 +1,24 @@
+{
+	"num_ingredients": 4,
+	"amount_range": {
+		"min": 10, 
+		"max": 50,
+		"step": 10
+	},
+	"max": {
+		"total": {
+			"kcal": 500
+		},
+		"single": {
+			
+		}
+	},
+	"min": {
+		"total": {
+
+		},
+		"single": {
+			
+		}
+	}
+}
