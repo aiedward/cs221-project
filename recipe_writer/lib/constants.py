@@ -86,7 +86,8 @@ def init(pathToRoot):
 
 	# Used by:
 	#  - main.py to direct execution to the proper executable in bin/
-	EXECUTABLES = ["process_recipes", "query_online_db", "write_recipes", "sandbox", "merge_recipes"]
+	EXECUTABLES = ["process_recipes", "query_online_db", "write_recipes", "sandbox", "merge_recipes",
+		"convert_file_to_json"]
 	EXE_ARG_POS = 1
 
 	##

@@ -166,6 +166,21 @@ def hasDeepKey(myDict, keyList):
 		curDict = curDict[key]
 	return True
 
+def nutStringQ(alias):
+    nutdict = loadJSONDict(os.path.join(c.PATH_TO_ROOT, "res", "nutwords.json"))
+    nutwords = nutdict.values()[0]
+    for w in nutwords:
+        if w in alias:
+            return True
+    return False
+
+def meatStringQ(alias):
+    meatdict = loadJSONDict(os.path.join(c.PATH_TO_ROOT, "res", "meatwords.json"))
+    meatwords = meatdict.values()[0]
+    for w in meatwords:
+        if w in alias:
+            return True
+    return False
 
 
 
@@ -295,19 +310,25 @@ class CSP:
 
 
 
-
 # A backtracking algorithm that solves weighted CSP.
 # Usage:
 #   search = BacktrackingSearch()
 #   search.solve(csp)
 class BacktrackingSearch():
 
-    def reset_results(self):
+    def reset_results(self, numSolutions=float('inf'), verbose=False):
         """
         This function resets the statistics of the different aspects of the
         CSP solver. We will be using the values here for grading, so please
         do not make any modification to these variables.
         """
+
+        # Max number of solutions we should find.
+        self.numSolutions = numSolutions
+
+        # Whether progress and stats should be printed
+        self.verbose = verbose
+
         # Keep track of the best assignment and weight found.
         self.optimalAssignment = {}
         self.optimalWeight = 0
@@ -393,9 +414,15 @@ class BacktrackingSearch():
         self.domains = {var: list(self.csp.values[var]) for var in self.csp.variables}
 
         # Perform backtracking search.
-        self.backtrack({}, 0, 1)
+        try:
+            self.backtrack({}, 0, 1)
+        except Exception as e:
+            # self.numSolutions solutions have been found
+            pass
+
         # Print summary of solutions.
-        self.print_stats()
+        if self.verbose:
+            self.print_stats()
 
     def backtrack(self, assignment, numAssigned, weight):
         """
@@ -430,7 +457,15 @@ class BacktrackingSearch():
                 self.optimalAssignment = newAssignment
                 if self.firstAssignmentNumOperations == 0:
                     self.firstAssignmentNumOperations = self.numOperations
-            return
+
+            # If we've found enough solutions, return all the way up
+            # the recursion tree
+            if len(self.allAssignments) >= numSolutions:
+                raise Exception()
+
+            # Otherwise, just return from this level of reursion
+            else:
+                return
 
         # Select the next variable to be assigned.
         var = self.get_unassigned_variable(assignment)

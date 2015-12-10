@@ -5,20 +5,13 @@
 		"max": 50,
 		"step": 10
 	},
-	"max": {
-		"total": {
-			"kcal": 500
-		},
-		"single": {
-			
-		}
+	"alias_constraints": {
+		"free_of": [
+			"nuts",
+			"meat"
+		]
 	},
-	"min": {
-		"total": {
-
-		},
-		"single": {
-			
-		}
+	"amount_constraints": {
+		"max_total_kcal": 500
 	}
 }
