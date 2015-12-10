@@ -6,10 +6,8 @@
 		"step": 10
 	},
 	"alias_constraints": {
-		"free_of": [
-			"nuts",
-			"meat"
-		]
+		"free_of_nuts": "True",
+		"free_of_meat": "True"
 	},
 	"amount_constraints": {
 		"max_total_kcal": 500

@@ -11,6 +11,8 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 
+aliasData = None
+
 # Function: safeConnect
 # ---------------------
 # Wrapper for a function requesting info from a server.  Returns the
@@ -35,6 +37,7 @@ def safeConnect(fxn, args, tries=40):
 # Loads a JSON file into a python dictionary and returns that dictionary.
 ##
 def loadJSONDict(jsonFilePath):
+    global aliasData
 	# Read in the JSON file containing recipe data
 	fullJsonString = None
 	with open(jsonFilePath, 'r') as f:
@@ -47,7 +50,10 @@ def loadJSONDict(jsonFilePath):
 
 	# Read the JSON file in as a dictionary
 	d = json.JSONDecoder()
-	return d.decode(fullJsonString)
+	returnDict = d.decode(fullJsonString)
+
+    if "aliasData_" in jsonFilePath:
+        aliasData = copy.deepcopy(returnDict)
 
 ##
 # Function: loadJSONDicts
@@ -127,15 +133,36 @@ def deleteDuplicatesBy(li, duplicatesQ):
 	return new_li
 
 ##
+# Function: loadLatestAliasData
+# -----------------------------
+# Loads in the file with the most recent date that ends in ".json" in /res/aliasdata
+# and returns the resulting dictionary.
+##
+def loadLatestAliasData():
+    aliasDataFolder = os.path.join(c.PATH_TO_RESOURCES, "aliasdata")
+    latestAliasDataFileFullPath = sorted(listFilesWithSuffix(aliasDataFolder, ".json"))[-1]
+    return loadJSONDict(latestAliasDataFileFullPath)
+
+##
+# Function: getAliasData
+# ----------------------
+# If alias data has already been loaded durin this session, that data
+# is returned. Otherwise, the latest alias data is loaded in and returned.
+##
+def getAliasData():
+    global aliasData
+    if aliasData == None:
+        return loadLatestAliasData()
+    else:
+        return aliasData
+
+##
 # Function: listAllAliases
 # ------------------------
 # Return a list of all aliases found in recipes.
 ##
 def listAllAliases():
-	aliasDataFolder = os.path.join(c.PATH_TO_RESOURCES, "aliasdata")
-	latestAliasDataFileFullPath = sorted(listFilesWithSuffix(aliasDataFolder, ".json"))[-1]
-	aliasData = loadJSONDict(latestAliasDataFileFullPath)
-	return aliasData.keys()
+    getAliasData().keys()
 
 ##
 # Function: string_appendDateAndTime
@@ -181,6 +208,10 @@ def meatStringQ(alias):
         if w in alias:
             return True
     return False
+
+def aliasBuddyScore(alias1, alias2):
+    return getAliasData()[alias1]["aliasBuddies"][alias2]
+
 
 
 
