@@ -1,0 +1,20 @@
+##
+# File: cluster_kmeans.py
+# ---------------
+#
+##
+
+from lib import util
+from lib import constants as c
+from lib import kmeans
+
+
+# Main Program */
+def main(argv):
+
+	print "hello cluster_kmeans.py"
+	print 30 * '*'
+
+	# jsonFilePath = os.path.join(c.PATH_TO_ROOT, "res", "allRecipes.json")
+
+	kmeans.cluster('test', 5)
