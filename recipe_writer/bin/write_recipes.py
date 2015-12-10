@@ -17,51 +17,57 @@ from lib import constants as c
 # Second argument expected to be alias data file that we will import from.
 ##
 def main(argv):
-	# argd = processArgs(argv)
+	argd = processArgs(argv)
 
-	results = runModule(argv)
+	results = runModule(argd)
 
-	fullJsonString = None
-	with open(allRecipesFullFilePath, "r") as f:
-		fullJsonString = f.read()
+	if argd["verbose"]:
+		print results
 
+##
+# Function: processArgs
+# ---------------------
+# Pretty self-explanatory.
+#
+# Possible options include:
+#    --module=
+#    --verbose=
+##
+def processArgs(argv):
+	argd = {"module": None, "verbose": True, "args": []}
+	realArgs = argv[1:]
 
+	for arg in realArgs:
+		if arg.startswith("--module="):
+			argd["module"] = arg.replace("--module=", "")
+		elif arg.startswith("--verbose="):
+			argd["verbose"] = arg.replace("--verbose=", "")
+		else:
+			argd["args"].append(arg)
 
-# ##
-# # Function: processArgs
-# # ---------------------
-# # Pretty self-explanatory.
-# #
-# # Possible options include:
-# #    --module=
-# ##
-# def processArgs(argv):
-# 	argd = {}
-# 	realArgs = argv[1:]
-# 	for arg in realArgs:
-# 		if arg.startswith("--module="):
-# 			argd["module"] = arg.replace("--module=", "")
-# 	return argd
+	return argd
 
 ##
 # Function: runModule
 # -------------------
-#
+# Calls the run(args) function for the specified module. The module's run(..)
+# function is like a main() function but it receives somewhat cleaned-up
+# command-line arguments and is expected to return a value.
 ##
-def runModule(argv):
+def runModule(argd):
 	results = None
-	moduleName = argv[1]
-	moduleArgs = argv[1:]
-	if moduleName.endswith("csp"):
-		results = csp.run(moduleArgs)
-	elif moduleName.endswith("kmeans"):
-		results = kmeans.run(moduleArgs)
-	elif moduleName.endswith("search"):
-		results = search.run(moduleArgs)
-	else:
-		results = [kmeans.run(moduleArgs), 
-			search.run(moduleArgs), 
-			csp.run(moduleArgs)]
+	moduleName = argd["module"]
+	moduleArgs = tuple(argd["args"])
+	if moduleName == "csp":
+		results = csp.run(*moduleArgs)
+	elif moduleName == "kmeans":
+		results = kmeans.run(*moduleArgs)
+	elif moduleName == "search":
+		results = search.run(*moduleArgs)
+	elif moduleName == None:
+		results = [kmeans.run(*moduleArgs), 
+			search.run(*moduleArgs), 
+			csp.run(*moduleArgs)]
 	return results
 
 
