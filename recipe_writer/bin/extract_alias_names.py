@@ -55,7 +55,7 @@ def main(argv):
 # Reads in all data from the json file containing all recipe data.
 ##
 def extractRecipesFromJSON(allRecipes):
-	jsonFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasdata", miniAliases.json)
+	jsonFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasdata", "miniAliases.json")
 	myDict = util.loadJSONDict(jsonFilePath)
 
 	# Fill allRecipes with just the values for each JSON member,
@@ -207,10 +207,11 @@ def dumpAliasDataToJSONFiles(aliasData):
 
 # If called from command line, call the main() function
 if __name__ == "__main__":
-	main(sys.argv)
+	main()
 
 # Otherwise, this file is being imported as a module
 else:
+	print "Passing"
 	pass
 
 
