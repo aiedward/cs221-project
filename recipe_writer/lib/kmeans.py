@@ -34,6 +34,12 @@ from lib import constants as c
 #     2.  After clustering
 #         - Manually label clusters as mexican/meats/breakfast/etc.
 
+##
+# Function: testDatapoints
+# -------------
+# Example code to show necessary collection manipulation
+# and to test KMeans algorithm. Not used in production code.
+##
 def testDatapoints():
 	# sparse matrix, shape = (n_samples, n_features)
 	allPoints = [
@@ -48,6 +54,14 @@ def testDatapoints():
 
 	return dataMatrix
 
+##
+# Function: createPoint
+# -------------
+# Given a recipe, it scrapes the important features used
+# in the kmean clustering, and creates a "point", which is 
+# a dictionary of featureName -> featureValue. The point
+# is then returned.
+##
 def createPoint(recipe):
 	point = {}
 
@@ -75,7 +89,21 @@ def createPoint(recipe):
 
 	return point
 
-
+##
+# Function: createDatapoints
+# -------------
+# Opens the specified jsonFilePath, and does collection 
+# manipulation to create sparse matrixes, which is the form
+# used by the KMeans class. Returns such matrix together with
+# a dict that maps the orderNumber -> recipeName.
+#
+# Collection manipulations:
+# 1) Get dict of dict from the JSON file with loadJSONDict()
+# 2) Transform in list of dict, which contains all
+#    relevant features (which need to be in string or
+#	 number form)
+# 3) Creates sparse matrix using DictVectorizer()
+##
 def createDatapoints(jsonFilePath):
 	# sparse matrix, shape = (n_samples, n_features)
 	allPoints = []
@@ -95,6 +123,12 @@ def createDatapoints(jsonFilePath):
 
 	return dataMatrix, pointToRecipeName
 
+##
+# Function: clusterAssignment
+# -------------
+# Maps each recipe to its cluster and stores that in
+# a cluter -> recipeNameList dict, which is returned.
+##
 def clusterAssignment(est, pointToRecipeName):
 	clusterToRecipes = {}
 	labels = est.labels_
@@ -109,6 +143,11 @@ def clusterAssignment(est, pointToRecipeName):
 
 	return clusterToRecipes
 
+##
+# Function: printClusters
+# -------------
+# Prints which recipes where in which clusters.
+##
 def printClusters(clusterToRecipes, est):
 	# print 10 * '-' + ' Cluster Centers ' + 10 * '-'
 	# print est.cluster_centers_
@@ -121,6 +160,12 @@ def printClusters(clusterToRecipes, est):
 			print recipe
 		print
 
+##
+# Function: cluster
+# -------------
+# Cluster the recipes in the jsonFilePath into K clusters and
+# prints which recipes where in what clusters afterwards.
+##
 def cluster(jsonFilePath, K):
 	'''
 	datapoints: list of datapoints, each datapoint is a string-to-double dict representing a sparse vector.
@@ -138,7 +183,12 @@ def cluster(jsonFilePath, K):
 	
 	print printClusters(clusterToRecipes, est)
 	
-
+##
+# Function: run
+# -------------
+# kmeans.py's version of main(). This function is called by write_recipes.py
+# with arguments given to it.
+##
 def run(verbose=False, K='5', filename='testRecipeTh'):
 
 	numClusters = int(K)
