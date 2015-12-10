@@ -614,8 +614,11 @@ class SchedulingCSPConstructor():
         #         be enforced by the constraints added by add_quarter_constraints
 
         # BEGIN_YOUR_CODE (around 20 lines of code expected)
+        
+        # Iterate through all quarters
         for quarter in self.profile.quarters:
 
+            # Compile a list of the course ID's of all classes requested
             all_cids = []
             for req in self.profile.requests:
                 all_cids += req.cids

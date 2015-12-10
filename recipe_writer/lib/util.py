@@ -126,6 +126,47 @@ def deleteDuplicatesBy(li, duplicatesQ):
 			new_li.append(e1)
 	return new_li
 
+##
+# Function: listAllAliases
+# ------------------------
+# Return a list of all aliases found in recipes.
+##
+def listAllAliases():
+	aliasDataFolder = os.path.join(c.PATH_TO_RESOURCES, "aliasdata")
+	latestAliasDataFileFullPath = sorted(listFilesWithSuffix(aliasDataFolder, ".json"))[-1]
+	aliasData = loadJSONDict(latestAliasDataFileFullPath)
+	return aliasData.keys()
+
+##
+# Function: string_appendDateAndTime
+# ----------------------------------
+# Return a string with the current date and time appended.
+##
+def string_appendDateAndTime(s):
+	return "_".join([s, time.strftime("%m-%d-%Y"), time.strftime("%Hh-%Mm-%Ss")]) + ".json"
+
+##
+# Function: hasDeepKey
+# --------------------
+# Dive into a dictionary, recursively asking for values corresponding to a
+# list of keys until you reach a non-dictionary-type value or you reach a
+# sub-dictionary that doesn't have the current key in the key list.
+#
+# Example:
+#	myDict = {"a": {"b": {"c": 1}, "d": 9}, "e": {"f": 3}}
+#   hasDeepKey(myDict, ["a", "b", "c"]) returns True
+#   hasDeepKey(myDict, ["a", "d"]) returns True
+#   hasDeepKey(myDict, ["a", "b", "h"]) returns False
+##
+def hasDeepKey(myDict, keyList):
+	curDict = myDict
+	for key in keyList:
+		if (type(curDict) is not dict) or (key not in curDict):
+			return False
+		curDict = curDict[key]
+	return True
+
+
 
 
 

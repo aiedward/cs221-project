@@ -40,7 +40,7 @@ def main(argv):
 	#    associated with as values.
 	fillAliasData(allRecipes, aliasData)
 
-	dumpRecipesToJSONFile(aliasData)
+	dumpAliasDataToJSONFiles(aliasData)
 
 	# printAliasData(aliasData, 5, True)
 	
@@ -190,13 +190,15 @@ def printAliasData(aliasData, numToPrint, randomize):
 			print k, ": ", v
 		print
 
-def string_appendDateAndTime(s):
-	return "_".join([s, time.strftime("%m-%d-%Y"), time.strftime("%Hh-%Mm-%Ss")]) + ".json"
-
-def dumpRecipesToJSONFile(aliasData):
-	fileName = string_appendDateAndTime("aliasData")
-	fullFilePath = os.path.join(c.PATH_TO_ALIASDATA, fileName)
-	util.dumpJSONDict(fullFilePath, aliasData)
+##
+# Function: dumpAliasToJSONFiles
+# ------------------------------
+# Dumps data to a file with name aliasData + date + time in /res/aliasdata/
+##
+def dumpAliasDataToJSONFiles(aliasData):
+	dataFileName = util.string_appendDateAndTime("aliasData")
+	dataFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasdata", dataFileName)
+	util.dumpJSONDict(dataFilePath, aliasData)
 
 
 # If called from command line, call the main() function
