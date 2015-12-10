@@ -166,6 +166,21 @@ def hasDeepKey(myDict, keyList):
 		curDict = curDict[key]
 	return True
 
+def nutStringQ(alias):
+    nutdict = loadJSONDict(os.path.join(c.PATH_TO_ROOT, "res", "nutwords.json"))
+    nutwords = nutdict.values()[0]
+    for w in nutwords:
+        if w in alias:
+            return True
+    return False
+
+def meatStringQ(alias):
+    meatdict = loadJSONDict(os.path.join(c.PATH_TO_ROOT, "res", "meatwords.json"))
+    meatwords = meatdict.values()[0]
+    for w in meatwords:
+        if w in alias:
+            return True
+    return False
 
 
 
