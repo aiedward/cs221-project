@@ -625,6 +625,8 @@ class SchedulingCSPConstructor():
 
             maxUnit_sum = 0.0
             new_vars = []
+
+            # Iterate through all course ID's seen in the requests
             for cid in all_cids:
                 minUnit = self.bulletin.courses[cid].minUnits
                 maxUnit = self.bulletin.courses[cid].maxUnits

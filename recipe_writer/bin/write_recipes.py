@@ -66,7 +66,7 @@ def processArgs(argv):
 def runModule(argd):
 	results = None
 	moduleName = argd["module"]
-	moduleArgs = tuple([argd["verbose"]] + argd["args"]])
+	moduleArgs = tuple([[argd["verbose"]] + argd["args"]])
 	if moduleName == "csp":
 		results = csp.run(*moduleArgs)
 	elif moduleName == "kmeans":

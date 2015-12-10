@@ -11,7 +11,7 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 
-from lib import util, constants, nutrition
+from lib import util, constants, nutrition, search
 
 
 ##
@@ -30,23 +30,34 @@ def run(verbose):
 	# These variables will likely be fed through run()'s arguments later
 	traits = util.loadJSONDict(constants.PATH_TO_RESOURCES, "csp_defaultTraits.json")
 
-	# Add variables to the CSP, 2 for each ingredient (name, amount)
-	addVariables(csp, traits)
+	traits["alias_choices"] = solveAliasCSP(verbose, traits)
 
-	# Add all factors to the csp. This is a big one.
-	addFactors(csp, traits)
+	ingredientAliasAmountPairs = solveAmountCSP(verbose, traits)
 
 	return "csp.py ran successfully"
 
+##
+# Function: solveAliasCSP
+# ---------------------------
+# Solve the problem of picking aliases for the ingredients given 
+# a set of constraints.
+##
+def solveAliasCSP(verbose, traits):
+	csp = CSP()
+	addVariables(csp, traits, "name")
+	addFactors(csp, traits, "name")
 
 ##
-# Function: addVariables
-# ----------------------
-# Add 2 variables for each ingredient (name, amount)
+# Function: solveAliasCSP
+# ---------------------------
+# Solve the problem of picking amounts for the ingredients given pre-picked
+# aliases and a set of constraints.
 ##
-def addVariables(csp, traits):
-	addNameVariables(csp, traits)
-	addAmountVariables(csp, traits)
+def solveAmountCSP(verbose, traits, ingredientAliases):
+	csp = CSP()
+	addAmountVariables(csp, traits, ingredientAliases)
+
+
 
 ##
 # Function: addNameVariables
@@ -77,18 +88,30 @@ def addAmountVariables(csp, traits):
 	for var in amountVariables:
 		csp.add_variable(var, amountDomain)
 
+##
+# Function: getAmountDomain
+# --------------------------
+#
+##
 def getAmountDomain(traits):
 	range(*tuple(traits["amount_range"].values())) + [traits["amount_range"]["max"]]
-	
+
 ##
-# Function: addFactors
-# --------------------
+# Function: addAliasFactors
+# --------------------------
+#
+##
+def addAliasFactors(csp, traits):
+	addSameNameFactors(csp, traits)
+
+##
+# Function: addAmountFactors
+# --------------------------
 # Factors:
 #	- No two variable names can be the same.
 #	- The total
 ##
-def addFactors(csp, traits):
-	addSameNameFactors(csp, traits):
+def addAmountFactors(csp, traits):
 	if util.hasDeepKey(traits, ["max", "total", "kcal"]):
 		addMaxTotalCaloriesFactor(csp, traits)
 	
