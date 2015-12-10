@@ -15,7 +15,22 @@ from lib import util
 from lib import constants as c
 
 def main(argv):
-	pass
+	pathToRecipes = os.path.join(c.PATH_TO_RESOURCES, "jsonrecipes")
+
+	# Get the full absolute file paths of all files in /res/jsonrecipes/
+	# that end in ".json"
+	jsonRecipes = util.listFilesWithSuffix(pathToRecipes, ".json")
+
+	# Load all of these ".json" files into dictionaries and put all
+	# these dictionaries in a list
+	listOfJSONDicts = util.loadJSONDicts(jsonRecipes)
+
+	# Merge recipes into one dictionary, deleting duplicates
+	mergedDict = util.naivelyMergeDicts(listOfJSONDicts)
+
+	# Write the merged recipe dictionary to a file
+	allRecipesFilePath = os.path.join(c.PATH_TO_RESOURCES, "allRecipes.json")
+	util.dumpJSONDict(allRecipesFilePath, mergedDict)
 
 if __name__ == "__main__":
 	main(sys.argv)
