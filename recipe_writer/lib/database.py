@@ -28,6 +28,22 @@ foundItems = 0
 missedItems = 0
 currentGovApiKey = c.GOV_NUT_API_KEY #Default value.
 
+#This starts at the last position so that the first call to getNextAPIKeyIndex
+#returns 0.
+global shouldCycleAPIKeys = True
+global lastSuccessfulAPIKeyIndex = NUM_API_KEYS - 1;
+global lastAPIKeyIndex = lastSuccessfulAPIKeyIndex
+
+def getNextAPIKeyIndex():
+	nextAPIKeyIndex = lastAPIKeyIndex + 1
+	if nextAPIKeyIndex == NUM_API_KEYS:
+		nextAPIKeyIndex = 0
+	lastAPIKeyIndex = nextAPIKeyIndex
+	if lastSuccessfulAPIKeyIndex == nextAPIKeyIndex
+		shouldCycleAPIKeys = False
+	return nextAPIKeyIndex
+
+
 def setConstants(recipesInDatabase, remainingCalls, missedIngredients, apiNum,startNum):
 	currentGovApiKey = govAPIArray[apiNum]
 	global startNumber
@@ -41,42 +57,6 @@ def printMissedIngredients():
 	print "These are the ingredients that do not exist in the government Nutritional Database:"
 	for ingredient in missedIngredients:
 		print ingredient
-
-# Function: nutritionalSearch
-# ---------------------
-# Makes search request on Nutritional API. Then, if the status is not 200
-# (i.e. the request did not go through), it gets the remaining requests
-# we have left for the hour (@remaining) and, checks whether remaining is
-# larger than SLEEP_THRESHOLD.
-#
-# If it is, then the reason why the request did not go through
-# was because the ingredient was not found in the ingredient database, so we
-# return False and the @searchRequest.
-#
-# Otherwise, it means that we have exceeded the gov 1K API requests/hour, and
-# thus we sleep for 10 min and keep trying until we can make API requests again.
-def nutritionalSearch(ingredient, currentGovApiKey):
-	apiSearchString = "http://api.nal.usda.gov/ndb/search/?format=json&q=%s&max=1&api_key=%s" % (ingredient, currentGovApiKey)
-	searchRequest = util.safeConnect(requests.get, tuple([apiSearchString]))
-	remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
-
-	if c.PRINT_REMAINING_CALLS: 
-		print "SEARCH: Gov Nutrional Database requests remaining: %d" % remaining
-
-	while searchRequest.status_code != 200:
-		if remaining >= c.SLEEP_THRESHOLD:
-			if c.PRINT_MISSED_INGREDIENTS: print "SEARCH: Could not find ingredient: %s" % ingredient
-			return False, searchRequest
-
-		while remaining < c.SLEEP_THRESHOLD:
-			print "SEARCH: Gov Nutrional Database requests remaining: %d" % remaining
-			print "SEARCH: Request failed because exceeded Gov 1K API requests/hour"
-			print "... Sleeping for 10 min ..."
-			time.sleep(c.SLEEP_TIME)
-			searchRequest = util.safeConnect(requests.get, tuple([apiSearchString]))
-			remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
-	return True, searchRequest
-
 
 # Function: addIngredientToNutritionalList
 # ---------------------
@@ -110,6 +90,63 @@ def addIngredientToNutritionalList(ingredients, currentGovApiKey):
 				missedIngredients.append(ingredient)
 				missedItems += 1
 
+# Function: nutritionalSearch
+# ---------------------
+# Makes search request on Nutritional API. Then, if the status is not 200
+# (i.e. the request did not go through), it gets the remaining requests
+# we have left for the hour (@remaining) and, checks whether remaining is
+# larger than SLEEP_THRESHOLD.
+#
+# If it is, then the reason why the request did not go through
+# was because the ingredient was not found in the ingredient database, so we
+# return False and the @searchRequest.
+#
+# Otherwise, it means that we have exceeded the gov 1K API requests/hour, and
+# thus we sleep for 10 min and keep trying until we can make API requests again.
+def nutritionalSearch(ingredient):
+	currentAPIKeyIndex = lastAPIKeyIndex
+	currentGovApiKey = govAPIArray[currentAPIKeyIndex]
+
+	apiSearchString = "http://api.nal.usda.gov/ndb/search/?format=json&q=%s&max=1&api_key=%s" % (ingredient, currentGovApiKey)
+	searchRequest = requests.get(apiSearchString)
+	remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
+
+	if c.PRINT_REMAINING_CALLS: 
+		print "SEARCH: Gov Nutrional Database requests remaining: %d with API Key %s" %	 (remaining, currentGovApiKey)
+
+	while searchRequest.status_code != 200:
+		# This means the ingredient wasn't found.  The calling function should handle the return value
+		# and add this ingredient to the missed ingredients list.
+		if remaining >= c.SLEEP_THRESHOLD:
+			if c.PRINT_MISSED_INGREDIENTS: print "SEARCH: Could not find ingredient: %s" % ingredient
+			return False, searchRequest
+
+		#This means we've hit the API Limit
+		while remaining < c.SLEEP_THRESHOLD:
+			# This is calculated in getNextAPIKeyIndex().  If a full cycle is made with no successful returns, that means we've exhausted
+			# ALL of our API Keys, and we'll just chill for a bit.
+			if shouldCycleAPIKeys:
+				currentAPIKeyIndex = getNextAPIKeyIndex()
+				currentGovApiKey = govAPIArray[currentAPIKeyIndex]
+				apiSearchString = "http://api.nal.usda.gov/ndb/search/?format=json&q=%s&max=1&api_key=%s" % (ingredient, currentGovApiKey)
+				searchRequest = requests.get(apiSearchString)
+				remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
+			else:
+				#Naptime.
+				print "SEARCH: Request failed because exceeded Gov 1K API requests/hour"
+				print "... Sleeping for 10 min ..."
+				time.sleep(c.SLEEP_TIME)
+				apiSearchString = "http://api.nal.usda.gov/ndb/search/?format=json&q=%s&max=1&api_key=%s" % (ingredient, currentGovApiKey)
+				searchRequest = requests.get(apiSearchString)
+				remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
+		print "SEARCH: Gov Nutrional Database requests remaining: %d with API Key %s" %	 (remaining, currentGovApiKey)
+	
+	#Updates variables for proper cycling through API Keys
+	lastSuccessfulAPIKeyIndex = currentAPIKeyIndex
+	shouldCycleAPIKeys = True
+	return True, searchRequest
+
+
 # Function: getNutritionalRequest
 # ---------------------
 # Makes get request on Nutritional API. Then, if the status is not 200
@@ -122,29 +159,50 @@ def addIngredientToNutritionalList(ingredients, currentGovApiKey):
 #
 # Otherwise, it means that we have exceeded the gov 1K API requests/hour, and
 # thus we sleep for 10 min and keep trying until we can make API requests again.
-def getNutritionalRequest(ingredientId, currentGovApiKey):
+def getNutritionalRequest(ingredientId):
+	#Load current values for the APIKeyIndex and the APIKey
+	currentAPIKeyIndex = lastAPIKeyIndex
+	currentGovApiKey = govAPIArray[currentAPIKeyIndex]
+
+	#Try to get the necessary info.
 	apiGetString = "http://api.nal.usda.gov/ndb/reports/?ndbno={0}&type=b&format=json&api_key={1}".format(ingredientId, currentGovApiKey)
-	getRequest = util.safeConnect(requests.get, tuple([apiSearchString]))
+	getRequest = requests.get(apiGetString)
 	if c.PRINT_REMAINING_CALLS: 
 		print "GET: Gov Nutrional Database requests remaining: %d" % int(getRequest.headers['X-RateLimit-Remaining'])
+
+	#On failure, Notify and either return/break on error, or loop API keys if waiting for the API limit to refresh.
 	while getRequest.status_code != 200:
 		print
 		print "[BROKE REQUEST] Status code != 200"
 
 		remaining = int(getRequest.headers['X-RateLimit-Remaining'])
-		print "GET: Gov Nutrional Database requests remaining: %d" % remaining
+		print "GET: Gov Nutrional Database requests remaining: %d with API Key %s" %	 (remaining, currentGovApiKey)
 
 		if remaining >= c.SLEEP_THRESHOLD:
 			print "[ERROR] GET: Status != 200 but remaining (%d) >= SLEEP_THRESHOLD (%d)" % (remaining, c.SLEEP_THRESHOLD)
 			return None
-
+		
+		#This means we've hit the API Limit
 		while remaining < c.SLEEP_THRESHOLD:
-			print "GET: Request failed because exceeded Gov 1K API requests/hour"
-			print "... Sleeping for 10 min ..."
-			time.sleep(c.SLEEP_TIME)
-			getRequest = util.safeConnect(requests.get, tuple([apiSearchString]))
-			remaining = int(getRequest.headers['X-RateLimit-Remaining'])
-			print "GET: Gov Nutrional Database requests remaining: %d" % remaining
+			# This is calculated in getNextAPIKeyIndex().  If a full cycle is made with no successful returns, that means we've exhausted
+			# ALL of our API Keys, and we'll just chill for a bit.
+			if shouldCycleAPIKeys:
+				currentAPIKeyIndex = getNextAPIKeyIndex()
+				currentGovApiKey = govAPIArray[currentAPIKeyIndex]
+				apiGetString = "http://api.nal.usda.gov/ndb/reports/?ndbno={0}&type=b&format=json&api_key={1}".format(ingredientId, currentGovApiKey)
+				searchRequest = requests.get(apiGetString)
+				remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
+			else:
+				print "GET: Request failed because exceeded Gov 1K API requests/hour"
+				print "... Sleeping for 10 min ..."
+				time.sleep(c.SLEEP_TIME)
+				getRequest = requests.get(apiGetString)
+				remaining = int(getRequest.headers['X-RateLimit-Remaining'])
+		print "GET: Gov Nutrional Database requests remaining: %d with API Key %s" %	 (remaining, currentGovApiKey)
+
+	#Updates variables for proper cycling through API Keys
+	lastSuccessfulAPIKeyIndex = currentAPIKeyIndex
+	shouldCycleAPIKeys = True
 	return getRequest
 
 # Function: buildNutritionalDatabase
