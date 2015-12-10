@@ -45,7 +45,7 @@ def processArgs(argv):
 
 	for arg in realArgs:
 		if arg.startswith("--module="):
-			argd["module"] = arg.replace("--module=", "")
+			argd["module"] = arg.split("=")[-1]
 		elif arg.startswith("--verbose="):
 			argd["verbose"] = arg.replace("--verbose=", "")
 		else:
@@ -67,6 +67,10 @@ def runModule(argd):
 	results = None
 	moduleName = argd["module"]
 	moduleArgs = tuple([[argd["verbose"]] + argd["args"]])
+
+	if argd["verbose"]:
+		print "Running module", moduleName
+
 	if moduleName == "csp":
 		results = csp.run(*moduleArgs)
 	elif moduleName == "kmeans":
