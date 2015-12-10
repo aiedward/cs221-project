@@ -1,3 +1,9 @@
+##
+# File: /bin/process_recipes.py
+# -----------------------------
+# Process raw recipe JSON data and output that processed data to JSON files.
+##
+
 import collections, itertools, copy, Queue
 import numpy, scipy, math, random
 import os, sys, time, importlib
@@ -5,6 +11,7 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 
+from lib import util
 from lib import constants as c
 
 ##
@@ -33,11 +40,9 @@ def main(argv):
 	#    associated with as values.
 	fillAliasData(allRecipes, aliasData)
 
-	print "len(aliasData.keys()): ", len(aliasData.keys())
+	dumpRecipesToJSONFile(aliasData)
 
-	dumpDictToJsonFile(aliasData, "aliasData")
-
-	printAliasData(aliasData, 5, True)
+	# printAliasData(aliasData, 5, True)
 	
 
 
@@ -47,22 +52,8 @@ def main(argv):
 # Reads in all data from the json file containing all recipe data.
 ##
 def extractRecipesFromJSON(allRecipes):
-	print "c.PATH_TO_RESOURCES: ", c.PATH_TO_RESOURCES
-	print "c.FILENAME_JSON_RECIPES", c.FILENAME_JSON_RECIPES
-	# Read in the JSON file containing recipe data
-	jsonFileName = os.path.join(c.PATH_TO_RESOURCES, c.FILENAME_JSON_RECIPES);
-	fullJsonString = None
-	with open(jsonFileName, 'r') as f:
-		fullJsonString = f.read()
-
-	# This is dead code I was trying to use to remove all escaped unicode
-	# characters (e.g. \u00bd) or convert them to ascii
-	#noUnicodeJsonString = fullJsonString.decode('unicode_escape').encode('ascii','ignore')
-	#asciiJsonString = fullJsonString.decode('unicode-escape')
-
-	# Read the JSON file in as a dictionary
-	d = json.JSONDecoder()
-	myDict = d.decode(fullJsonString)
+	jsonFilePath = os.path.join(c.PATH_TO_RESOURCES, c.FILENAME_JSON_RECIPES)
+	myDict = util.loadJSONDict(jsonFilePath)
 
 	# Fill allRecipes with just the values for each JSON member,
 	# as the values actually contain the keys as a member
@@ -199,15 +190,13 @@ def printAliasData(aliasData, numToPrint, randomize):
 			print k, ": ", v
 		print
 
-def dumpDictToJsonFile(dict2dump, fileNamePrefix):
-	jsonDatabase = json.dumps(dict2dump, sort_keys=True, indent=4)
-	fileName = string_appendDateAndTime(fileNamePrefix)
-	fullFileName = os.path.join(c.PATH_TO_ALIASDATA, fileName)
-	with open(fullFileName, "w") as f:
-		f.write(jsonDatabase)
-
 def string_appendDateAndTime(s):
 	return "_".join([s, time.strftime("%m-%d-%Y"), time.strftime("%Hh-%Mm-%Ss")]) + ".json"
+
+def dumpRecipesToJSONFile(aliasData):
+	fileName = string_appendDateAndTime("aliasData")
+	fullFilePath = os.path.join(c.PATH_TO_ALIASDATA, fileName)
+	util.dumpJSONDict(fullFilePath, aliasData)
 
 
 # If called from command line, call the main() function
