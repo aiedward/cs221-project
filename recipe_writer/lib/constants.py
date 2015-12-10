@@ -55,7 +55,7 @@ def init(pathToRoot):
 	global YUM_STEP
 	global YUM_ALLOWED_COURSE
 	global PRINT_RECIPE_IN_DATABASE
-	global GOV_NUT_API_KEY
+	global GOV_NUT_API_KEY_0
 	global GOV_NUT_API_KEY_1
 	global GOV_NUT_API_KEY_2
 	global GOV_NUT_API_KEY_3
@@ -101,7 +101,7 @@ def init(pathToRoot):
 	PRINT_RECIPE_IN_DATABASE = False
 
 	# Goverment Nutritional Database API constants
-	GOV_NUT_API_KEY = "5YbfzajkZSaGWi7hibcD4Nq1EXSGHRtZP5Pvlkvv"
+	GOV_NUT_API_KEY_0 = "5YbfzajkZSaGWi7hibcD4Nq1EXSGHRtZP5Pvlkvv"
 	GOV_NUT_API_KEY_1 = "svYYehDakYftfY9OsNtQuE30yFNotcWrb2db8MzH"
 	GOV_NUT_API_KEY_2 = "e8AUBbuo2cPNt5nXONZ7ZHZrizZsoeLuAxonNA9z"
 	GOV_NUT_API_KEY_3 = "IcpbZjpGGe81PQW0ruxgzwWe3lSEuqAKeG1N8UqV"
