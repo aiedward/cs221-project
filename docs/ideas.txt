@@ -36,6 +36,7 @@ CSP, Factor Graphs
                       government nutritional database uses, which will allow us
                       to easily convert to nutritional content AND to the practical
                       units of measurement used for that ingredient (e.g. cups, tbsp, tsp)
+			- e.g. “4 cups all-purpose flour”, “3 tbsp garlic powder”, “2 tsp sugar”
                 - Corresponding variables would likely be stored as 2-tuples
             1.  There is a weighted factor connecting all ingredient aliases
                 whose weight is the sum of all bigram costs between the
@@ -57,4 +58,7 @@ CSP, Factor Graphs
                         - Is it vegan?
                         - Is it nut-allergy okay?
                         - Is it gluten-free?
+		3. Weighted factor for how similar are the proportions of amounts of 
+		the aliases to proportions we’ve seen them in together before?
+			- Will make sure we don’t have like 100g sugar and 1g flour
 
