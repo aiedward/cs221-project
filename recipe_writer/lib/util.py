@@ -10,6 +10,7 @@ import os, sys, time, importlib
 import tokenize, re, string
 import json, unicodedata
 import thread
+import lib.constants as c
 
 from lib import constants as c
 
@@ -39,10 +40,18 @@ def safeConnect(fxn, args, tries=40):
 # Loads a JSON file into a python dictionary and returns that dictionary.
 ##
 def loadJSONDict(jsonFilePath):
+<<<<<<< HEAD
+	global aliasData
+	print "Loading json"
+	# Read in the JSON file containing recipe data
+	fullJsonString = None
+	with open(jsonFilePath, 'r') as f:
+=======
     global aliasData
     # Read in the JSON file containing recipe data
     fullJsonString = None
     with open(jsonFilePath, 'r') as f:
+>>>>>>> bf3ba50842624e3baf93f63290b91c86c744529c
 		fullJsonString = f.read()
 
     # This is dead code I was trying to use to remove all escaped unicode
@@ -54,8 +63,10 @@ def loadJSONDict(jsonFilePath):
     d = json.JSONDecoder()
     returnDict = d.decode(fullJsonString)
 
-    if "aliasData_" in jsonFilePath:
-        aliasData = copy.deepcopy(returnDict)
+	if "aliasData_" in jsonFilePath:
+		aliasData = copy.deepcopy(returnDict)
+
+	return returnDict
 
     return returnDict
 
@@ -143,8 +154,10 @@ def deleteDuplicatesBy(li, duplicatesQ):
 # and returns the resulting dictionary.
 ##
 def loadLatestAliasData():
+    print "GOt to alias data laoding"
     aliasDataFolder = os.path.join(c.PATH_TO_RESOURCES, "aliasdata")
     latestAliasDataFileFullPath = sorted(listFilesWithSuffix(aliasDataFolder, ".json"))[-1]
+    print "Path: "+ latestAliasDataFileFullPath
     return loadJSONDict(latestAliasDataFileFullPath)
 
 ##
@@ -156,6 +169,7 @@ def loadLatestAliasData():
 def getAliasData():
     global aliasData
     if aliasData == None:
+    	print "Loading new data"
         return loadLatestAliasData()
     else:
         return aliasData
@@ -166,7 +180,13 @@ def getAliasData():
 # Return a list of all aliases found in recipes.
 ##
 def listAllAliases():
+<<<<<<< HEAD
+    aliasDict = getAliasData()
+    #print aliasDict
+    return aliasDict.keys()
+=======
     return getAliasData().keys()
+>>>>>>> bf3ba50842624e3baf93f63290b91c86c744529c
 
 ##
 # Function: string_appendDateAndTime

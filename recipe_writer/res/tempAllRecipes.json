@@ -1,0 +1,1187 @@
+{
+	"15 Minute Garlic Parmesan Roasted Shrimp": {
+        "course": [], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.16666666666666666, 
+            "meaty": 0.6666666666666666, 
+            "piquant": 0.0, 
+            "salty": 0.6666666666666666, 
+            "sour": 0.8333333333333334, 
+            "sweet": 0.0
+        }, 
+        "ingredientLines": [
+            "1 pound medium shrimp, peeled and deveined", 
+            "2 tablespoons olive oil", 
+            "4 cloves garlic, minced", 
+            "1/2 teaspoon dried oregano", 
+            "1/2 teaspoon dried basil", 
+            "1/4 cup freshly grated Parmesan", 
+            "Kosher salt and freshly ground black pepper, to taste", 
+            "Kosher salt and freshly ground black pepper, to taste", 
+            "Juice of 1 lemon", 
+            "2 tablespoons chopped parsley leaves, for garnish"
+        ], 
+        "ingredients": [
+            "medium shrimp", 
+            "olive oil", 
+            "garlic", 
+            "dried oregano", 
+            "dried basil", 
+            "freshly grated parmesan", 
+            "kosher salt", 
+            "freshly ground black pepper", 
+            "lemon", 
+            "parsley leaves"
+        ], 
+        "recipeId": "15-Minute-Garlic-Parmesan-Roasted-Shrimp-1367996", 
+        "recipeName": "15 Minute Garlic Parmesan Roasted Shrimp", 
+        "totalTimeInSeconds": 1500
+    }, 
+    "30 Minute Lighter Stovetop Turkey Tetrazzini": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.16666666666666666, 
+            "meaty": 0.16666666666666666, 
+            "piquant": 0.0, 
+            "salty": 0.16666666666666666, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "1 tablespoon vegetable oil", 
+            "\u00bd cup chopped onion (optional)", 
+            "10 ounces sliced white button mushrooms", 
+            "2 cups low-sodium chicken broth", 
+            "2\u00bd cups low-fat milk", 
+            "12 ounces whole wheat spaghetti (uncooked)", 
+            "2 cups cooked and shredded turkey (or rotisserie chicken)", 
+            "\u00bd cup fat-free sour cream", 
+            "1 tablespoon butter", 
+            "\u00bc cup parmesan cheese, grated", 
+            "Italian parsley, chopped (optional)"
+        ], 
+        "ingredients": [
+            "vegetable oil", 
+            "chopped onion", 
+            "white button mushrooms", 
+            "low sodium chicken broth", 
+            "low-fat milk", 
+            "whole wheat spaghetti", 
+            "turkey", 
+            "non-fat sour cream", 
+            "butter", 
+            "parmesan cheese", 
+            "flat leaf parsley"
+        ], 
+        "recipeId": "30-Minute-Lighter-Stovetop-Turkey-Tetrazzini-1380515", 
+        "recipeName": "30 Minute Lighter Stovetop Turkey Tetrazzini", 
+        "totalTimeInSeconds": 1800
+    }, 
+    "30-Minute Leftover Turkey Chili": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.8333333333333334, 
+            "meaty": 0.3333333333333333, 
+            "piquant": 0.8333333333333334, 
+            "salty": 0.16666666666666666, 
+            "sour": 0.6666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "2 Tablespoons olive oil", 
+            "4 cloves garlic, minced", 
+            "1 medium onion, small diced", 
+            "1 green pepper, small diced", 
+            "1 Tablespoon ground cumin", 
+            "2 teaspoons chili powder", 
+            "2 (15-oz.) cans pinto beans in chili sauce", 
+            "2 (15-oz.) cans pinto beans in chili sauce", 
+            "1 (15-oz.) can kidney beans, drained and rinsed", 
+            "1 (28-oz.) can crushed tomatoes", 
+            "1 (6-oz.) can tomato paste", 
+            "3 Tablespoons light brown sugar", 
+            "4 cups chopped leftover turkey", 
+            "Chili toppings, such as sour cream, shredded cheese and sliced scallions", 
+            "Chili toppings, such as sour cream, shredded cheese and sliced scallions", 
+            "Chili toppings, such as sour cream, shredded cheese and sliced scallions"
+        ], 
+        "ingredients": [
+            "olive oil", 
+            "garlic", 
+            "onions", 
+            "green pepper", 
+            "ground cumin", 
+            "chili powder", 
+            "chili sauce", 
+            "pinto beans", 
+            "kidney beans", 
+            "crushed tomatoes", 
+            "tomato paste", 
+            "light brown sugar", 
+            "turkey", 
+            "shredded cheese", 
+            "chili", 
+            "scallions"
+        ], 
+        "recipeId": "30-Minute-Leftover-Turkey-Chili-1392275", 
+        "recipeName": "30-Minute Leftover Turkey Chili", 
+        "totalTimeInSeconds": 1800
+    }, 
+    "30-Minute Pizza Crust": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "1 3/4 to 2 1/4 cups all-purpose flour", 
+            "1 envelope Fleischmann's\u00ae Pizza Crust Yeast OR Fleischmann's\u00ae RapidRise Yeast", 
+            "1 1/2 teaspoons sugar", 
+            "3/4 teaspoon salt", 
+            "2/3 cup very warm water (120 to 130 degrees F)*", 
+            "3 tablespoons oil", 
+            "1/2 to 1 cup pizza sauce", 
+            "1 to 2 cups shredded mozzarella cheese"
+        ], 
+        "ingredients": [
+            "all-purpose flour", 
+            "Fleischmann's RapidRise Yeast", 
+            "sugar", 
+            "salt", 
+            "warm water", 
+            "oil", 
+            "pizza sauce", 
+            "shredded mozzarella cheese"
+        ], 
+        "recipeId": "30-Minute-Pizza-Crust-1357102", 
+        "recipeName": "30-Minute Pizza Crust", 
+        "totalTimeInSeconds": 900
+    }, 
+    "4 Ingredient Slow Cooker Pesto Ranch Chicken": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": [], 
+        "flavors": null, 
+        "ingredientLines": [
+            "4 boneless skinless chicken breasts", 
+            "1 packet ranch dressing seasoning mix (just the dry mix)", 
+            "1 cup pesto (1 jar of store-bought OR click HERE for my super easy 5-minute homemade pesto!)", 
+            "\u00bd cup shredded parmesan cheese"
+        ], 
+        "ingredients": [
+            "boneless skinless chicken breasts", 
+            "Hidden Valley\u00ae Original Ranch Salad\u00ae Dressing & Seasoning Mix", 
+            "pesto", 
+            "shredded parmesan cheese"
+        ], 
+        "recipeId": "4-Ingredient-Slow-Cooker-Pesto-Ranch-Chicken-1071663", 
+        "recipeName": "4 Ingredient Slow Cooker Pesto Ranch Chicken", 
+        "totalTimeInSeconds": 14700
+    }, 
+    "5 Ingredient Simple Crock Pot Pork Chops": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "6-8 boneless pork chops", 
+            "2 10\u00be ounce cans of condensed cream of chicken soup", 
+            "\u00bc cup dried onion", 
+            "\u00bd cup ketchup", 
+            "2 tablespoons Worcestershire sauce"
+        ], 
+        "ingredients": [
+            "boneless chop pork", 
+            "condensed cream of chicken soup", 
+            "onions", 
+            "ketchup", 
+            "worcestershire sauce"
+        ], 
+        "recipeId": "5-Ingredient-Simple-Crock-Pot-Pork-Chops-1345792", 
+        "recipeName": "5 Ingredient Simple Crock Pot Pork Chops", 
+        "totalTimeInSeconds": 18600
+    }, 
+    "A Simple Turkey Meatball": {
+        "course": [], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.8333333333333334, 
+            "meaty": 0.8333333333333334, 
+            "piquant": 0.0, 
+            "salty": 0.8333333333333334, 
+            "sour": 0.0, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "1 lb. ground turkey", 
+            "1 egg", 
+            "\u00bd cup parmesan cheese", 
+            "\u00bd cup breadcrumbs", 
+            "Garlic powder (desired amount)", 
+            "\u00bd teaspoon salt", 
+            "2 tablespoons olive oil"
+        ], 
+        "ingredients": [
+            "ground turkey", 
+            "eggs", 
+            "parmesan cheese", 
+            "bread crumbs", 
+            "garlic powder", 
+            "salt", 
+            "olive oil"
+        ], 
+        "recipeId": "A-Simple-Turkey-Meatball-1390303", 
+        "recipeName": "A Simple Turkey Meatball", 
+        "totalTimeInSeconds": 1020
+    }, 
+    "Aaron Franklin\u2019s pinto beans": {
+        "course": [], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.8333333333333334, 
+            "meaty": 0.6666666666666666, 
+            "piquant": 0.8333333333333334, 
+            "salty": 0.8333333333333334, 
+            "sour": 0.8333333333333334, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "1 pound dried pinto beans", 
+            "1/4 medium yellow onion, diced", 
+            "1/4 cup chili powder", 
+            "1 1/2 tablespoons kosher salt", 
+            "1 tablespoon black pepper", 
+            "2 teaspoons onion powder", 
+            "2 teaspoons garlic powder", 
+            "1/4 teaspoon ground cumin", 
+            "1 cup chopped smoked brisket"
+        ], 
+        "ingredients": [
+            "dried pinto beans", 
+            "yellow onion", 
+            "chili powder", 
+            "kosher salt", 
+            "black pepper", 
+            "onion powder", 
+            "garlic powder", 
+            "ground cumin", 
+            "brisket"
+        ], 
+        "recipeId": "Aaron-Franklins-pinto-beans-1389704", 
+        "recipeName": "Aaron Franklin\u2019s pinto beans", 
+        "totalTimeInSeconds": 2400
+    }, 
+    "After-Church Five-In-One Skillet Casserole": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.6666666666666666, 
+            "meaty": 0.8333333333333334, 
+            "piquant": 0.0, 
+            "salty": 0.16666666666666666, 
+            "sour": 0.6666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "1 1 /2 pounds hamburger", 
+            "1 onion, chopped", 
+            "1 /2 pounds spaghetti, cooked 10 minutes and drained", 
+            "2 cups fresh peas", 
+            "2 cups tomato juice", 
+            "1 pound your favorite cheese"
+        ], 
+        "ingredients": [
+            "hamburger", 
+            "onions", 
+            "spaghetti", 
+            "fresh peas", 
+            "tomato juice", 
+            "cheese"
+        ], 
+        "recipeId": "After-Church-Five-In-One-Skillet-Casserole-1394117", 
+        "recipeName": "After-Church Five-In-One Skillet Casserole", 
+        "totalTimeInSeconds": 3600
+    }, 
+    "Ambur Mutton Biryani recipe-How to make Ambur Biryani": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.16666666666666666, 
+            "meaty": 0.16666666666666666, 
+            "piquant": 0.16666666666666666, 
+            "salty": 0.16666666666666666, 
+            "sour": 0.5, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "1 kg rice, basmati or surdas", 
+            "1 kg mutton, cut into small pieces and cleaned", 
+            "300 ml oil", 
+            "100 gm fresh garlic paste", 
+            "100 gm fresh ginger paste", 
+            "3 tbsp. chilli powder", 
+            "6-7 cloves", 
+            "2 1\u201dstick cinnamon", 
+            "4-5 cardamom", 
+            "5 onion, sliced", 
+            "4 tomato , chopped", 
+            "1 cup yogurt", 
+            "Bunch of mint and coriander leaves", 
+            "2 lemon, juiced", 
+            "Salt to taste"
+        ], 
+        "ingredients": [
+            "rice", 
+            "mutton", 
+            "oil", 
+            "garlic paste", 
+            "ginger paste", 
+            "chili powder", 
+            "clove", 
+            "cinnamon", 
+            "cardamom", 
+            "onions", 
+            "tomatoes", 
+            "yoghurt", 
+            "mint leaves", 
+            "lemon", 
+            "salt"
+        ], 
+        "recipeId": "Ambur-Mutton-Biryani-recipe-How-to-make-Ambur-Biryani-1385516", 
+        "recipeName": "Ambur Mutton Biryani recipe-How to make Ambur Biryani", 
+        "totalTimeInSeconds": 4800
+    }, 
+    "Apple Cider Pork Chops": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": [], 
+        "flavors": null, 
+        "ingredientLines": [
+            "8 pork chops", 
+            "2 cups dark brown sugar", 
+            "1\u00bc cups salt", 
+            "2 tablespoons whole black peppercorns", 
+            "2 tablespoons mustard powder", 
+            "2 cups apple cider vinegar, heated to just boiling", 
+            "4 cups of ice cubes"
+        ], 
+        "ingredients": [
+            "pork chops", 
+            "dark brown sugar", 
+            "salt", 
+            "black peppercorns", 
+            "mustard powder", 
+            "apple cider vinegar", 
+            "ice cubes"
+        ], 
+        "recipeId": "Apple-Cider-Pork-Chops-1383295", 
+        "recipeName": "Apple Cider Pork Chops", 
+        "totalTimeInSeconds": 8220
+    }, 
+    "Apple Maple Pork Loin": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.5, 
+            "meaty": 0.8333333333333334, 
+            "piquant": 0.0, 
+            "salty": 0.6666666666666666, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.5
+        }, 
+        "ingredientLines": [
+            "2 - 2.5 lbs pork loin", 
+            "2 apples, peeled and sliced", 
+            "1\u00bd tsp salt", 
+            "\u00bd tsp black pepper", 
+            "\u00bd tsp ground cinnamon", 
+            "\u00bd onion, sliced", 
+            "\u00bd cup maple syrup"
+        ], 
+        "ingredients": [
+            "pork loin", 
+            "apples", 
+            "salt", 
+            "black pepper", 
+            "ground cinnamon", 
+            "onions", 
+            "maple syrup"
+        ], 
+        "recipeId": "Apple-Maple-Pork-Loin-1369807", 
+        "recipeName": "Apple Maple Pork Loin", 
+        "totalTimeInSeconds": 22800
+    }, 
+    "Apricot Baked Chicken": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "2\u00bd pounds chicken, skinned", 
+            "2 tablespoons mayonnaise or Miracle Whip", 
+            "\u00bd package dried onion soup mix", 
+            "\u00bd cup bottled Russian dressing", 
+            "1 cup apricot jam"
+        ], 
+        "ingredients": [
+            "chicken", 
+            "mayonnaise", 
+            "onion soup mix", 
+            "dress russian", 
+            "apricot jam"
+        ], 
+        "recipeId": "Apricot-Baked-Chicken-1396926", 
+        "recipeName": "Apricot Baked Chicken", 
+        "totalTimeInSeconds": 5400
+    }, 
+    "Apricot Glazed Grilled Pork Tenderloin": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": [], 
+        "flavors": null, 
+        "ingredientLines": [
+            "Grilled Pork", 
+            "1 pound pork tenderloin, trimmed", 
+            "1 tsp dried oregano", 
+            "\u00bd tsp dried, minced onion", 
+            "\u00bd tsp dried, minced garlic", 
+            "\u00bc tsp course ground pepper", 
+            "1-2 tsp extra virgin olive oil", 
+            "\u00bd C apricot preserves", 
+            "1 tsp balsamic vinegar"
+        ], 
+        "ingredients": [
+            "pork", 
+            "pork tenderloin", 
+            "dried oregano", 
+            "dried minced onion", 
+            "dried minced garlic", 
+            "ground pepper", 
+            "extra-virgin olive oil", 
+            "apricot preserves", 
+            "balsamic vinegar"
+        ], 
+        "recipeId": "Apricot-Glazed-Grilled-Pork-Tenderloin-1394651", 
+        "recipeName": "Apricot Glazed Grilled Pork Tenderloin", 
+        "totalTimeInSeconds": 2100
+    }, 
+    "Asian Beef Skewers": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": [
+            "Barbecue", 
+            "Asian"
+        ], 
+        "flavors": {
+            "bitter": 0.8333333333333334, 
+            "meaty": 0.3333333333333333, 
+            "piquant": 0.0, 
+            "salty": 0.8333333333333334, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "\u00bd cup low sodium soy sauce", 
+            "1 tablespoons vegetable oil", 
+            "2 tablespoons lemon juice", 
+            "1 tablespoons honey", 
+            "2 green onions, thinly sliced", 
+            "1 clove garlic, minced", 
+            "\u00bd tablespoon fresh ginger, grated or minced", 
+            "1 pound sirloin steak, cubed (or your favorite cut of beef)", 
+            "1 onion, chopped into large pieces"
+        ], 
+        "ingredients": [
+            "low sodium soy sauce", 
+            "vegetable oil", 
+            "lemon juice", 
+            "honey", 
+            "green onions", 
+            "garlic", 
+            "fresh ginger", 
+            "sirloin steak", 
+            "onions"
+        ], 
+        "recipeId": "Asian-Beef-Skewers-1388789", 
+        "recipeName": "Asian Beef Skewers", 
+        "totalTimeInSeconds": 2400
+    }, 
+    "Au Gratin Potatoes & Sausage Casserole": {
+        "course": [], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "1 box Betty Crocker Au Gratin Potatoes", 
+            "\u00bd pound spicy or mild breakfast sausage", 
+            "\u00bc cup chopped green peppers", 
+            "\u00bc cup diced onion"
+        ], 
+        "ingredients": [
+            "potatoes", 
+            "breakfast sausages", 
+            "green pepper", 
+            "diced onions"
+        ], 
+        "recipeId": "Au-Gratin-Potatoes-_-Sausage-Casserole-1393959", 
+        "recipeName": "Au Gratin Potatoes & Sausage Casserole", 
+        "totalTimeInSeconds": 2100
+    }, 
+    "BBQ Chicken French Bread Pizza": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "French bread, 1 loaf", 
+            "BBQ Sauce, 3/4 cup (divided 1/4 and 1/2)", 
+            "Mozzerella cheese, shredded, 1 1/2 cups", 
+            "Chicken, cooked and shredded, 1 cup", 
+            "Red Onion, diced, 1/4 cup", 
+            "Cilantro, minced, 1/4 cup"
+        ], 
+        "ingredients": [
+            "french bread", 
+            "bbq sauce", 
+            "mozzarella cheese", 
+            "chicken", 
+            "purple onion", 
+            "cilantro"
+        ], 
+        "recipeId": "BBQ-Chicken-French-Bread-Pizza-1391794", 
+        "recipeName": "BBQ Chicken French Bread Pizza", 
+        "totalTimeInSeconds": 1800
+    }, 
+    "BBQ Chicken Pizza": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "1 pound store-bought pizza dough", 
+            "1/3 cup BBQ sauce; 2 tablespoons for chicken (homemade or store-bought)", 
+            "1/3 cup BBQ sauce; 2 tablespoons for chicken (homemade or store-bought)", 
+            "1 cup rotisserie chicken, diced or cubed", 
+            "1/2 small red onion, thinly sliced", 
+            "1 cup mozzarella cheese, grated", 
+            "cilantro, to taste, garnish", 
+            "cornmeal, for dusting baking sheet"
+        ], 
+        "ingredients": [
+            "pizza doughs", 
+            "chicken", 
+            "bbq sauce", 
+            "rotisserie chicken", 
+            "purple onion", 
+            "mozzarella cheese", 
+            "cilantro", 
+            "cornmeal"
+        ], 
+        "recipeId": "BBQ-Chicken-Pizza-1397134", 
+        "recipeName": "BBQ Chicken Pizza", 
+        "totalTimeInSeconds": 2400
+    }, 
+    "BBQ Chicken Quinoa Casserole": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "3\u00a0cups cooked quinoa* (see tutorial for how to cook quinoa)", 
+            "2 cups (8 ounces) shredded Colby Jack cheese**, divided", 
+            "2 cups shredded cooked chicken", 
+            "1 (15-ounce) can black beans,\u00a0rinsed and drained", 
+            "1 cup whole-kernel corn,\u00a0canned or frozen (then thawed)", 
+            "1 1/4 cups KC Masterpiece Kansas City Classic BBQ Sauce, plus extra for drizzling on top", 
+            "optional garnishes: chopped fresh cilantro, finely-chopped red or green onions, diced avocado, sour cream, etc.", 
+            "optional garnishes: chopped fresh cilantro, finely-chopped red or green onions, diced avocado, sour cream, etc.", 
+            "optional garnishes: chopped fresh cilantro, finely-chopped red or green onions, diced avocado, sour cream, etc.", 
+            "optional garnishes: chopped fresh cilantro, finely-chopped red or green onions, diced avocado, sour cream, etc."
+        ], 
+        "ingredients": [
+            "cooked quinoa", 
+            "colby jack cheese", 
+            "cooked chicken", 
+            "black beans", 
+            "corn kernel whole", 
+            "bbq sauce", 
+            "sour cream", 
+            "avocado", 
+            "green onions", 
+            "chopped cilantro fresh"
+        ], 
+        "recipeId": "BBQ-Chicken-Quinoa-Casserole-1391733", 
+        "recipeName": "BBQ Chicken Quinoa Casserole", 
+        "totalTimeInSeconds": 1800
+    }, 
+    "BBQ Chicken Taquitos": {
+        "course": [], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "2 cups cooked chopped chicken", 
+            "2 tablespoons minced onion", 
+            "\u2153 cup of your favorite barbecue sauce", 
+            "1\u00bd cups cheddar cheese", 
+            "10 corn tortillas (you can use flour if you prefer) 6\" size", 
+            "cooking spray or olive oil"
+        ], 
+        "ingredients": [
+            "chicken", 
+            "minced onion", 
+            "barbecue sauce", 
+            "cheddar cheese", 
+            "corn tortillas", 
+            "cooking spray"
+        ], 
+        "recipeId": "BBQ-Chicken-Taquitos-1385820", 
+        "recipeName": "BBQ Chicken Taquitos", 
+        "totalTimeInSeconds": 2400
+    }, 
+    "Bacon Cheddar Pork Chops": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.8333333333333334, 
+            "meaty": 0.8333333333333334, 
+            "piquant": 0.0, 
+            "salty": 0.8333333333333334, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "4 boneless, medium thickness pork chops", 
+            "2 eggs", 
+            "\u00bc cup of milk", 
+            "1.5oz real bacon bits (half of a 3oz package)", 
+            "1 cup bread crumbs", 
+            "1.5 cups shredded cheddar or cheddar blend cheese", 
+            "chopped green onions to garnish"
+        ], 
+        "ingredients": [
+            "pork chops", 
+            "eggs", 
+            "milk", 
+            "bacon bits", 
+            "bread crumbs", 
+            "shredded cheddar cheese", 
+            "green onions"
+        ], 
+        "recipeId": "Bacon-Cheddar-Pork-Chops-1397101", 
+        "recipeName": "Bacon Cheddar Pork Chops", 
+        "totalTimeInSeconds": 2100
+    }, 
+    "Bacon Cheeseburger Crescents": {
+        "course": [], 
+        "cuisine": [], 
+        "flavors": null, 
+        "ingredientLines": [
+            "1 lb lean ground beef", 
+            "8 slices pre-cooked bacon, chopped", 
+            "8 oz Velveeta cheese (I used 2%)", 
+            "1 Tbsp Worcestershire sauce", 
+            "1 Tbsp dried minced onion flakes", 
+            "2 cans refrigerated crescent rolls (I used low-fat)"
+        ], 
+        "ingredients": [
+            "lean ground beef", 
+            "cooked bacon", 
+            "Velveeta", 
+            "worcestershire sauce", 
+            "onion flakes", 
+            "refrigerated crescent rolls"
+        ], 
+        "recipeId": "Bacon-Cheeseburger-Crescents-1363342", 
+        "recipeName": "Bacon Cheeseburger Crescents", 
+        "totalTimeInSeconds": 1800
+    }, 
+    "Bacon Cheeseburger Meatloaf | Freezer to Slow Cooker Meals": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.8333333333333334, 
+            "meaty": 0.8333333333333334, 
+            "piquant": 0.0, 
+            "salty": 0.8333333333333334, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "2 lbs. ground beef", 
+            "8 pieces pre cooked bacon, chopped small", 
+            "1 \u00bd cups shredded cheddar cheese", 
+            "\u00be cup bread crumbs", 
+            "\u00bd cup ketchup", 
+            "1 T. worcestershire", 
+            "2 garlic cloves, crushed", 
+            "2 tsp. onion flakes", 
+            "1 tsp.salt", 
+            "1 tsp.pepper"
+        ], 
+        "ingredients": [
+            "ground beef", 
+            "cooked bacon", 
+            "shredded cheddar cheese", 
+            "bread crumbs", 
+            "ketchup", 
+            "worcestershire sauce", 
+            "garlic cloves", 
+            "onion flakes", 
+            "salt", 
+            "pepper"
+        ], 
+        "recipeId": "Bacon-Cheeseburger-Meatloaf-_-Freezer-to-Slow-Cooker-Meals-1394110", 
+        "recipeName": "Bacon Cheeseburger Meatloaf | Freezer to Slow Cooker Meals", 
+        "totalTimeInSeconds": 3600
+    }, 
+    "Bacon Maple Pork Tenderloin": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "1 pork tenderloin", 
+            "8 to 10 slices good-quality bacon;", 
+            "4 tbsp. maple syrup or raw honey; (optional)", 
+            "2 tbsp. Dijon mustard;", 
+            "\u00bc cup unsweetened applesauce;", 
+            "1 tsp. chili powder;", 
+            "\u00bd tsp. smoked paprika;", 
+            "\u00bc tsp. ground cinnamon;", 
+            "Cooking fat;", 
+            "Sea salt and freshly ground black pepper;", 
+            "Sea salt and freshly ground black pepper;"
+        ], 
+        "ingredients": [
+            "pork tenderloin", 
+            "bacon", 
+            "maple syrup", 
+            "dijon mustard", 
+            "unsweetened applesauce", 
+            "chili powder", 
+            "smoked paprika", 
+            "ground cinnamon", 
+            "cooking fat", 
+            "freshly ground black pepper", 
+            "sea salt"
+        ], 
+        "recipeId": "Bacon-Maple-Pork-Tenderloin-1385163", 
+        "recipeName": "Bacon Maple Pork Tenderloin", 
+        "totalTimeInSeconds": 3000
+    }, 
+    "Bacon-Wrapped Filet Mignon": {
+        "course": [], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "2 (8-to10-ounce) filets, 2 inches thick", 
+            "Kosher salt and freshly ground black pepper", 
+            "Kosher salt and freshly ground black pepper", 
+            "Garlic powder", 
+            "2 thin bacon slices", 
+            "2 tablespoons unsalted butter", 
+            "2 tablespoons extra-virgin olive oil"
+        ], 
+        "ingredients": [
+            "filet", 
+            "freshly ground black pepper", 
+            "kosher salt", 
+            "garlic powder", 
+            "bacon slices", 
+            "unsalted butter", 
+            "extra-virgin olive oil"
+        ], 
+        "recipeId": "Bacon-Wrapped-Filet-Mignon-1386219", 
+        "recipeName": "Bacon-Wrapped Filet Mignon", 
+        "totalTimeInSeconds": 1500
+    }, 
+    "Baked BBQ Pork Chops": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.8333333333333334, 
+            "meaty": 0.3333333333333333, 
+            "piquant": 0.0, 
+            "salty": 0.8333333333333334, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.5
+        }, 
+        "ingredientLines": [
+            "6 boneless thin cut pork chops", 
+            "1 bottle organic BBQ sauce", 
+            "\u00bd medium onion, sliced", 
+            "1 tablespoon freshly chopped parsley", 
+            "1 teaspoon garlic salt", 
+            "\u00bd teaspoon black pepper"
+        ], 
+        "ingredients": [
+            "pork chops", 
+            "bbq sauce", 
+            "onions", 
+            "chopped parsley", 
+            "garlic salt", 
+            "black pepper"
+        ], 
+        "recipeId": "Baked-BBQ-Pork-Chops-1379277", 
+        "recipeName": "Baked BBQ Pork Chops", 
+        "totalTimeInSeconds": 2100
+    }, 
+    "Baked Cod with Olive Topping": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": [], 
+        "flavors": {
+            "bitter": 0.16666666666666666, 
+            "meaty": 0.3333333333333333, 
+            "piquant": 0.0, 
+            "salty": 0.6666666666666666, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "2 cups mixed pitted olives, coarsely chopped", 
+            "1 heaping cup cherry tomatoes, sliced crosswise", 
+            "2 tablespoons extra virgin olive oil", 
+            "1 to 2 tablespoons fresh parsley, diced", 
+            "4 (6 ounce) cod fillets", 
+            "1 tablespoon extra virgin olive oil", 
+            "kosher salt and pepper", 
+            "kosher salt and pepper"
+        ], 
+        "ingredients": [
+            "pitted olives", 
+            "cherry tomatoes", 
+            "extra-virgin olive oil", 
+            "fresh parsley", 
+            "cod fillets", 
+            "kosher salt", 
+            "pepper"
+        ], 
+        "recipeId": "Baked-Cod-with-Olive-Topping-1394002", 
+        "recipeName": "Baked Cod with Olive Topping", 
+        "totalTimeInSeconds": 1200
+    }, 
+    "Baked Creamy Cheesy White Sauce Gnocchi": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.16666666666666666, 
+            "meaty": 0.16666666666666666, 
+            "piquant": 0.0, 
+            "salty": 0.6666666666666666, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "1 pound Gnocchi (homemade or store-bought, my store-bought Gnocchi said cooked in 2 minutes)", 
+            "\u00bc cup + 2 tablespoons freshly grated Parmesan cheese", 
+            "1 cup grated Fontal (or Gruyere) cheese", 
+            "fresh thyme", 
+            "WHITE SAUCE", 
+            "1 tablespoon butter", 
+            "1 cup milk (I used 2%)", 
+            "1 tablespoon flour", 
+            "pinch salt", 
+            "dash of oregano, basil and pepper"
+        ], 
+        "ingredients": [
+            "gnocchi", 
+            "grated parmesan cheese", 
+            "gruyere cheese", 
+            "fresh thyme", 
+            "sauce", 
+            "butter", 
+            "milk", 
+            "flour", 
+            "salt", 
+            "oregano"
+        ], 
+        "recipeId": "Baked-Creamy-Cheesy-White-Sauce-Gnocchi-1391282", 
+        "recipeName": "Baked Creamy Cheesy White Sauce Gnocchi", 
+        "totalTimeInSeconds": 1560
+    }, 
+    "Baked Garlic Lemon Tilapia": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "6 tilapia fillets (about 5 ounces each)", 
+            "3 tablespoons freshly squeezed lemon juice", 
+            "2-3 cloves garlic, finely chopped", 
+            "2-3 tablespoons melted butter", 
+            "1 tablespoon finely chopped parsley", 
+            "2 pinches Italian or Provencal herbs blend", 
+            "Salt and freshly ground white pepper to taste", 
+            "Salt and freshly ground white pepper to taste"
+        ], 
+        "ingredients": [
+            "tilapia fillets", 
+            "lemon juice", 
+            "garlic", 
+            "melted butter", 
+            "chopped parsley", 
+            "herbs", 
+            "ground white pepper", 
+            "salt"
+        ], 
+        "recipeId": "Baked-Garlic-Lemon-Tilapia-1385405", 
+        "recipeName": "Baked Garlic Lemon Tilapia", 
+        "totalTimeInSeconds": 2400
+    }, 
+    "Baked Honey Salmon in Foil": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.16666666666666666, 
+            "meaty": 0.6666666666666666, 
+            "piquant": 0.16666666666666666, 
+            "salty": 0.16666666666666666, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.5
+        }, 
+        "ingredientLines": [
+            "\u00bc cup honey", 
+            "2 cloves garlic, grated or crushed", 
+            "1\u00bd tablespoons olive oil", 
+            "1 tablespoon apple cider vinegar", 
+            "1\u00bd tablespoons fresh thyme", 
+            "\u00bd teaspoon salt", 
+            "\u215b teaspoon ground pepper", 
+            "1\u00bd - 2 pound salmon piece"
+        ], 
+        "ingredients": [
+            "honey", 
+            "garlic", 
+            "olive oil", 
+            "apple cider vinegar", 
+            "fresh thyme", 
+            "salt", 
+            "ground pepper", 
+            "salmon"
+        ], 
+        "recipeId": "Baked-Honey-Salmon-in-Foil-1394101", 
+        "recipeName": "Baked Honey Salmon in Foil", 
+        "totalTimeInSeconds": 2100
+    }, 
+    "Baked Macaroni and Cheese": {
+        "course": [
+            "Main Dishes", 
+            "Side Dishes"
+        ], 
+        "cuisine": [], 
+        "flavors": {
+            "bitter": 0.5, 
+            "meaty": 0.5, 
+            "piquant": 0.16666666666666666, 
+            "salty": 0.6666666666666666, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.3333333333333333
+        }, 
+        "ingredientLines": [
+            "8 ounces elbow macaroni", 
+            "3 tablespoons unsalted butter", 
+            "3 tablespoons all-purpose flour", 
+            "1 tablespoon ground (powdered) mustard*", 
+            "1 teaspoon smoked paprika**", 
+            "1/2 cup onion, diced small", 
+            "3 cups whole milk", 
+            "1 large egg", 
+            "9 ounces sharp cheddar cheese, grated", 
+            "1 teaspoon kosher salt", 
+            "1/2 teaspoon black pepper, freshly ground"
+        ], 
+        "ingredients": [
+            "elbow macaroni", 
+            "unsalted butter", 
+            "all-purpose flour", 
+            "mustard", 
+            "smoked paprika", 
+            "onions", 
+            "whole milk", 
+            "large eggs", 
+            "sharp cheddar cheese", 
+            "kosher salt", 
+            "black pepper"
+        ], 
+        "recipeId": "Baked-Macaroni-and-Cheese-1381859", 
+        "recipeName": "Baked Macaroni and Cheese", 
+        "totalTimeInSeconds": 4200
+    }, 
+    "Baked Penne Vodka": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": null, 
+        "ingredientLines": [
+            "1 pound of dried penne", 
+            "1 jar of Classic Vodka Sauce", 
+            "8 ounces fresh mozzarella, cut into 1/2\" cubes (divided)", 
+            "1 tablespoon of butter", 
+            "Fresh basil and freshly grated parmesan for serving", 
+            "Fresh basil and freshly grated parmesan for serving"
+        ], 
+        "ingredients": [
+            "penne", 
+            "vodka sauce", 
+            "fresh mozzarella", 
+            "butter", 
+            "freshly grated parmesan", 
+            "fresh basil"
+        ], 
+        "recipeId": "Baked-Penne-Vodka-1379910", 
+        "recipeName": "Baked Penne Vodka", 
+        "totalTimeInSeconds": 3300
+    }, 
+    "Baked Ranch Chicken": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": [], 
+        "flavors": null, 
+        "ingredientLines": [
+            "4 skinless, boneless chicken breasts (4oz each)", 
+            "1 cup cornflakes cereal", 
+            "1 packet dry Ranch dressing mix", 
+            "1/2 cup fat free sour cream"
+        ], 
+        "ingredients": [
+            "boneless skinless chicken breasts", 
+            "cornflake cereal", 
+            "ranch dressing", 
+            "non-fat sour cream"
+        ], 
+        "recipeId": "Baked-Ranch-Chicken-1365052", 
+        "recipeName": "Baked Ranch Chicken", 
+        "totalTimeInSeconds": 4200
+    }, 
+    "Baked Salmon with Herbed Mayo": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": null, 
+        "flavors": {
+            "bitter": 0.3333333333333333, 
+            "meaty": 0.8333333333333334, 
+            "piquant": 0.0, 
+            "salty": 0.5, 
+            "sour": 0.8333333333333334, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "1 lb. salmon fillet", 
+            "1 cup mayonnaise", 
+            "1 cup chopped fresh parsley", 
+            "1 tablespoon lemon juice", 
+            "2 teaspoons seasoning salt"
+        ], 
+        "ingredients": [
+            "salmon fillets", 
+            "mayonnaise", 
+            "fresh parsley", 
+            "lemon juice", 
+            "seasoning salt"
+        ], 
+        "recipeId": "Baked-Salmon-with-Herbed-Mayo-1389328", 
+        "recipeName": "Baked Salmon with Herbed Mayo", 
+        "totalTimeInSeconds": 2400
+    }, 
+    "Baked Sloppy Joe Cups": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": [], 
+        "flavors": {
+            "bitter": 0.6666666666666666, 
+            "meaty": 0.6666666666666666, 
+            "piquant": 0.0, 
+            "salty": 0.8333333333333334, 
+            "sour": 0.16666666666666666, 
+            "sweet": 0.16666666666666666
+        }, 
+        "ingredientLines": [
+            "1 pound ground chuck beef (80% lean)", 
+            "1/2 cup chopped yellow onion", 
+            "1 can (15 oz each) Manwich\u00ae Original Sloppy Joe Sauce", 
+            "1 pkg (12 oz each) refrigerated Texas-style buttermilk biscuits", 
+            "2/3 cup shredded Cheddar and Monterey Jack cheese blend"
+        ], 
+        "ingredients": [
+            "beef", 
+            "yellow onion", 
+            "sloppy joe sauce", 
+            "buttermilk biscuits", 
+            "shredded cheddar cheese"
+        ], 
+        "recipeId": "Baked-Sloppy-Joe-Cups-1392469", 
+        "recipeName": "Baked Sloppy Joe Cups", 
+        "totalTimeInSeconds": 2400
+    }, 
+    "Baked Ziti": {
+        "course": [
+            "Main Dishes"
+        ], 
+        "cuisine": [], 
+        "flavors": null, 
+        "ingredientLines": [
+            "1 23.5oz jar organic marinara sauce", 
+            "3-1/2 cups dry ziti or penne pasta", 
+            "1-1/2 cups shredded mozzarella cheese", 
+            "\u00bd cup shredded Parmesan cheese", 
+            "1 cup whole milk ricotta cheese", 
+            "2 tablespoons dried basil", 
+            "\u00bd teaspoon sea salt + 2 tablespoons for the pasta water", 
+            "\u00bd teaspoon sea salt + 2 tablespoons for the pasta water", 
+            "2 tablespoons olive oil"
+        ], 
+        "ingredients": [
+            "marinara sauce", 
+            "ziti", 
+            "shredded mozzarella cheese", 
+            "shredded parmesan cheese", 
+            "whole milk ricotta cheese", 
+            "dried basil", 
+            "sea salt", 
+            "pasta water", 
+            "olive oil"
+        ], 
+        "recipeId": "Baked-Ziti-1379302", 
+        "recipeName": "Baked Ziti", 
+        "totalTimeInSeconds": 2100
+    }
+}

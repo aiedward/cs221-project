@@ -60,6 +60,7 @@ def init(pathToRoot):
 	global GOV_NUT_API_KEY_2
 	global GOV_NUT_API_KEY_3
 	global GOV_NUT_API_KEY_4
+	global GOV_NUT_API_KEY_5
 	global GOV_NUT_API_KEY_6 
 	global GOV_NUT_API_KEY_7 
 	global GOV_NUT_API_KEY_8 

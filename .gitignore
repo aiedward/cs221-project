@@ -2,4 +2,5 @@ recipe_writer/res/jsonrecipes
 recipe_writer/res/aliasdata
 recipe_writer/res/allRecipes.json
 recipe_writer/res/allNutritional.json
+recipe_writer/res/nutrients
 *.pyc

@@ -1,0 +1,166 @@
+{
+    "(    oz.) tomato sauce": {
+        "aliasBuddies": {
+            "bay leaves": 1, 
+            "beer": 1, 
+            "bell pepper": 1, 
+            "burger rolls": 1, 
+            "butter": 1, 
+            "cayenne pepper": 1, 
+            "chili powder": 2, 
+            "cilantro leaves": 1, 
+            "cocoa powder": 1, 
+            "cooked rice": 1, 
+            "crushed tomatoes": 1, 
+            "dried oregano": 1, 
+            "dried thyme": 1, 
+            "extra lean ground beef": 1, 
+            "extra-virgin olive oil": 1, 
+            "fresh ginger": 1, 
+            "garlic": 1, 
+            "garlic powder": 1, 
+            "green cabbage": 1, 
+            "green lentil": 1, 
+            "green olives": 1, 
+            "ground black pepper": 2, 
+            "ground chile": 1, 
+            "ground coriander": 1, 
+            "ground cumin": 2, 
+            "ground lamb": 1, 
+            "ground turmeric": 1, 
+            "honey": 1, 
+            "hungarian paprika": 1, 
+            "italian herbs": 1, 
+            "large garlic cloves": 1, 
+            "lean ground beef": 2, 
+            "lentils": 1, 
+            "low-fat cheese": 1, 
+            "low-fat sour cream": 1, 
+            "macaroni": 1, 
+            "minced garlic": 3, 
+            "mint leaves": 1, 
+            "montreal steak seasoning": 1, 
+            "olive oil": 3, 
+            "onions": 5, 
+            "pepper": 1, 
+            "pinto beans": 1, 
+            "plain greek yogurt": 1, 
+            "roasted tomatoes": 1, 
+            "salt": 5, 
+            "shallots": 1, 
+            "shredded cheddar cheese": 1, 
+            "sliced green onions": 1, 
+            "smoked sweet spanish paprika": 1, 
+            "sour cream": 1, 
+            "soy sauce": 1, 
+            "sugar": 1, 
+            "tabasco green pepper sauce": 1, 
+            "thick-cut bacon": 1, 
+            "tomatoes with juice": 3, 
+            "water": 2, 
+            "worcestershire sauce": 1
+        }, 
+        "count": 5, 
+        "lines": [
+            "1 can (8 oz.) tomato sauce", 
+            "1 can (8 oz.) tomato sauce", 
+            "1 can (8 oz.) tomato sauce", 
+            "1 can (15 oz.) tomato sauce", 
+            "1 can (14.5 oz.) petite dice tomatoes with juice"
+        ]
+    }, 
+    "(   oz.) tomato paste": {
+        "aliasBuddies": {
+            "brown sugar": 1, 
+            "butter": 1, 
+            "chili powder": 1, 
+            "colby jack cheese": 1, 
+            "flour": 1, 
+            "garlic": 1, 
+            "ground beef": 1, 
+            "hot dogs": 1, 
+            "milk": 1, 
+            "minced onion": 1, 
+            "pepper": 1, 
+            "salt": 1, 
+            "smoked paprika": 1, 
+            "tortilla chips": 1, 
+            "water": 1, 
+            "worcestershire sauce": 1, 
+            "yellow mustard": 1
+        }, 
+        "count": 1, 
+        "lines": [
+            "1 can (6 oz) tomato paste"
+        ]
+    }, 
+    "(10 oz.) frozen chopped spinach": {
+        "aliasBuddies": {
+            "bread": 1, 
+            "fresh parsley": 1, 
+            "garlic": 1, 
+            "large eggs": 1, 
+            "lean ground beef": 1, 
+            "olive oil": 1, 
+            "onions": 1, 
+            "pecorino romano cheese": 1, 
+            "pepper": 1, 
+            "salt": 1, 
+            "tuttorosso crushed tomatoes": 1
+        }, 
+        "count": 1, 
+        "lines": [
+            "10 oz frozen chopped spinach, thawed and drained of all liquid"
+        ]
+    }, 
+    "(10 oz.) frozen chopped spinach, thawed and squeezed dry": {
+        "aliasBuddies": {
+            "black olives": 1, 
+            "cayenne": 1, 
+            "chili powder": 1, 
+            "crab": 1, 
+            "flat leaf parsley": 1, 
+            "garlic": 1, 
+            "jack cheese": 1, 
+            "jalapeno chilies": 1, 
+            "mayonnaise": 1, 
+            "olive oil": 1, 
+            "onions": 1, 
+            "pepper": 1, 
+            "salt": 1, 
+            "tomato salsa": 1, 
+            "whole wheat tortillas": 1, 
+            "worcestershire sauce": 1
+        }, 
+        "count": 1, 
+        "lines": [
+            "1 box (10 oz.) frozen chopped spinach, thawed and squeezed dry"
+        ]
+    }, 
+    "(10 oz.) frozen mixed vegetables": {
+        "aliasBuddies": {
+            "1% low-fat milk": 1, 
+            "celery": 1, 
+            "fat-free chicken broth": 1, 
+            "fatfree lowsodium chicken broth": 1, 
+            "flour": 1, 
+            "garlic": 1, 
+            "ground turkey": 1, 
+            "mushrooms": 1, 
+            "olive oil": 1, 
+            "onions": 1, 
+            "paprika": 1, 
+            "parsnips": 1, 
+            "reduced-fat sour cream": 1, 
+            "rosemary": 1, 
+            "salt": 1, 
+            "sweet potatoes": 1, 
+            "tomato paste": 1, 
+            "worcestershire sauce": 1
+        }, 
+        "count": 1, 
+        "lines": [
+            "8 oz mushrooms, diced"
+        ]
+    }
+}
