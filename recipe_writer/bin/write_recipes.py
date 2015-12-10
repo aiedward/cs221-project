@@ -5,7 +5,7 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 
-from lib import util, kmeans, search #, csp
+from lib import util, kmeans, search, csp
 from lib import constants as c
 # c.init(os.path.dirname(os.path.dirname(__file__)))
 
@@ -17,6 +17,7 @@ from lib import constants as c
 # Second argument expected to be alias data file that we will import from.
 ##
 def main(argv):
+	print "In write_recipes.py, c.PATH_TO_ROOT: ", c.PATH_TO_ROOT
 	argd = processArgs(argv)
 
 	results = runModule(argd)

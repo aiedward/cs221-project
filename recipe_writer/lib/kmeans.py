@@ -11,7 +11,7 @@ import json, unicodedata
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction import DictVectorizer
 # import matplotlib.pyplot as plt
-from lib import I jutil
+from lib import util
 from lib import constants as c
 
 # NOTE

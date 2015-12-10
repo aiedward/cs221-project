@@ -11,6 +11,8 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 
+from lib import constants as c
+
 aliasData = None
 
 # Function: safeConnect
@@ -38,22 +40,24 @@ def safeConnect(fxn, args, tries=40):
 ##
 def loadJSONDict(jsonFilePath):
     global aliasData
-	# Read in the JSON file containing recipe data
-	fullJsonString = None
-	with open(jsonFilePath, 'r') as f:
+    # Read in the JSON file containing recipe data
+    fullJsonString = None
+    with open(jsonFilePath, 'r') as f:
 		fullJsonString = f.read()
 
-	# This is dead code I was trying to use to remove all escaped unicode
-	# characters (e.g. \u00bd) or convert them to ascii
-	#noUnicodeJsonString = fullJsonString.decode('unicode_escape').encode('ascii','ignore')
-	#asciiJsonString = fullJsonString.decode('unicode-escape')
+    # This is dead code I was trying to use to remove all escaped unicode
+    # characters (e.g. \u00bd) or convert them to ascii
+    #noUnicodeJsonString = fullJsonString.decode('unicode_escape').encode('ascii','ignore')
+    #asciiJsonString = fullJsonString.decode('unicode-escape')
 
-	# Read the JSON file in as a dictionary
-	d = json.JSONDecoder()
-	returnDict = d.decode(fullJsonString)
+    # Read the JSON file in as a dictionary
+    d = json.JSONDecoder()
+    returnDict = d.decode(fullJsonString)
 
     if "aliasData_" in jsonFilePath:
         aliasData = copy.deepcopy(returnDict)
+
+    return returnDict
 
 ##
 # Function: loadJSONDicts
@@ -162,7 +166,7 @@ def getAliasData():
 # Return a list of all aliases found in recipes.
 ##
 def listAllAliases():
-    getAliasData().keys()
+    return getAliasData().keys()
 
 ##
 # Function: string_appendDateAndTime
@@ -209,8 +213,20 @@ def meatStringQ(alias):
             return True
     return False
 
+##
+# Function aliasBuddyScore
+# ------------------------
+# score = ((# times seen together) / (total # alias1 appearances) + 
+#          (# times seen together) / (total # alias2 appearances)) / 2
+##
 def aliasBuddyScore(alias1, alias2):
-    return getAliasData()[alias1]["aliasBuddies"][alias2]
+    aliasData = getAliasData()
+    freq1 = aliasData[alias1]["count"]
+    freq2 = aliasData[alias2]["count"]
+    freqTogether = aliasData[alias1]["aliasBuddies"][alias2]
+    buddyScore = (freqTogether / freq1) + (freqTogether / freq2)
+    buddyScore /= 2
+    return buddyScore
 
 
 
@@ -500,8 +516,12 @@ class BacktrackingSearch():
 
         # Select the next variable to be assigned.
         var = self.get_unassigned_variable(assignment)
+
         # Get an ordering of the values.
         ordered_values = self.domains[var]
+
+        # Austin addition: Sort the values based on how optimal they will be
+        ordered_values = sorted(ordered_values, key=lambda val: -self.get_delta_weight(assignment, var, val))
 
         # Continue the backtracking recursion using |var| and |ordered_values|.
         if not self.ac3:
