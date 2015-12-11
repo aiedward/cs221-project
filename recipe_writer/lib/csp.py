@@ -28,7 +28,6 @@ constants.init(os.path.dirname(os.path.dirname(__file__)))
 def run(verbose):
     # These variables will likely be fed through run()'s arguments later
     traitsDataPath = os.path.join(constants.PATH_TO_ROOT, "res", "csp_defaultTraits.json")
-    print traitsDataPath
     traits = util.loadJSONDict(traitsDataPath)
 
     traits["verbose"] = verbose
@@ -41,14 +40,14 @@ def run(verbose):
 
     # With each ingredient now assigned an alias, solve the csp of choosing
     # amounts (mass in grams) for each ingredient
-    # solveAmountCSP(traits)
+    solveAmountCSP(traits)
 
     # Print status update
     if verbose:
         print "csp.py ran successfully"
 
     # return {k: v for k, v in traits.items() if k in ["alias_choices"]}
-    # return {k: v for k, v in traits.items() if k in ["alias_choices", "amount choices"]}
+    return {k: v for k, v in traits.items() if k in ["alias_choices", "amount choices"]}
 
 ##
 # Function: solveAliasCSP
@@ -198,70 +197,9 @@ def getAmountDomain(traits):
 
 
 
-##
-# Function: get_ingredient_sum_variable
-# -------------------------------------
-# Create a set of variables that have binary factors in between them to limit
-# the sum of a certain trait of the ingredients.
-# conversionFxn takes in a name variable assignment
-def get_ingredient_sum_variable(csp, traits, name, sumVal, minOrMax, conversionFxn):
-    nameVars = getNameVars(csp)
-    amountVars = getAmountVars(csp)
 
-    # maxVarAmounts = [max(csp.values[amountVar]) for amountVar in amountVars]
-    # minVarAmounts = [min(csp.values[amountVar]) for amountVar in amountVars]
 
-    # runningMaxSum = 0
-    # runningMinSum = 0
 
-    last_var = None
-    last_var_domain = None
-
-    # The domain for the first/second value of a B pair is set to be the same
-    # as the amountVar for simplicity.
-    # Add all unique first/second value pairs to the full domain of a B pair.
-    sumVarDomain = itertools.permutations(getAmountDomain(traits), 2)
-
-    for i, amountVar in enumerate(amountVars):
-        # Give the new variable a name
-        newVar = ('sum', name, i)
-
-        # The first of the sum variables can only have 0 as its first element.
-        newVarDomain = None
-        if i == 0:
-            newVarDomain = filter(function=lambda B: B[0] == 0, iterable=sumVarDomain)
-        else:
-            newVarDomain = sumVarDomain
-
-        # Add the new variable/domain pair to the csp
-        csp.add_variable(newVar, newVarDomain)
-
-        # Add a binary factor that ties this new sum var to its corresponding
-        # amount var
-        def amountVar_sumVar_CongruentQ(xi, bi):
-            return bi[1] == bi[0] + xi
-        csp.add_binary_factor(amountVars[i], newVar, amountVar_sumVar_CongruentQ)
-        
-        if i != 0:
-            csp.add_binary_factor(last_var, newVar, lambda bimin1, bi: bi[0] == bimin1[1])
-
-        last_var = newVar
-        last_var_domain = newVarDomain
-
-    finalSumVar = ('sum', name, len(amountVars))
-    csp.add_variable(finalSumVar, range(0, sumVal+1))
-
-    if minOrMax == "max":
-        csp.add_unary_factor(finalSumVar, lambda bn: bn <= sumVal)
-    else:
-        csp.add_unary_factor(finalSumVar, lambda bn: bn >= sumVal)
-
-    if last_var:
-        csp.add_binary_factor(last_var, finalSumVar, lambda bnmin1, bn: bn == bnmin1[1])
-    else:
-        csp.add_unary_factor(finalSumVar, lambda bn: bn == 0)
-
-    return sumVar
 
 
 class AliasCSP:
@@ -330,7 +268,6 @@ class AliasCSPSolver:
 
     def solve(self, csp):
         self.csp = csp
-        self.initializeVariables()
         self.beamSearch()
         if self.verbose:
             print
@@ -364,7 +301,31 @@ class AliasCSPSolver:
         if failed:
             self.initializeVariables()
 
-    def getDeltaWeight(self, newVar, newVal, varAssigned=True):
+
+    def beamSearch(self):
+        if self.verbose:
+            print "\nStarting beamSearch in csp.py to pick aliases..."
+        self.initializeVariables()
+        for i in xrange(self.numIters):
+            for var in self.csp.variables:
+                possibleValues = self.csp.domain
+                if len(possibleValues) == 0:
+                    return
+                # elif len(possibleValues) % 100 == 0:
+                #     print "\n###"
+                #     print "There are %d ingredients left to try." % len(possibleValues)
+                #     print "\n###"
+                val = random.choice(possibleValues)
+                if self.getDeltaWeight2(var, val) > 0:
+                    print
+                    print "Old assignments: ", self.curAssignment.values()
+                    print "Old score: ", self.calculateCurrentWeight()
+                    self.curAssignment[var] = val
+                    print "New assignments: ", self.curAssignment.values()
+                    print "New score: ", self.calculateCurrentWeight()
+                self.csp.domain.remove(val)
+
+        def getDeltaWeight(self, newVar, newVal, varAssigned=True):
         oldWeight = self.calculateCurrentWeight()
 
         oldVal = self.curAssignment[newVar]
@@ -470,30 +431,70 @@ class AliasCSPSolver:
 
         return weight
 
+##
+# Function: get_ingredient_sum_variable
+# -------------------------------------
+# Create a set of variables that have binary factors in between them to limit
+# the sum of a certain trait of the ingredients.
+# conversionFxn takes in a name variable assignment
+def get_ingredient_sum_variable(csp, traits, name, sumVal, minOrMax, conversionFxn):
+    nameVars = getNameVars(csp)
+    amountVars = getAmountVars(csp)
 
-    def beamSearch(self):
-        print "Starting beamSearch in csp.py to pick aliases..."
-        for i in xrange(self.numIters):
-            for var in self.csp.variables:
-                possibleValues = self.csp.domain
-                if len(possibleValues) == 0:
-                    return
-                # elif len(possibleValues) % 100 == 0:
-                #     print "\n###"
-                #     print "There are %d ingredients left to try." % len(possibleValues)
-                #     print "\n###"
-                val = random.choice(possibleValues)
-                if self.getDeltaWeight2(var, val) > 0:
-                    print
-                    print "Old assignments: ", self.curAssignment.values()
-                    print "Old score: ", self.calculateCurrentWeight()
-                    self.curAssignment[var] = val
-                    print "New assignments: ", self.curAssignment.values()
-                    print "New score: ", self.calculateCurrentWeight()
-                self.csp.domain.remove(val)
+    # maxVarAmounts = [max(csp.values[amountVar]) for amountVar in amountVars]
+    # minVarAmounts = [min(csp.values[amountVar]) for amountVar in amountVars]
 
+    # runningMaxSum = 0
+    # runningMinSum = 0
 
+    last_var = None
+    last_var_domain = None
 
+    # The domain for the first/second value of a B pair is set to be the same
+    # as the amountVar for simplicity.
+    # Add all unique first/second value pairs to the full domain of a B pair.
+    sumVarDomain = itertools.permutations(getAmountDomain(traits), 2)
+
+    for i, amountVar in enumerate(amountVars):
+        # Give the new variable a name
+        newVar = ('sum', name, i)
+
+        # The first of the sum variables can only have 0 as its first element.
+        newVarDomain = None
+        if i == 0:
+            newVarDomain = filter(function=lambda B: B[0] == 0, iterable=sumVarDomain)
+        else:
+            newVarDomain = sumVarDomain
+
+        # Add the new variable/domain pair to the csp
+        csp.add_variable(newVar, newVarDomain)
+
+        # Add a binary factor that ties this new sum var to its corresponding
+        # amount var
+        def amountVar_sumVar_CongruentQ(xi, bi):
+            return bi[1] == bi[0] + xi
+        csp.add_binary_factor(amountVars[i], newVar, amountVar_sumVar_CongruentQ)
+        
+        if i != 0:
+            csp.add_binary_factor(last_var, newVar, lambda bimin1, bi: bi[0] == bimin1[1])
+
+        last_var = newVar
+        last_var_domain = newVarDomain
+
+    finalSumVar = ('sum', name, len(amountVars))
+    csp.add_variable(finalSumVar, range(0, sumVal+1))
+
+    if minOrMax == "max":
+        csp.add_unary_factor(finalSumVar, lambda bn: bn <= sumVal)
+    else:
+        csp.add_unary_factor(finalSumVar, lambda bn: bn >= sumVal)
+
+    if last_var:
+        csp.add_binary_factor(last_var, finalSumVar, lambda bnmin1, bn: bn == bnmin1[1])
+    else:
+        csp.add_unary_factor(finalSumVar, lambda bn: bn == 0)
+
+    return sumVar
 
 
 if __name__ == "__main__":
