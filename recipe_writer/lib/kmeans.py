@@ -19,6 +19,11 @@ from lib import constants as c
 
 COMMAND_LINE = ""
 MEATY_IMPLEMENTATION = 2
+TOTAL_TIME_ADJUSTMENT = 1/float(1000)
+NUM_INGREDIENT_ADJUSTMENT = float(5)
+MEATY_ADJUSTMENT = float(20)
+FLAVOR_ADJUSTMENT = float(100)
+CUISINE_ADJUSTMENT = float(100)
 
 # NOTE
 # K-Means
@@ -66,7 +71,7 @@ def testDatapoints():
 def cuisinePoint(point, cuisine):
 	if cuisine is not None and len(cuisine) > 0:
 		for cui in cuisine:
-			point['cuisine-' + cui] = 1
+			point['cuisine-' + cui] = 1 * CUISINE_ADJUSTMENT
 
 def meatyPoint(point, ingredients, recipeName):
 	if MEATY_IMPLEMENTATION in [1, 2, 3]:
@@ -77,30 +82,39 @@ def meatyPoint(point, ingredients, recipeName):
 
 		# Implementation 1: % of ingredients that are meaty
 		if MEATY_IMPLEMENTATION == 1:
-			point['meaty'] = float(meatyCount)/len(ingredients) * 100
+			point['meaty'] = float(meatyCount)/len(ingredients) * FLAVOR_ADJUSTMENT
 
 		# Implementation 2: num of ingredients that are meaty
 		if MEATY_IMPLEMENTATION == 2:
-			point['meaty'] = float(meatyCount)*20
+			point['meaty'] = float(meatyCount)*MEATY_ADJUSTMENT
 
 		# Implementation 3: num of ingredients + recipe name that are meaty
 		if MEATY_IMPLEMENTATION == 3:
 			for word in recipeName.split():
 				if util.meatStringQ(word.lower()):
 					meatyCount += 1
-			point['meaty'] = float(meatyCount)*20
+			point['meaty'] = float(meatyCount)*MEATY_ADJUSTMENT
 
 def flavorPoint(point, flavors, flavorsList):
 	# Implementation 0: Flavor Feature with Yummly
 	for flavorFeature in flavorsList:
 		if flavors is not None and len(flavors) > 0:
-			point[flavorFeature] = flavors[flavorFeature] * 100
+			point[flavorFeature] = flavors[flavorFeature] * FLAVOR_ADJUSTMENT
 		else:
-			point[flavorFeature] = -100
+			point[flavorFeature] = -1 * FLAVOR_ADJUSTMENT
+
+def timePoint(point, totalTimeInSeconds):
+	point[c.KMEANS_FEATURE_TOTALTIME] = totalTimeInSeconds*TOTAL_TIME_ADJUSTMENT
+
+def numIngredientsPoint(point, numIngredients):
+	point[c.KMEANS_FEATURE_NUM_INGREDIENTS] = numIngredients * NUM_INGREDIENT_ADJUSTMENT
 
 def getListIntersections(list1, list2):
 	result = set(list1).intersection(list2)
 	return list(result)
+
+def getListDifference(list1, list2):
+	return list(set(list1) - set(list2))
 
 ##
 # Function: createPoint
@@ -128,11 +142,11 @@ def createPoint(recipe, featureList):
 	if len(flavorsList) > 0:
 		flavorPoint(point, flavors, flavorsList)
 
-	# point['totalTimeInSeconds'] = recipe['totalTimeInSeconds']
-	# point['numIngredients'] = len(ingredients)
+	if c.KMEANS_FEATURE_TOTALTIME in featureList:
+		timePoint(point, recipe[c.KMEANS_FEATURE_TOTALTIME])
 
-	# for ingredient in ingredients:
-	# 	point['ingredient-'+ingredient] = 1
+	if c.KMEANS_FEATURE_NUM_INGREDIENTS in featureList:
+		numIngredientsPoint(point, len(ingredients))
 
 	return point
 
@@ -183,9 +197,15 @@ def createAliasDatapoints(jsonDataFilePath, featureList):
 # Maps each recipe to its cluster and stores that in
 # a cluster -> recipeNameList dict, which is returned.
 ##
-def clusterAssignment(est, countToRecipeName, allPoints, featureList):
+def clusterAssignment(K, est, countToRecipeName, allPoints, featureList):
 	clusterToRecipes = {}
 	clusterStats = {}
+	countHasFeature = {}
+	
+	for clusterN in range(K):
+		for feature in featureList:
+			countHasFeature[("Cluster " + str(clusterN), feature)] = 0
+	
 	labels = est.labels_
 	numtypeFeatures = getListIntersections(featureList, c.KMEANS_NUM_FEATURES)
 
@@ -198,26 +218,49 @@ def clusterAssignment(est, countToRecipeName, allPoints, featureList):
 		clusterRecipeList.append(recipeName)
 		clusterToRecipes[cluster] = clusterRecipeList
 
-		for numtypeFeature in numtypeFeatures:
+		for feature in featureList:
 			clusterData = clusterStats.get(cluster)
 			if clusterData is None:
 				clusterData = {}
-			fv = clusterData.get(numtypeFeature)
-			if fv is None:
-				clusterData[numtypeFeature] = 0
-			
+			fv = clusterData.get(feature)
 			point = allPoints[count]
-			pointNum = point.get(numtypeFeature) # WATCH OUT for this here! What about ones with variable names?
-			if pointNum is None:
-				pointNum = -1
-			clusterData[numtypeFeature] = clusterData[numtypeFeature] + pointNum
-			clusterStats[cluster] = clusterData
 
-	if len(numtypeFeatures) > 0:
-		for cluster, clusterData in clusterStats.iteritems():
-			for numtypeFeature, sumPoints in clusterData.iteritems():
-				numPoints = len(clusterToRecipes[cluster])
-				clusterData[numtypeFeature] = sumPoints/float(numPoints)
+			if feature in numtypeFeatures:
+				if fv is None:
+					clusterData[feature] = 0
+				pointNum = point.get(feature) # WATCH OUT for this here! What about ones with variable names?
+				if pointNum is None:
+					pointNum = -1 # WHY -1??
+				clusterData[feature] = clusterData[feature] + pointNum
+			
+			else:
+				if fv is None:
+					clusterData[feature] = {}
+				has_feature = False
+				for feature_name, exists in point.iteritems():
+					prefix = feature + '-'
+					if prefix in feature_name:
+						has_feature = True
+						name = feature_name.replace(prefix, "")
+						num_of_feature = clusterData[feature].get(name)
+						if num_of_feature is None:
+							clusterData[feature][name] = 0
+						clusterData[feature][name] += exists
+				if has_feature:
+					countHasFeature[(cluster, feature)] += 1
+
+			clusterStats[cluster] = clusterData
+	
+	for cluster, clusterData in clusterStats.iteritems():
+		numPoints = len(clusterToRecipes[cluster])
+		for f, v in clusterData.iteritems():
+			if f in numtypeFeatures:
+				clusterData[f] = v/float(numPoints)
+			else:
+				numFeaturePoints = countHasFeature[(cluster, f)]
+				for name, times in v.iteritems():
+					clusterData[f][name] = times/float(numPoints)
+				clusterData[f]['NONE'] = (numPoints - numFeaturePoints)/float(numPoints) * 100
 
 	return clusterToRecipes, clusterStats
 
@@ -228,14 +271,30 @@ def clusterAssignment(est, countToRecipeName, allPoints, featureList):
 ##
 def printClusters(clusterToRecipes, clusterStats, est, dataType, featureList):
 	dict2dump = copy.deepcopy(clusterToRecipes)
+	numtypeFeatures = getListIntersections(featureList, c.KMEANS_NUM_FEATURES)
 
 	for cluster, recipeList in clusterToRecipes.iteritems():
 		print 10 * '-' + cluster + ' '+ 10 * '-'
 		clusterData = clusterStats[cluster]
-		for numtypeFeature, sumPoints in clusterData.iteritems():
-			dict2dump[cluster + ' ' + numtypeFeature + ' score'] = sumPoints
-			print "The cluster's %s score was: %f" % (numtypeFeature, sumPoints)
 		
+		# for numtypeFeature, sumPoints in clusterData.iteritems():
+		# 	dict2dump[cluster + ' ' + numtypeFeature + ' score'] = sumPoints
+		# 	print "The cluster's %s score was: %f" % (numtypeFeature, sumPoints)
+		
+		for f, v in clusterData.iteritems():
+			if f in numtypeFeatures:
+				if f == c.KMEANS_FEATURE_TOTALTIME:
+					v /= TOTAL_TIME_ADJUSTMENT
+				if f == c.KMEANS_FEATURE_NUM_INGREDIENTS:
+					v /= NUM_INGREDIENT_ADJUSTMENT
+				dict2dump[cluster + ' ' + f + ' average score'] = v
+				print "The cluster's %s average score was: %f" % (f, v)
+			else:
+				dict2dump[cluster + ' ' + f + ' distribution'] = v
+				print "The cluster's %s distribution was: " % f
+				for name, prob in v.iteritems():
+					print "    %s: %f%%" % (name, prob)
+
 		print
 		for recipe in recipeList:
 			print recipe
@@ -288,7 +347,7 @@ def cluster(jsonDataFilePath, K, dataType, featureList):
 	
 	est = KMeans(n_clusters = K)
 	pred = est.fit_predict(dataMatrix)
-	clusterToRecipes, clusterStats = clusterAssignment(est, countToData, allPoints, featureList)
+	clusterToRecipes, clusterStats = clusterAssignment(K, est, countToData, allPoints, featureList)
 	
 	printClusters(clusterToRecipes, clusterStats, est, dataType, featureList)
 	# drawClusters(dataMatrix, pred)
