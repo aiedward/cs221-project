@@ -11,10 +11,11 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 import lib.constants as c
-
+from enum import Enum
 from lib import constants as c
 
 aliasData = None
+nutrientData = None
 # Function: safeConnect
 # ---------------------
 # Wrapper for a function requesting info from a server.  Returns the
@@ -37,6 +38,7 @@ def safeConnect(fxn, args, tries=40):
 # Function: loadJSONDict
 # ----------------------
 # Loads a JSON file into a python dictionary and returns that dictionary.
+#
 ##
 def loadJSONDict(jsonFilePath):
 
@@ -44,7 +46,7 @@ def loadJSONDict(jsonFilePath):
     # Read in the JSON file containing recipe data
     fullJsonString = None
     with open(jsonFilePath, 'r') as f:
-		fullJsonString = f.read()
+		fullJsonString = f.read().encode('ascii', errors='ignore')
 
 
     # This is dead code I was trying to use to remove all escaped unicode
@@ -696,4 +698,6 @@ class BacktrackingSearch():
                     var_queue.append(neighbor_var)
 
         # END_YOUR_CODE
+
+
 
