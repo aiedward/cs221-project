@@ -279,6 +279,28 @@ def averageAliasBuddyScore(aliasList):
             total += aliasBuddyScore(aliasList[i], aliasList[j])
     return total / count
 
+def frange(limit1, limit2 = None, increment = 1., inclusive=False):
+    """
+    Range function that accepts floats (and integers).
+
+    Usage:
+    frange(-2, 2, 0.1)
+    frange(10)
+    frange(10, increment = 0.5)
+
+    The returned value is an iterator.  Use list(frange) for a list.
+    """
+
+    if limit2 is None:
+        limit2, limit1 = limit1, 0.
+    else:
+        limit1 = float(limit1)
+
+    count = int(math.ceil(limit2 - limit1)/increment)
+    if inclusive:
+        count += 1
+    return (limit1 + n*increment for n in range(count))
+
 
 # General code for representing a weighted CSP (Constraint Satisfaction Problem).
 # All variables are being referenced by their index instead of their original
@@ -712,7 +734,7 @@ class BacktrackingSearch():
 
         # END_YOUR_CODE
 
-def get_sum_variable(csp, name, variables, maxSum):
+def get_sum_variable(csp, name, variables, maxSum, step=0.1):
     """
     Given a list of |variables| each with non-negative integer domains,
     returns the name of a new variable with domain range(0, maxSum+1), such that
@@ -742,8 +764,8 @@ def get_sum_variable(csp, name, variables, maxSum):
 
     mins_of_variables = [min(csp.values[variable]) for variable in variables]
 
-    runningMaxSum = 0
-    runningMinSum = 0
+    runningMaxSum = 0.0
+    runningMinSum = 0.0
 
     last_var = None
     last_var_domain = None
@@ -763,15 +785,14 @@ def get_sum_variable(csp, name, variables, maxSum):
         # else:
         new_var_domain = []
 
-        leftRange = range(old_runningMinSum, old_runningMaxSum + 1)
-        rightRange = range(runningMinSum, runningMaxSum + 1)
+        leftRange = frange(old_runningMinSum, old_runningMaxSum, step, inclusive=True)
+        rightRange = frange(runningMinSum, runningMaxSum, step, inclusive=True)
 
-        leftRange = range(0, maxSum + 1)
-        rightRange = range(0, maxSum + 1)
+        leftRange = frange(0.0, maxSum, step, inclusive=True)
+        rightRange = frange(0.0, maxSum, step, inclusive=True)
 
         if i == 0:
-            leftRange = [0]
-            # csp.add_unary_factor(new_var, lambda bi: bi[1] == 0)
+            leftRange = [0.0]
 
         for x in leftRange:
             for y in rightRange:
@@ -783,12 +804,14 @@ def get_sum_variable(csp, name, variables, maxSum):
         
         if i != 0:
             csp.add_binary_factor(last_var, new_var, lambda bimin1, bi: bi[0] == bimin1[1])
+        else:
+            csp.add_unary_factor(new_var, lambda bi: bi[1] == 0)
 
         last_var = new_var
         last_var_domain = new_var_domain
 
     sum_var = ('sum', name, num_variables)
-    csp.add_variable(sum_var, range(0, maxSum+1))
+    csp.add_variable(sum_var, frange(0.0, maxSum, step, inclusive=True))
     csp.add_unary_factor(sum_var, lambda bn: bn <= maxSum)
     if last_var:
         csp.add_binary_factor(last_var, sum_var, lambda bnmin1, bn: bn == bnmin1[1])

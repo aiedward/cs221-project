@@ -1,5 +1,5 @@
 {
-	"num_ingredients": 4,
+	"num_ingredients": 3,
 	"num_iters": 30,
 	"amount_range": {
 		"min": 10, 
@@ -11,6 +11,6 @@
 		"free_of_meat": "False"
 	},
 	"amount_constraints": {
-		"max_total_kcal": 500
+		"max_total_kcal": 100
 	}
 }

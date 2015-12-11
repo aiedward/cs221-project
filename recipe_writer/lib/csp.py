@@ -86,6 +86,8 @@ def solveAmountCSP(traits):
     solver = util.BacktrackingSearch()
     solver.solve(csp, mcv=True, ac3=True)
 
+    print "solver.allAssignments[0]: ", solver.allAssignments[0]
+    print "solver.numSolutions: ", solver.numSolutions
     traits["amount_choices"] = solver.optimalAssignment
 
 ##
@@ -112,17 +114,23 @@ def addVariablesAndFactors(csp, traits, whichCSP):
             addFactors_freeOfNuts(csp, traits)
         if constraints.get("free_of_meat", "False").lower() == "true":
             addFactors_freeOfMeat(csp, traits)
+        addFactors_nutrientDataExists(csp, traits)
         addFactors_buddyScore(csp, traits)
 
     elif whichCSP == "amount":
         # Shorthand for nutritional database class
         ND = traits["ND"]
 
+        for k, v in traits["alias_choices"].items():
+            print "Alias for %s is %s" % (k, v)
+
         variables = []
         domains = []
 
         variables += ['grams_%d'%i for i in xrange(0, num_ingredients)]
         domains += [getAmountDomain(traits) for i in xrange(0, num_ingredients)]
+
+        varDomainStepDict = {}
 
         # Get a list of all nutrients that are mentioned in amount constraints
         # (focusNutrients)
@@ -137,7 +145,9 @@ def addVariablesAndFactors(csp, traits, whichCSP):
                 newVar = '%s_%d' % (nutrient, i)
                 variables.append(newVar)
                 alias = indToAlias(traits, i)
-                domains.append([ND.getNutrientFromUnit(g, alias, "grams", nutrient) for g in getAmountDomain(traits)])
+                newDomain = [ND.getNutrientFromGrams(g, alias, nutrient) for g in getAmountDomain(traits)]
+                domains.append(newDomain)
+                varDomainStepDict[newVar] = newDomain[1] - newDomain[0]
 
         # Add all the amount variables
         for var, dom in zip(variables, domains):
@@ -145,16 +155,16 @@ def addVariablesAndFactors(csp, traits, whichCSP):
             csp.add_variable(var, dom)
 
         # Add all amount constraints specified in csp_defaultTraits.json
-        for constraint in traits["amount_constraints"]:
+        for constraint, val in traits["amount_constraints"].items():
             splitConstraint = constraint.split("_")
+            unit = splitConstraint[2]
 
             # If the amount constraint is a "max total ___" constraint...
             if splitConstraint[:2] == ["max", "total"]:
-                unit = splitConstraint[2]
-
                 # Get all variables that correspond to the unit (e.g. kcal, percentFat)
                 relevantVars = [var for var in variables if var.startswith(unit)]
-                print relevantVars
+                print "sum_val: ", val
+                util.get_sum_variable(csp, unit, relevantVars, val, step=0.1)
                 
 ##
 # Function: amountVarToAlias
@@ -208,6 +218,16 @@ def addFactors_freeOfMeat(csp, traits):
         csp.add_unary_factor(var, lambda a: not util.meatStringQ(a))
 
 ##
+# Function: addFactors_nutrientDataExists
+# ----------------------------
+# Makes sure no alias has meat in it.
+##
+def addFactors_nutrientDataExists(csp, traits):
+    for var in csp.variables:
+        csp.add_unary_factor(var, lambda a: traits["ND"].isValidIngredient(a))
+
+
+##
 # Function: addFactors_buddyScore
 # -------------------------------
 # Optimize for good buddy scores between all the aliases.
@@ -237,7 +257,8 @@ def addFactor_maxTotalCalories(csp, traits):
 #
 ##
 def getAmountDomain(traits):
-    return range(*tuple(traits["amount_range"].values())) + [traits["amount_range"]["max"]]
+    rangeArgs = tuple([traits["amount_range"]["min"], traits["amount_range"]["max"], traits["amount_range"]["step"]])
+    return range(*rangeArgs) + [traits["amount_range"]["max"]]
 
 
 
