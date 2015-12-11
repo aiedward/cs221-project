@@ -1,0 +1,53 @@
+##
+# File: bruno-insights.txt
+# ---------------
+#
+##
+
+TODO:
+- Cluster based on different features
+- Try to figure out how to cluster on more than one type of feature at the time.
+	Maybe clusterType should be a list, instead of only one feature.
+- Figure out automatic labeling based on feature --> How to do it in non-number features?
+- Cluster not using recipes as datapoint, but using aliases
+- Use aliases, alisesM, and alisesL on clusters that are interesting
+- Figure out to to draw stuff
+- Talk about 1D, 2D, 3D...
+
+DONE:
+- Write outputs into JSON file, remember to put a timestamp on it
+
+INSIGHTS:
+1) One shouldn't use too many features at once, since it creates clusters that don't make 
+	much sense. This happens because everything is so spread out that the distances between
+	cluster centers are not that meaningful
+2) Cuisine:
+	Mainly to test clustering, but it worked great! Recipes were clustered correctly based on their cusines,
+	as long as the clustering number was correct. Simple clustering, since we knew exacly which cuisine
+	each recipe was (or if they didn't have the cuisine filed from the Yummly API).
+3) Meaty:
+	i) Tried clustering with cluster = 2. Problem: recipes with no meats and recipe with a bit of meat
+		were grouped together. Relized that having 0 meat is a big deal in the clustering, and should model
+		it after that. With cluters > 3 it started getting too granular, no pattern was seen.
+	ii) Implementation 0: Meaty with Yummly: realized the "meaty" field in the yummly database wasn't
+		very reliable. Realized this by looking at a few examples. Moreover, oftem times recipes had no
+		"meaty" field
+	iii) Implementation 1: % of ingredients that are meaty: not very effective. There were several recipes
+		that had an important meat component, but since they were complex (e.g. a lot of ingredients), they
+		were classified as "less meaty". E.g. "Spiced Pork Tenderloin with Cranberry Sauce" was in the 
+		least meaty cluster.
+	iv) Implementation 2: num of ingredients that are meaty: much better results! It was able to separate
+		recipes into vegetarian (0.0 average meaty), a bit meaty, and very meaty. There were a few mistakes,
+		but overall great clustering.
+	v) # Implementation 3: num of ingredients + recipe name that are meaty: Good, but worse than implementation
+		2. Often times recipes names have "Beefless", "without red meat" components, which were being missinterpreted
+		by the algorithm.
+	1, 2, and 3 use the meatwords.json file to categorize what words are meats. Implementation 2 is the winner!
+4) Piquant
+	Used the Yummly piquant numbers. At first, whenver the Yummly didn't have a piquant field for a recipe, I would
+	just set the value as -1. But that would screw up the clustering because -1 is too close to, say, 0 and 1, and all
+	flavors fields (one of which is piquant), are in the 0-1 range. With notion in mind, I decided to give a -100 assignment
+	for recipes that didn't have the piquant field, and multiplied the piquant values (between 0 and 1) of the recipes that
+	did have a piquant assingment by 100. THis gave us 3 clusters: A: no piquant data, B: not piquant, C: piquant.
+5) Bigger changes between runs when using multiple clustering and factors. Probably ending up in different local
+	minima
