@@ -20,6 +20,7 @@ import threading
 import time
 from lib import util
 from lib import constants as c
+from lib import nutrientdatabase as ndb
 
 def printFunctionName():
     print ""
@@ -447,6 +448,17 @@ def extractRecipesFromJSON(allRecipes):
     for _, val in myDict.items():
         allRecipes.append(val)
 
+def testNutrientDatabaseClass():
+    nutDatabase = ndb.NutrientDatabase()
+    print nutDatabase.getNumValidIngredients()
+    print nutDatabase.getCalories("accent flavor enhancer")
+    print nutDatabase.listConversionUnits("accent flavor enhancer")
+    print nutDatabase.getConversionFactor("accent flavor enhancer", 'cup')
+    print nutDatabase.getNutrientFromGrams(100,"accent flavor enhancer", 'calories')
+    print nutDatabase.getNutrientFromUnit(1,"accent flavor enhancer", 'calories', 'cup')
+    print nutDatabase.getNutrientFromGrams(200,"accent flavor enhancer", 'energy')
+    print nutDatabase.getNutrientFromGrams(100,"accent flavor enhancer", 'protein')
+
 []
 
 
@@ -471,7 +483,8 @@ def main(argv):
     # test_database1()
     # test_threading1()
     #saveNutrientInfo()
-    testAliasExtraction()
+    #testAliasExtraction()
+    testNutrientDatabaseClass()
 
 if __name__ == "__main__":
     main(sys.argv)

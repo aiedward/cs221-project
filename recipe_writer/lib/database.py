@@ -147,12 +147,13 @@ def shouldWriteJSON(dictToTest):
 
 def writeSegmentedJSONFile(dictionaryToDump, baseFilename, segmentIndex):
 	# Dumps and prints out a .JSON file for every YUM_STEP recipes retrieved.
-	jsonToWrite = json.dumps(dictionaryToDump, sort_keys=True, indent=4)
+	# jsonToWrite = json.dumps(dictionaryToDump, sort_keys=True, indent=4)
 	#Filename is /res/jsonrecipes/jsonrecipe_index, where index is startIndex/100.
 	targetFileName = baseFilename + "_" + str(segmentIndex) + ".json"
-	writeFile= open(targetFileName, 'w+')
-	writeFile.write(jsonToWrite)
-	writeFile.close()
+	util.dumpJSONDict(targetFileName, dictionaryToDump)
+	# writeFile= open(targetFileName, 'w+')
+	# writeFile.write(jsonToWrite)
+	# writeFile.close()
 	# #Adding to clears dict so that next iteration will print clean.
 	# dictionaryToDump.clear()
 	# segmentIndex += 1
