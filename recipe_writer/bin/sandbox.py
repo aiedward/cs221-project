@@ -523,6 +523,15 @@ def getPercentageTests():
     print "Daily Values: " + str(nutDatabase.getPercentage("mass_fat", "accent flavor enhancer"))
 
 
+    smallAliasData = {}
+    aliasData = {'a': 0, 'b': 1, 'c': 2}
+    for _ in range(2):
+        item = aliasData.popitem()
+        smallAliasData[item[0]] = item[1]
+
+    print smallAliasData
+
+
 
 
 
