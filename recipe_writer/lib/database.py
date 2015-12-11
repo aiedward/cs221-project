@@ -573,6 +573,15 @@ def nutrientDictFromJSON(givenIngredient):
     return returnDict
 
 
+def manualNutrientQuery(ingredientName, ingredientId):
+	manualDict = {}
+	getRequest = getNutritionalRequest(ingredientId)
+		if getRequest is not None:
+			requestAsJson = json.loads(getRequest.content)
+			requestAsFormattedDict = nutrientDictFromJSON(requestAsJson)
+			manualDict[ingredientName] = requestAsFormattedDict
+	util.dumpJSONDict("manualNutrientQuery", manualDict)
+
 ###########################################################
 ###############   DEPRECATED FUNCTIONS   ##################
 ###########################################################
