@@ -5,15 +5,10 @@
 ##
 
 TODO:
-- Cluster based on different features
-- Try to figure out how to cluster on more than one type of feature at the time.
-	Maybe clusterType should be a list, instead of only one feature.
-- Figure out automatic labeling based on feature --> How to do it in non-number features?
-- Cluster not using recipes as datapoint, but using aliases
+- Cluster not using recipes as datapoint, but using aliases. Could use a particular ingredient as feature (group based on times saw with the item)
 - Use aliases, alisesM, and alisesL on clusters that are interesting
 - Figure out to to draw stuff
 - Talk about 1D, 2D, 3D...
-- Implement totalTimeInSeconds, numIngredient
 
 
 INSIGHTS:
@@ -50,3 +45,7 @@ INSIGHTS:
 	did have a piquant assingment by 100. THis gave us 3 clusters: A: no piquant data, B: not piquant, C: piquant.
 5) Bigger changes between runs when using multiple clustering and factors. Probably ending up in different local
 	minima
+6) If you are looking at how many times a feature appears (e.g. ingredient-vodka), you should multiply it by a constant,
+	otherwise several items will have only 1 count, and will be clustered with the 0s.
+
+6) Look at different files that start with "-"

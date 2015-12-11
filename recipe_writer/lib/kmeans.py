@@ -24,6 +24,7 @@ NUM_INGREDIENT_ADJUSTMENT = float(5)
 MEATY_ADJUSTMENT = float(20)
 FLAVOR_ADJUSTMENT = float(100)
 CUISINE_ADJUSTMENT = float(100)
+INGREDIENT_ADJUSTMENT = float(5)
 
 # NOTE
 # K-Means
@@ -117,14 +118,14 @@ def getListDifference(list1, list2):
 	return list(set(list1) - set(list2))
 
 ##
-# Function: createPoint
+# Function: createRecipePoint
 # -------------
 # Given a recipe, it scrapes the important features used
 # in the kmean clustering, and creates a "point", which is 
 # a dictionary of featureName -> featureValue. The point
 # is then returned.
 ##
-def createPoint(recipe, featureList):
+def createRecipePoint(recipe, featureList):
 	point = {}
 
 	recipeName = recipe['recipeName']
@@ -147,6 +148,46 @@ def createPoint(recipe, featureList):
 
 	if c.KMEANS_FEATURE_NUM_INGREDIENTS in featureList:
 		numIngredientsPoint(point, len(ingredients))
+
+	return point
+
+def aliasCountPoint(point, aliasCount):
+	point[c.KMEANS_ALIAS_COUNT] = aliasCount
+
+def aliasBuddiesPoint(point, aliasBuddies):
+	point[c.KMEANS_ALIAS_BUDDIES] = len(aliasBuddies)
+
+def aliasIngredient(point, feature, ingredient, aliasBuddies):
+	amount = aliasBuddies.get(ingredient)
+	if amount is None:
+		amount = -5
+	point[feature] = amount * INGREDIENT_ADJUSTMENT
+
+##
+# Function: createAliasPoint
+# -------------
+# Given some alias data, it scrapes the important features used
+# in the kmean clustering, and creates a "point", which is 
+# a dictionary of featureName -> featureValue. The point
+# is then returned.
+##
+def createAliasPoint(aliasData, featureList):
+	point = {}
+
+	aliasCount = aliasData['count']
+	aliasBuddies = aliasData['aliasBuddies']
+
+	if c.KMEANS_ALIAS_COUNT in featureList:
+		aliasCountPoint(point, aliasCount)
+
+	if c.KMEANS_ALIAS_BUDDIES in featureList:
+		aliasBuddiesPoint(point, aliasBuddies)
+
+	for feature in featureList:
+		prefix = "ingredient-"
+		if prefix in feature:
+			ingredient = feature.replace(prefix, "")
+			aliasIngredient(point, feature, ingredient, aliasBuddies)
 
 	return point
 
@@ -174,7 +215,7 @@ def createRecipeDatapoints(jsonDataFilePath, featureList):
 
 	count = 0
 	for recipeName, recipe in allRecipes.items():
-		point = createPoint(recipe, featureList)
+		point = createRecipePoint(recipe, featureList)
 		allPoints.append(point)
 		countToRecipeName[count] = recipeName
 		count += 1
@@ -189,7 +230,26 @@ def createRecipeDatapoints(jsonDataFilePath, featureList):
 # -------------
 ##
 def createAliasDatapoints(jsonDataFilePath, featureList):
-	raise Exception("createAliasDatapoints Not implemented yet")
+	# sparse matrix, shape = (n_samples, n_features)
+	allPoints = []
+	countToAliasName = {}
+
+	allAlias = util.loadJSONDict(jsonDataFilePath)
+
+	count = 0
+	for aliasName, aliasData in allAlias.items():
+		point = createAliasPoint(aliasData, featureList)
+		allPoints.append(point)
+		countToAliasName[count] = aliasName
+		count += 1
+
+	vec = DictVectorizer()
+	dataMatrix = vec.fit_transform(allPoints)
+
+	return dataMatrix, countToAliasName, allPoints
+
+def isIngredientContraint(feature):
+	return "ingredient-" in feature
 
 ##
 # Function: clusterAssignment
@@ -197,8 +257,8 @@ def createAliasDatapoints(jsonDataFilePath, featureList):
 # Maps each recipe to its cluster and stores that in
 # a cluster -> recipeNameList dict, which is returned.
 ##
-def clusterAssignment(K, est, countToRecipeName, allPoints, featureList):
-	clusterToRecipes = {}
+def clusterAssignment(K, est, countToData, allPoints, featureList):
+	clusterToData = {}
 	clusterStats = {}
 	countHasFeature = {}
 	
@@ -209,14 +269,14 @@ def clusterAssignment(K, est, countToRecipeName, allPoints, featureList):
 	labels = est.labels_
 	numtypeFeatures = getListIntersections(featureList, c.KMEANS_NUM_FEATURES)
 
-	for count, recipeName in countToRecipeName.iteritems():
+	for count, dataName in countToData.iteritems():
 		cluster = "Cluster " + str(labels[count])
 		
-		clusterRecipeList = clusterToRecipes.get(cluster)
-		if clusterRecipeList is None:
-			clusterRecipeList = []
-		clusterRecipeList.append(recipeName)
-		clusterToRecipes[cluster] = clusterRecipeList
+		clusterDataList = clusterToData.get(cluster)
+		if clusterDataList is None:
+			clusterDataList = []
+		clusterDataList.append(dataName)
+		clusterToData[cluster] = clusterDataList
 
 		for feature in featureList:
 			clusterData = clusterStats.get(cluster)
@@ -225,7 +285,7 @@ def clusterAssignment(K, est, countToRecipeName, allPoints, featureList):
 			fv = clusterData.get(feature)
 			point = allPoints[count]
 
-			if feature in numtypeFeatures:
+			if feature in numtypeFeatures or isIngredientContraint(feature):
 				if fv is None:
 					clusterData[feature] = 0
 				pointNum = point.get(feature) # WATCH OUT for this here! What about ones with variable names?
@@ -252,9 +312,9 @@ def clusterAssignment(K, est, countToRecipeName, allPoints, featureList):
 			clusterStats[cluster] = clusterData
 	
 	for cluster, clusterData in clusterStats.iteritems():
-		numPoints = len(clusterToRecipes[cluster])
+		numPoints = len(clusterToData[cluster])
 		for f, v in clusterData.iteritems():
-			if f in numtypeFeatures:
+			if f in numtypeFeatures or isIngredientContraint(f):
 				clusterData[f] = v/float(numPoints)
 			else:
 				numFeaturePoints = countHasFeature[(cluster, f)]
@@ -262,27 +322,23 @@ def clusterAssignment(K, est, countToRecipeName, allPoints, featureList):
 					clusterData[f][name] = times/float(numPoints)
 				clusterData[f]['NONE'] = (numPoints - numFeaturePoints)/float(numPoints) * 100
 
-	return clusterToRecipes, clusterStats
+	return clusterToData, clusterStats
 
 ##
 # Function: printClusters
 # -------------
 # Prints which recipes where in which clusters.
 ##
-def printClusters(clusterToRecipes, clusterStats, est, dataType, featureList):
-	dict2dump = copy.deepcopy(clusterToRecipes)
+def printClusters(clusterToData, clusterStats, est, dataType, featureList):
+	dict2dump = copy.deepcopy(clusterToData)
 	numtypeFeatures = getListIntersections(featureList, c.KMEANS_NUM_FEATURES)
 
-	for cluster, recipeList in clusterToRecipes.iteritems():
+	for cluster, recipeList in clusterToData.iteritems():
 		print 10 * '-' + cluster + ' '+ 10 * '-'
 		clusterData = clusterStats[cluster]
 		
-		# for numtypeFeature, sumPoints in clusterData.iteritems():
-		# 	dict2dump[cluster + ' ' + numtypeFeature + ' score'] = sumPoints
-		# 	print "The cluster's %s score was: %f" % (numtypeFeature, sumPoints)
-		
 		for f, v in clusterData.iteritems():
-			if f in numtypeFeatures:
+			if f in numtypeFeatures or isIngredientContraint(f):
 				if f == c.KMEANS_FEATURE_TOTALTIME:
 					v /= TOTAL_TIME_ADJUSTMENT
 				if f == c.KMEANS_FEATURE_NUM_INGREDIENTS:
@@ -347,9 +403,9 @@ def cluster(jsonDataFilePath, K, dataType, featureList):
 	
 	est = KMeans(n_clusters = K)
 	pred = est.fit_predict(dataMatrix)
-	clusterToRecipes, clusterStats = clusterAssignment(K, est, countToData, allPoints, featureList)
+	clusterToData, clusterStats = clusterAssignment(K, est, countToData, allPoints, featureList)
 	
-	printClusters(clusterToRecipes, clusterStats, est, dataType, featureList)
+	printClusters(clusterToData, clusterStats, est, dataType, featureList)
 	# drawClusters(dataMatrix, pred)
 	
 ##
@@ -358,8 +414,13 @@ def cluster(jsonDataFilePath, K, dataType, featureList):
 # kmeans.py's version of main(). This function is called by write_recipes.py
 # with arguments given to it.
 ##
-def run(verbose=False, K='5', dataFilename='testRecipeTh', dataType=c.KMEANS_RECIPE_DATATYPE, features=c.KMEANS_FEATURE_PIQUANT):
+def run(verbose=False, K='5', dataFilename='testRecipeTh', dataType=c.KMEANS_RECIPE_DATATYPE, features='No Features'):
 	global COMMAND_LINE
+
+	if len(dataFilename) == 0 and dataType == c.KMEANS_RECIPE_DATATYPE:
+		dataFilename = 'testRecipeTh'
+	if len(dataFilename) == 0 and dataType == c.KMEANS_RECIPE_DATATYPE:
+		dataFilename = 'aliasData_small'
 
 	COMMAND_LINE = "python __main__.py write_recipes module=kmeans " + "verbose=" + str(verbose) + " " + K + " " + dataFilename + " " + dataType + " " + features
 	fullFilename = dataFilename + '.json'
@@ -373,7 +434,7 @@ def run(verbose=False, K='5', dataFilename='testRecipeTh', dataType=c.KMEANS_REC
 		exceptionMessage = "We don't have kmeans implemented for datatype " + dataType + ". Try 'recipe' or 'alias' instead."
 		raise Exception(exceptionMessage)
 	for feature in featureList:
-		if feature not in c.KMEANS_ALL_FEATURES:
+		if feature not in c.KMEANS_ALL_FEATURES and "ingredient-" not in feature:
 			exceptionMessage = "We don't have kmeans implemented for feature " + feature + ". Try 'piquant', or 'meaty' instead."
 			raise Exception(exceptionMessage)
 
