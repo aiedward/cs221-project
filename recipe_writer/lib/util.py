@@ -169,11 +169,20 @@ def deleteDuplicatesBy(li, duplicatesQ):
 # and returns the resulting dictionary.
 ##
 def loadLatestAliasData():
-    print "GOt to alias data laoding"
     aliasDataFolder = os.path.join(c.PATH_TO_RESOURCES, "aliasdata")
     latestAliasDataFileFullPath = sorted(listFilesWithSuffix(aliasDataFolder, ".json"))[-1]
-    print "Path: "+ latestAliasDataFileFullPath
+    # print "Path: "+ latestAliasDataFileFullPath
     return loadJSONDict(latestAliasDataFileFullPath)
+
+##
+# Function: loadAliasData
+# -----------------------------
+# Loads in the file with the most recent date that ends in ".json" in /res/aliasdata
+# and returns the resulting dictionary.
+##
+def loadAliasData(dataPathFromRoot):
+    aliasDataPath = os.path.join(c.PATH_TO_ROOT, dataPathFromRoot.lstrip("/"))
+    return loadJSONDict(aliasDataPath)
 
 ##
 # Function: getAliasData
@@ -185,7 +194,8 @@ def getAliasData():
     global aliasData
     if aliasData == None:
         print "Loading new data"
-        return loadLatestAliasData()
+        return loadAliasData("/res/aliasData_medium.json")
+        # return loadLatestAliasData()
     else:
         return aliasData
 
@@ -279,27 +289,11 @@ def averageAliasBuddyScore(aliasList):
             total += aliasBuddyScore(aliasList[i], aliasList[j])
     return total / count
 
-def frange(limit1, limit2 = None, increment = 1., inclusive=False):
-    """
-    Range function that accepts floats (and integers).
+# def isclose(a, b, rel_tol=1e-06, abs_tol=0.0):
+#     return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
-    Usage:
-    frange(-2, 2, 0.1)
-    frange(10)
-    frange(10, increment = 0.5)
-
-    The returned value is an iterator.  Use list(frange) for a list.
-    """
-
-    if limit2 is None:
-        limit2, limit1 = limit1, 0.
-    else:
-        limit1 = float(limit1)
-
-    count = int(math.ceil(limit2 - limit1)/increment)
-    if inclusive:
-        count += 1
-    return (limit1 + n*increment for n in range(count))
+def isclose(a, b, abs_tol=1e-06):
+    return abs(a-b) <= abs_tol
 
 
 # General code for representing a weighted CSP (Constraint Satisfaction Problem).
@@ -433,21 +427,18 @@ class CSP:
 # Usage:
 #   search = BacktrackingSearch()
 #   search.solve(csp)
+#
+# NOTE: This version of BacktrackingSearch short-circuits
+# when it finds an assignment with a weight that is 1.0,
+# as no other assignment can do better than this.
 class BacktrackingSearch():
 
-    def reset_results(self, numSolutions=float('inf'), verbose=False):
+    def reset_results(self):
         """
         This function resets the statistics of the different aspects of the
         CSP solver. We will be using the values here for grading, so please
         do not make any modification to these variables.
         """
-
-        # Max number of solutions we should find.
-        self.numSolutions = numSolutions
-
-        # Whether progress and stats should be printed
-        self.verbose = verbose
-
         # Keep track of the best assignment and weight found.
         self.optimalAssignment = {}
         self.optimalWeight = 0
@@ -536,12 +527,10 @@ class BacktrackingSearch():
         try:
             self.backtrack({}, 0, 1)
         except Exception as e:
-            # self.numSolutions solutions have been found
-            pass
+            pass  # solver found an optimal solution and decided to finish
 
         # Print summary of solutions.
-        if self.verbose:
-            self.print_stats()
+        self.print_stats()
 
     def backtrack(self, assignment, numAssigned, weight):
         """
@@ -577,23 +566,16 @@ class BacktrackingSearch():
                 if self.firstAssignmentNumOperations == 0:
                     self.firstAssignmentNumOperations = self.numOperations
 
-            # If we've found enough solutions, return all the way up
-            # the recursion tree
-            if len(self.allAssignments) >= numSolutions:
-                raise Exception()
-
-            # Otherwise, just return from this level of reursion
-            else:
-                return
+                # If we've found an assignment with weight 1.0, this is the
+                # best we can do (as defined in make_sum_variable)
+                if weight == 1.0:
+                    raise Exception('done!')
+            return
 
         # Select the next variable to be assigned.
         var = self.get_unassigned_variable(assignment)
-
         # Get an ordering of the values.
         ordered_values = self.domains[var]
-
-        # Austin addition: Sort the values based on how optimal they will be
-        ordered_values = sorted(ordered_values, key=lambda val: -self.get_delta_weight(assignment, var, val))
 
         # Continue the backtracking recursion using |var| and |ordered_values|.
         if not self.ac3:
@@ -734,7 +716,7 @@ class BacktrackingSearch():
 
         # END_YOUR_CODE
 
-def get_sum_variable(csp, name, variables, maxSum, step=0.1):
+def get_sum_variable(csp, name, variables, maxSum):
     """
     Given a list of |variables| each with non-negative integer domains,
     returns the name of a new variable with domain range(0, maxSum+1), such that
@@ -764,8 +746,8 @@ def get_sum_variable(csp, name, variables, maxSum, step=0.1):
 
     mins_of_variables = [min(csp.values[variable]) for variable in variables]
 
-    runningMaxSum = 0.0
-    runningMinSum = 0.0
+    runningMaxSum = 0
+    runningMinSum = 0
 
     last_var = None
     last_var_domain = None
@@ -785,14 +767,15 @@ def get_sum_variable(csp, name, variables, maxSum, step=0.1):
         # else:
         new_var_domain = []
 
-        leftRange = frange(old_runningMinSum, old_runningMaxSum, step, inclusive=True)
-        rightRange = frange(runningMinSum, runningMaxSum, step, inclusive=True)
+        leftRange = range(old_runningMinSum, old_runningMaxSum + 1)
+        rightRange = range(runningMinSum, runningMaxSum + 1)
 
-        leftRange = frange(0.0, maxSum, step, inclusive=True)
-        rightRange = frange(0.0, maxSum, step, inclusive=True)
+        leftRange = range(0, maxSum + 1)
+        rightRange = range(0, maxSum + 1)
 
         if i == 0:
-            leftRange = [0.0]
+            leftRange = [0]
+            # csp.add_unary_factor(new_var, lambda bi: bi[1] == 0)
 
         for x in leftRange:
             for y in rightRange:
@@ -804,14 +787,12 @@ def get_sum_variable(csp, name, variables, maxSum, step=0.1):
         
         if i != 0:
             csp.add_binary_factor(last_var, new_var, lambda bimin1, bi: bi[0] == bimin1[1])
-        else:
-            csp.add_unary_factor(new_var, lambda bi: bi[1] == 0)
 
         last_var = new_var
         last_var_domain = new_var_domain
 
     sum_var = ('sum', name, num_variables)
-    csp.add_variable(sum_var, frange(0.0, maxSum, step, inclusive=True))
+    csp.add_variable(sum_var, range(0, maxSum+1))
     csp.add_unary_factor(sum_var, lambda bn: bn <= maxSum)
     if last_var:
         csp.add_binary_factor(last_var, sum_var, lambda bnmin1, bn: bn == bnmin1[1])
@@ -819,4 +800,63 @@ def get_sum_variable(csp, name, variables, maxSum, step=0.1):
         csp.add_unary_factor(sum_var, lambda bn: bn == 0)
 
     return sum_var
+
+def make_sum_variable(csp, unit, variables, maxSum, unitInd):
+    ## TO DO: If sum of max of all variables in this category
+    # is less than maxSum, don't make any sum variables - they aren't necessary.
+    # Instead, make variables that make sure each variable uses its max amount.
+    # Additionally, if there are over 8000 possible values for the final bn sum
+    # variable, just raise an exception, reroll aliases, and try again - not worth
+    # the wait.
+    variables = sorted(variables, key=lambda var: -csp.values[var][-1][1])
+    prevDomain = [(0, 0)]
+    newVars = [('sum', unit, i) for i in xrange(len(variables))]
+    realVarDomains = [map(lambda subLi: subLi[unitInd], csp.values[var]) for var in variables]
+    newVarDomains = []
+
+    # Calculate sum variable domains
+    for i, var in enumerate(variables):
+        newVar = newVars[i]
+        newVarDomain = []
+        for vPair in prevDomain:
+            v = vPair[1]
+            for x in realVarDomains[i]:
+                if v + x <= maxSum:
+                    newVarDomain.append((v, v + x))
+
+        newVarDomains.append(newVarDomain)
+        prevDomain = newVarDomain
+
+    newVarDomains = [list(set(domain)) for domain in newVarDomains]
+
+    print "Lengths of sum variable domains: %r" % [len(domain) for domain in newVarDomains]
+    
+    # Add all sum variables
+    for newVar, newVarDomain in zip(newVars, newVarDomains):
+        csp.add_variable(newVar, newVarDomain)
+    
+
+    # Add intra-variable consistencies
+    for newVar, realVar in zip(newVars, variables):
+        csp.add_binary_factor(newVar, realVar, 
+            lambda bi, xi: isclose(bi[1], bi[0] + xi[unitInd]))
+
+    # Add inter-variable consistencies
+    for newVar1, newVar2 in zip(newVars[:-1], newVars[1:]):
+        csp.add_binary_factor(newVar1, newVar2, 
+            lambda b_prev, b_next: isclose(b_prev[1], b_next[0]))
+
+    # Add total consistency factors for first and last sum variables
+    csp.add_unary_factor(newVars[0], lambda b0: b0[0] == 0.0)
+    csp.add_unary_factor(newVars[-1], lambda bn: bn[1] <= maxSum) #or isclose(bn[1], maxSum))
+
+    # Add factor to get sum as close as possible to limit
+    def limitCloseness(bn):
+        if maxSum - bn[1] <= 1.0:
+            return 1.0
+        else:
+            return 1.0 / maxSum - bn[1]
+    csp.add_unary_factor(newVars[-1], limitCloseness)
+
+
 

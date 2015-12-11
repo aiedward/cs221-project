@@ -39,12 +39,22 @@ def run(verbose):
     # amounts (mass in grams) for each ingredient
     solveAmountCSP(traits)
 
+    print
+    totals = [0.0, 0.0]
+    for k, v in traits["amount_choices"].items():
+        print "%s: %d grams, %f kcal" % (traits["amountVarToAlias"][k], v[0], v[1])
+        totals[0] += v[0]
+        totals[1] += v[1]
+    print
+    print "Total mass: %d grams" % totals[0]
+    print "Total calories: %f kcal" % totals[1]
+
     # Print status update
-    if verbose:
-        print "csp.py ran successfully"
+    # if verbose:
+    #     print "csp.py ran successfully"
 
     # return {k: v for k, v in traits.items() if k in ["alias_choices"]}
-    return {k: v for k, v in traits.items() if k in ["alias_choices", "amount choices"]}
+    return "" #{k: v for k, v in traits.items() if k in ["alias_choices", "amount choices"]}
 
 ##
 # Function: initializeTraits
@@ -65,6 +75,9 @@ def initializeTraits(verbose):
 # a set of constraints.
 ##
 def solveAliasCSP(traits):
+    ## TO DO: Create another version of BacktrackingSearch that
+    # works with AliasCSP (which just skips preprocessing) and
+    # stops after a certain number of calls to backtrack()
     csp = AliasCSP()
     addVariablesAndFactors(csp, traits, "alias")
 
@@ -72,6 +85,9 @@ def solveAliasCSP(traits):
     solver.solve(csp)
 
     traits["alias_choices"] = solver.curAssignment
+
+    for k, v in traits["alias_choices"].items():
+        print "Alias for %s is %s" % (k, v)
 
 ##
 # Function: solveAmountCSP
@@ -86,9 +102,10 @@ def solveAmountCSP(traits):
     solver = util.BacktrackingSearch()
     solver.solve(csp, mcv=True, ac3=True)
 
-    print "solver.allAssignments[0]: ", solver.allAssignments[0]
-    print "solver.numSolutions: ", solver.numSolutions
-    traits["amount_choices"] = solver.optimalAssignment
+    assign = solver.optimalAssignment
+    print solver.optimalAssignment
+    amountAssigns = {k: v for k, v in assign.items() if "_" in k}
+    traits["amount_choices"] = amountAssigns
 
 ##
 # Function: addVariables
@@ -121,38 +138,41 @@ def addVariablesAndFactors(csp, traits, whichCSP):
         # Shorthand for nutritional database class
         ND = traits["ND"]
 
-        for k, v in traits["alias_choices"].items():
-            print "Alias for %s is %s" % (k, v)
+        variables = ['amount_%d'%i for i in xrange(0, num_ingredients)]
+        aliasVarDict = {variables[i]: traits["alias_choices"][k] \
+            for i, k in enumerate(sorted(traits["alias_choices"].keys()))}
+        traits["amountVarToAlias"] = aliasVarDict
+        domainDict = {}
 
-        variables = []
-        domains = []
+        for var in variables:
+            gramDomain = getAmountDomain(traits)
+            kcalDomain = [ND.getNutrientFromGrams(g, aliasVarDict[var], "kcal") for g in gramDomain]
+            domainDict[var] = [tuple(li) for li in zip(gramDomain, kcalDomain)]
 
-        variables += ['grams_%d'%i for i in xrange(0, num_ingredients)]
-        domains += [getAmountDomain(traits) for i in xrange(0, num_ingredients)]
+        nutrientIndexDict = {"grams": 0, "kcal": 1}
 
-        varDomainStepDict = {}
 
         # Get a list of all nutrients that are mentioned in amount constraints
         # (focusNutrients)
-        validNutrients = ND.validNutrientsDict.keys() + ['kcal']
-        focusNutrients = []
-        for constraint in traits["amount_constraints"]:
-            focusNutrients += [n for n in constraint.split("_") if n in validNutrients]
+        # validNutrients = ND.validNutrientsDict.keys() + ['kcal']
+        # focusNutrients = []
+        # for constraint in traits["amount_constraints"]:
+        #     focusNutrients += [n for n in constraint.split("_") if n in validNutrients]
         
         # Create a variable for each focus nutrient / index combination
-        for nutrient in focusNutrients:
-            for i in xrange(0, num_ingredients):
-                newVar = '%s_%d' % (nutrient, i)
-                variables.append(newVar)
-                alias = indToAlias(traits, i)
-                newDomain = [ND.getNutrientFromGrams(g, alias, nutrient) for g in getAmountDomain(traits)]
-                domains.append(newDomain)
-                varDomainStepDict[newVar] = newDomain[1] - newDomain[0]
+        # for nutrient in focusNutrients:
+        #     for i in xrange(0, num_ingredients):
+        #         newVar = '%s_%d' % (nutrient, i)
+        #         variables.append(newVar)
+        #         alias = indToAlias(traits, i)
+        #         newDomain = [int(math.ceil(ND.getNutrientFromGrams(g, alias, nutrient))) for g in getAmountDomain(traits)]
+        #         domains.append(newDomain)
+        #         varDomainStepDict[newVar] = newDomain[1] - newDomain[0]
 
         # Add all the amount variables
-        for var, dom in zip(variables, domains):
-            print "Domain of var %s is %r" % (var, dom)
-            csp.add_variable(var, dom)
+        for var in variables:
+            print "Domain of var %s is %r" % (var, domainDict[var])
+            csp.add_variable(var, domainDict[var])
 
         # Add all amount constraints specified in csp_defaultTraits.json
         for constraint, val in traits["amount_constraints"].items():
@@ -164,7 +184,9 @@ def addVariablesAndFactors(csp, traits, whichCSP):
                 # Get all variables that correspond to the unit (e.g. kcal, percentFat)
                 relevantVars = [var for var in variables if var.startswith(unit)]
                 print "sum_val: ", val
-                util.get_sum_variable(csp, unit, relevantVars, val, step=0.1)
+                util.make_sum_variable(csp, unit, variables, val, nutrientIndexDict[unit])
+
+        print "Finished making amountCSP..."
                 
 ##
 # Function: amountVarToAlias
@@ -498,71 +520,6 @@ class AliasCSPSolver:
                             weight += score
 
         return weight
-
-##
-# Function: get_ingredient_sum_variable
-# -------------------------------------
-# Create a set of variables that have binary factors in between them to limit
-# the sum of a certain trait of the ingredients.
-# conversionFxn takes in a name variable assignment
-def get_ingredient_sum_variable(csp, traits, name, sumVal, minOrMax, conversionFxn):
-    nameVars = getNameVars(csp)
-    amountVars = getAmountVars(csp)
-
-    # maxVarAmounts = [max(csp.values[amountVar]) for amountVar in amountVars]
-    # minVarAmounts = [min(csp.values[amountVar]) for amountVar in amountVars]
-
-    # runningMaxSum = 0
-    # runningMinSum = 0
-
-    last_var = None
-    last_var_domain = None
-
-    # The domain for the first/second value of a B pair is set to be the same
-    # as the amountVar for simplicity.
-    # Add all unique first/second value pairs to the full domain of a B pair.
-    sumVarDomain = itertools.permutations(getAmountDomain(traits), 2)
-
-    for i, amountVar in enumerate(amountVars):
-        # Give the new variable a name
-        newVar = ('sum', name, i)
-
-        # The first of the sum variables can only have 0 as its first element.
-        newVarDomain = None
-        if i == 0:
-            newVarDomain = filter(function=lambda B: B[0] == 0, iterable=sumVarDomain)
-        else:
-            newVarDomain = sumVarDomain
-
-        # Add the new variable/domain pair to the csp
-        csp.add_variable(newVar, newVarDomain)
-
-        # Add a binary factor that ties this new sum var to its corresponding
-        # amount var
-        def amountVar_sumVar_CongruentQ(xi, bi):
-            return bi[1] == bi[0] + xi
-        csp.add_binary_factor(amountVars[i], newVar, amountVar_sumVar_CongruentQ)
-        
-        if i != 0:
-            csp.add_binary_factor(last_var, newVar, lambda bimin1, bi: bi[0] == bimin1[1])
-
-        last_var = newVar
-        last_var_domain = newVarDomain
-
-    finalSumVar = ('sum', name, len(amountVars))
-    csp.add_variable(finalSumVar, range(0, sumVal+1))
-
-    if minOrMax == "max":
-        csp.add_unary_factor(finalSumVar, lambda bn: bn <= sumVal)
-    else:
-        csp.add_unary_factor(finalSumVar, lambda bn: bn >= sumVal)
-
-    if last_var:
-        csp.add_binary_factor(last_var, finalSumVar, lambda bnmin1, bn: bn == bnmin1[1])
-    else:
-        csp.add_unary_factor(finalSumVar, lambda bn: bn == 0)
-
-    return sumVar
 
 
 if __name__ == "__main__":
