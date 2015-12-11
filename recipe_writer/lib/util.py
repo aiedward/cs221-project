@@ -808,10 +808,16 @@ def make_sum_variable(csp, unit, variables, maxSum, unitInd):
     # Additionally, if there are over 8000 possible values for the final bn sum
     # variable, just raise an exception, reroll aliases, and try again - not worth
     # the wait.
-    variables = sorted(variables, key=lambda var: -csp.values[var][-1][1])
+    variables = sorted(variables, key=lambda var: -csp.values[var][-1][unitInd])
     prevDomain = [(0, 0)]
     newVars = [('sum', unit, i) for i in xrange(len(variables))]
     realVarDomains = [map(lambda subLi: subLi[unitInd], csp.values[var]) for var in variables]
+    
+    # If the sum can't be surpassed, there's no need to complicate things more...
+    maxVarVals = [max(domain) for domain in realVarDomains] 
+    if sum(maxVarVals) <= maxSum:
+        return
+
     newVarDomains = []
 
     # Calculate sum variable domains
@@ -827,6 +833,7 @@ def make_sum_variable(csp, unit, variables, maxSum, unitInd):
         newVarDomains.append(newVarDomain)
         prevDomain = newVarDomain
 
+    # Make sure each domain only contains unique values
     newVarDomains = [list(set(domain)) for domain in newVarDomains]
 
     print "Lengths of sum variable domains: %r" % [len(domain) for domain in newVarDomains]
@@ -848,15 +855,17 @@ def make_sum_variable(csp, unit, variables, maxSum, unitInd):
 
     # Add total consistency factors for first and last sum variables
     csp.add_unary_factor(newVars[0], lambda b0: b0[0] == 0.0)
-    csp.add_unary_factor(newVars[-1], lambda bn: bn[1] <= maxSum) #or isclose(bn[1], maxSum))
+    # csp.add_unary_factor(newVars[-1], lambda bn: bn[1] <= maxSum) #or isclose(bn[1], maxSum))
 
     # Add factor to get sum as close as possible to limit
     def limitCloseness(bn):
-        if maxSum - bn[1] <= 1.0:
+        if abs(maxSum - bn[1]) <= 1.0:
             return 1.0
         else:
-            return 1.0 / maxSum - bn[1]
+            return 1.0 / abs(maxSum - bn[1])
     csp.add_unary_factor(newVars[-1], limitCloseness)
+
+    print "Finished creating sum variables for %s" % unit
 
 
 

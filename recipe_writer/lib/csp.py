@@ -40,14 +40,16 @@ def run(verbose):
     solveAmountCSP(traits)
 
     print
-    totals = [0.0, 0.0]
+    totals = [0.0, 0.0, 0.0]
     for k, v in traits["amount_choices"].items():
-        print "%s: %d grams, %f kcal" % (traits["amountVarToAlias"][k], v[0], v[1])
+        print "%s: %d grams, %f kcal, %f mg sodium" % (traits["amountVarToAlias"][k], v[0], v[1], v[2])
         totals[0] += v[0]
         totals[1] += v[1]
+        totals[2] += v[2]
     print
     print "Total mass: %d grams" % totals[0]
     print "Total calories: %f kcal" % totals[1]
+    print "Total sodium: %f mg" % totals[2]
 
     # Print status update
     # if verbose:
@@ -144,20 +146,25 @@ def addVariablesAndFactors(csp, traits, whichCSP):
         traits["amountVarToAlias"] = aliasVarDict
         domainDict = {}
 
-        for var in variables:
-            gramDomain = getAmountDomain(traits)
-            kcalDomain = [ND.getNutrientFromGrams(g, aliasVarDict[var], "kcal") for g in gramDomain]
-            domainDict[var] = [tuple(li) for li in zip(gramDomain, kcalDomain)]
-
-        nutrientIndexDict = {"grams": 0, "kcal": 1}
-
-
         # Get a list of all nutrients that are mentioned in amount constraints
         # (focusNutrients)
-        # validNutrients = ND.validNutrientsDict.keys() + ['kcal']
-        # focusNutrients = []
-        # for constraint in traits["amount_constraints"]:
-        #     focusNutrients += [n for n in constraint.split("_") if n in validNutrients]
+        validNutrients = ND.validNutrientsDict.keys() + ['kcal'] + ['sodium']
+        focusNutrients = []
+        for constraint in traits["amount_constraints"]:
+            focusNutrients += [n for n in constraint.split("_") if n in validNutrients]
+
+        # Create domains for the variables
+        for var in variables:
+            allDomains = []
+            gramDomain = getAmountDomain(traits)
+            allDomains.append(gramDomain)
+            for nu in focusNutrients:
+                nuDomain = [ND.getNutrientFromGrams(g, aliasVarDict[var], nu) for g in gramDomain]
+                allDomains.append(nuDomain)
+            domainDict[var] = [tuple(li) for li in zip(*allDomains)]
+
+        # Where each unit is in the value tuple
+        nutrientIndexDict = {unit: i for i, unit in enumerate(["grams"] + focusNutrients)}
         
         # Create a variable for each focus nutrient / index combination
         # for nutrient in focusNutrients:
@@ -181,9 +188,7 @@ def addVariablesAndFactors(csp, traits, whichCSP):
 
             # If the amount constraint is a "max total ___" constraint...
             if splitConstraint[:2] == ["max", "total"]:
-                # Get all variables that correspond to the unit (e.g. kcal, percentFat)
-                relevantVars = [var for var in variables if var.startswith(unit)]
-                print "sum_val: ", val
+                print "sum_val is %s for unit %s: " % (val, unit)
                 util.make_sum_variable(csp, unit, variables, val, nutrientIndexDict[unit])
 
         print "Finished making amountCSP..."

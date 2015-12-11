@@ -4,13 +4,14 @@
 	"amount_range": {
 		"min": 5, 
 		"max": 50,
-		"step": 8
+		"step": 9
 	},
 	"alias_constraints": {
 		"free_of_nuts": "True",
 		"free_of_meat": "False"
 	},
 	"amount_constraints": {
-		"max_total_kcal": 200
+		"max_total_kcal": 150,
+		"max_total_sodium": 250
 	}
 }
