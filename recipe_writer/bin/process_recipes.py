@@ -13,6 +13,7 @@ import thread
 
 from lib import util
 from lib import constants as c
+from lib import nutrientdatabase as ndb
 
 validAliasDict = {}
 
@@ -26,6 +27,7 @@ def main(argv):
 	validIngredientsFilePath = os.path.join(c.PATH_TO_RESOURCES, "validIngredients.json")
 	validAliasDict = util.loadJSONDict(validIngredientsFilePath)
 
+
 	allRecipes = []
 
 	# Each alias has 3 main fields:
@@ -33,6 +35,7 @@ def main(argv):
 	#   "aliasBuddies"
 	#   "lines"
 	aliasData = {}
+	ingredientLineDict = {}
 
 	# Read in and parse recipe data structures (dictionaries) from a json file.
 	extractRecipesFromJSON(allRecipes)
@@ -40,42 +43,84 @@ def main(argv):
 	# Convert all string data to lowercase.
 	lowerAllStrings(allRecipes)
 
+	nutDB = ndb.NutrientDatabase()
+	
+	#Let's fuck around.
+	for recipe in allRecipes:
+		print "Ingredient Lines: " + str(len(recipe['ingredientLines']))
+		print recipe['ingredientLines']
+		print "\nIngredients: " + str(len(recipe['ingredients']))
+		print recipe['ingredients']
+
+		for ingredientLineIndex in range(0, len(recipe['ingredientLines'])):
+			if ingredientLineIndex == len(recipe['ingredients']):
+				break
+		 	ingredientLine = recipe['ingredientLines'][ingredientLineIndex].encode('ascii', errors='ignore')
+		 	ingredient = recipe['ingredients'][ingredientLineIndex].encode('ascii', errors='ignore')
+		 	if ingredient not in validAliasDict:
+		 		continue
+		 	if ingredient not in ingredientLineDict:
+		 		ingredientLineDict[ingredient] = []
+		 	ingredientLineDict[ingredient].append(ingredientLine)
+
+	print ingredientLineDict
+
+	for ingredient in ingredientLineDict:
+		for ingredientLine in ingredientLineDict[ingredient]:
+			#TIME TO PARSE.
+			words = ingredientLine.split()
+			potentialStart = words[0]
+
+			#If the first token is a number, try the next few.
+			if hasNumbers(words[0]):
+				potentialUnit = words[1]
+				print str(potentialStart) + " " + potentialUnit + " ||" + str(words)
+			#print words[0]
+			#print ingredientLine
+
+	# 	for i in range(0, len(ingredient)):
+	# 		print ingredientLineDict[ingredient]
+	
 	# Get the counts of ingredient short names.
 	# Create a dictionary storing relationships between the various aliases.
 	# Create a dictionary with aliases as keys and lists of lines they've been
-	#    associated with as values.
+	# associated with as values.
 	fillAliasData(allRecipes, aliasData)
+
+
 
 	for key in aliasData:
 		if key not in validAliasDict:
 			print "Ya fucked up with the ingredient: " + key
 
-	dumpAliasDataToJSONFiles(aliasData)
+	#Temporarily removed to test.
+	#dumpAliasDataToJSONFiles(aliasData)
 
-	#Now create small files
-	smallAliasData = {}
-	for _ in range(250):
-		item = aliasData.popitem()
-		smallAliasData[item[0]] = item[1]
+	# #Now create small files
+	# smallAliasData = {}
+	# for _ in range(250):
+	# 	item = aliasData.popitem()
+	# 	smallAliasData[item[0]] = item[1]
 
-	smallFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_small.json")
-	util.dumpJSONDict(smallFilePath, smallAliasData)
+	# smallFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_small.json")
+	# util.dumpJSONDict(smallFilePath, smallAliasData)
 
-	for _ in range(250):
-		item = aliasData.popitem()
-		smallAliasData[item[0]] = item[1]
+	# for _ in range(250):
+	# 	item = aliasData.popitem()
+	# 	smallAliasData[item[0]] = item[1]
 
-	mediumFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_medium.json")
-	util.dumpJSONDict(mediumFilePath, smallAliasData)
+	# mediumFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_medium.json")
+	# util.dumpJSONDict(mediumFilePath, smallAliasData)
 
-	for _ in range(500):
-		item = aliasData.popitem()
-		smallAliasData[item[0]] = item[1]
+	# for _ in range(500):
+	# 	item = aliasData.popitem()
+	# 	smallAliasData[item[0]] = item[1]
 
-	largeFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_large.json")
-	util.dumpJSONDict(largeFilePath, smallAliasData)
+	# largeFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_large.json")
+	# util.dumpJSONDict(largeFilePath, smallAliasData)
 
-
+def hasNumbers(inputString):	
+    return any(char.isdigit() for char in inputString)
 
 ##
 # Function: extractRecipesFromJSON
@@ -83,7 +128,8 @@ def main(argv):
 # Reads in all data from the json file containing all recipe data.
 ##
 def extractRecipesFromJSON(allRecipes):
-	jsonFilePath = os.path.join(c.PATH_TO_RESOURCES, c.FILENAME_JSON_RECIPES)
+	#jsonFilePath = os.path.join(c.PATH_TO_RESOURCES, c.FILENAME_JSON_RECIPES)
+	jsonFilePath = os.path.join(c.PATH_TO_RESOURCES, "tempAllRecipes.json")	
 	myDict = util.loadJSONDict(jsonFilePath)
 
 	# Fill allRecipes with just the values for each JSON member,
