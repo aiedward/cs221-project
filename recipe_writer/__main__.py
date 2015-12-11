@@ -45,10 +45,11 @@ if __name__ == "__main__":
 
 	# If no executable was provided, use the default
 	if len(argv) < c.EXE_ARG_POS+1:
-		argv.append(DEFAULT_EXE_CHOICE)
+		raise Exception("No valid executable")
 
 	# If an executable was provided that doesn't exist, use the default
 	elif argv[c.EXE_ARG_POS] not in c.EXECUTABLES:
-		argv[c.EXE_ARG_POS] = DEFAULT_EXE_CHOICE
+		raise Exception("No valid executable")
+	#argv[c.EXE_ARG_POS] = DEFAULT_EXE_CHOICE
 
 	main(argv)

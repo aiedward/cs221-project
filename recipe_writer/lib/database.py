@@ -36,14 +36,17 @@ lastSuccessfulAPIKeyIndex = c.NUM_API_KEYS - 1
 lastAPIKeyIndex = lastSuccessfulAPIKeyIndex
 currentAPIKey = 19 #Default value.
 
-
+# Function: getNextAPIKeyIndex
+# ---------------------
+# Returns the next key, or stays at the same one
+# and set the global shouldCycleAPIKeys if all the keys
+# in the loop have been used up and we're ACTUALLY waiting.
 
 def getNextAPIKeyIndex():
 	global shouldCycleAPIKeys
 	global lastSuccessfulAPIKeyIndex
 	global lastAPIKeyIndex
 	global currentAPIKey
-
 
 	nextAPIKeyIndex = lastAPIKeyIndex + 1
 	if nextAPIKeyIndex == c.NUM_API_KEYS:
@@ -53,7 +56,9 @@ def getNextAPIKeyIndex():
 		shouldCycleAPIKeys = False
 	return nextAPIKeyIndex
 
-
+# Function: setConstants
+# ---------------------
+# Sets initial values for the globals
 def setConstants(recipesInDatabase, remainingCalls, missedIngredients, apiNum,startNum):
 	global shouldCycleAPIKeys
 	global lastSuccessfulAPIKeyIndex
@@ -81,66 +86,76 @@ def printMissedIngredients():
 # ---------------------
 # Takes in a list of ingredients (@ingredients). For each ingredient, we search
 # for it in the Nutritional Database. If we find it, we add it to our dictionary
-# of ingredient -> ingredientIds (@foundIngredients). Otherwise, we add it to
-# out missedIngredients list
+# of ingredient -> foundIngredients.  We periodically save and dump this as a json
+# for every YUM_STEP ingredients either found or missed to be consolidated later.
 def addIngredientToNutritionalList(ingredients):
 	global shouldCycleAPIKeys
 	global lastSuccessfulAPIKeyIndex
 	global lastAPIKeyIndex
 	global currentAPIKey
 
-	foundItems = 0
-	missedItems = 0
 	foundIngredients = {}
 	missedIngredients = {}
-	print "adding ingredients to nutritionalList"
+	
 	foundIngredientsFilename = os.path.join(c.PATH_TO_RESOURCES, "nutrients", "foundingredients", "foundingredients")
 	missedIngredientsFilename = os.path.join(c.PATH_TO_RESOURCES, "nutrients", "missedingredients", "missedingredients")
 	foundFileCount = 0
 	missedFileCount = 0
-	for ingredient in ingredients:
+	
+	#Loops trough a sorted list of ingredients, printing the index along the way (can restart if necessary on failure.)
+	for i in range(0, len(ingredients)):
+		ingredient = ingredients[i]
+		print "Ingredient #" + str(i)
+		#nutritionalSearch makes all the API calls
 		foundIngredient, searchRequest = nutritionalSearch(ingredient)
 
+		# If sucessfully pulled the ID of the ingredient from the online databse, 
 		if foundIngredient:
-			# Adding ingredient to foundIngredients dict
 			nutritionalResults = json.loads(searchRequest.content)
 			resultList = nutritionalResults.get('list')
 			if resultList is not None:
 				ingredientId = resultList["item"][0]["ndbno"]
 				if ingredient not in foundIngredients:
 					foundIngredients[ingredient] = ingredientId
-					foundItems += 1
 			else:
 				print "ERROR, list is None. Check it out the results: %s" % nutritionalResults
 				print searchRequest.status_code
 
+		#Otherwise, add the ingredient to the list of misses.
 		else:
-			# Adding ingredient to missedIngredients list
 			if ingredient not in missedIngredients:
 				missedIngredients[ingredient] = 0
-				missedItems += 1
-		if len(foundIngredients) % c.YUM_STEP == 0 and len(foundIngredients) != 0:
-			# Dumps and prints out a .JSON file for every YUM_STEP recipes retrieved.
-			jsonIngredientDatabase = json.dumps(foundIngredients, sort_keys=True, indent=4)
-			#Filename is /res/jsonrecipes/jsonrecipe_index, where index is startIndex/100.
-			targetFileName = foundIngredientsFilename + "_" + str(foundFileCount) + ".json"
-			foundIngredientsFile = open(targetFileName, 'w+')
-			foundIngredientsFile.write(jsonIngredientDatabase)
-			foundIngredientsFile.close()
+
+		#Prints the dictionaries to json files if they are of size YUM_STEP
+		if shouldWriteJSON(foundingredients):
+			writeSegmentedJSONFile(foundingredients, foundIngredientsFilename, foundFileCount)
 			#Adding to clears dict so that next iteration will print clean.
 			foundIngredients.clear()
 			foundFileCount += 1
-		if len(missedIngredients) % c.YUM_STEP == 0 and len(missedIngredients) != 0:
-			# Dumps and prints out a .JSON file for every YUM_STEP recipes retrieved.
-			jsonIngredientDatabase = json.dumps(missedIngredients, sort_keys=True, indent=4)
-			#Filename is /res/jsonrecipes/jsonrecipe_index, where index is startIndex/100.
-			targetFileName = missedIngredientsFilename + "_" + str(missedFileCount) + ".json"
-			missedIngredientsFile= open(targetFileName, 'w+')
-			missedIngredientsFile.write(jsonIngredientDatabase)
-			missedIngredientsFile.close()
-			#Adding to clears dict so that next iteration will print clean.
+		if shouldWriteJSON(missedingredients):
+			writeSegmentedJSONFile(missedingredients, missedIngredientsFilename, missedFileCount)
 			missedIngredients.clear()
 			missedFileCount += 1
+	#Write anything that hasn't yet been written.
+	writeSegmentedJSONFile(foundingredients, foundIngredientsFilename, foundFileCount)
+	writeSegmentedJSONFile(missedingredients, missedIngredientsFilename, missedFileCount)
+
+def shouldWriteJSON(dictToTest):
+    if len(dictToTest) % c.YUM_STEP == 0 and len(dictToTest) != 0:
+        return True
+    return False
+
+def writeSegmentedJSONFile(dictionaryToDump, baseFilename, segmentIndex):
+	# Dumps and prints out a .JSON file for every YUM_STEP recipes retrieved.
+	jsonToWrite = json.dumps(dictionaryToDump, sort_keys=True, indent=4)
+	#Filename is /res/jsonrecipes/jsonrecipe_index, where index is startIndex/100.
+	targetFileName = baseFilename + "_" + str(segmentIndex) + ".json"
+	writeFile= open(targetFileName, 'w+')
+	writeFile.write(jsonToWrite)
+	writeFile.close()
+	# #Adding to clears dict so that next iteration will print clean.
+	# dictionaryToDump.clear()
+	# segmentIndex += 1
 
 
 # Function: nutritionalSearch
@@ -162,17 +177,13 @@ def nutritionalSearch(ingredient):
 	global lastAPIKeyIndex
 	global currentAPIKey
 
-
 	currentAPIKeyIndex = lastAPIKeyIndex
 	currentAPIKey = govAPIArray[currentAPIKeyIndex]
 
-	#print "Ingredient is:" + ingredient.encode('ascii', errors='ignore')
-	#print "currentAPIKey is: " + str(currentAPIKey)
-	#print "currentAPIKeyIndex is: " + str(currentAPIKeyIndex)
-
-	apiSearchString = "http://api.nal.usda.gov/ndb/search/?format=json&q=%s&max=1&api_key=%s" % (ingredient, currentAPIKey)
-	searchRequest = requests.get(apiSearchString)
-	remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
+	searchRequest = getSearchRequest(ingredient, currentAPIKey)
+	remaining = getRemaining(searchRequest)
+	if remaining < 0 or searchRequest is None:
+		return False, None
 
 	#if c.PRINT_REMAINING_CALLS: 
 	print "SEARCH: Gov Nutrional Database requests remaining: %d with API Key # %s" %	 (remaining, currentAPIKeyIndex)
@@ -191,17 +202,20 @@ def nutritionalSearch(ingredient):
 			if shouldCycleAPIKeys:
 				currentAPIKeyIndex = getNextAPIKeyIndex()
 				currentAPIKey = govAPIArray[currentAPIKeyIndex]
-				apiSearchString = "http://api.nal.usda.gov/ndb/search/?format=json&q=%s&max=1&api_key=%s" % (ingredient, currentAPIKey)
-				searchRequest = requests.get(apiSearchString)
-				remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
+				searchRequest = getSearchRequest(ingredient, currentAPIKey)
+				remaining = getRemaining(searchRequest)
+				if remaining < 0 or searchRequest is None:
+					return False, None
 			else:
 				#Naptime.
 				print "SEARCH: Request failed because exceeded Gov 1K API requests/hour"
 				print "... Sleeping for 10 min ..."
 				time.sleep(c.SLEEP_TIME)
-				apiSearchString = "http://api.nal.usda.gov/ndb/search/?format=json&q=%s&max=1&api_key=%s" % (ingredient, currentAPIKey)
-				searchRequest = requests.get(apiSearchString)
-				remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
+				searchRequest = getSearchRequest(ingredient, currentAPIKey)
+				remaining = getRemaining(searchRequest)
+				if remaining < 0 or searchRequest is None:
+					return False, None
+
 		print "SEARCH: Gov Nutrional Database requests remaining: %d with API Key %s" %	 (remaining, currentAPIKeyIndex)
 	
 	#Updates variables for proper cycling through API Keys
@@ -209,7 +223,24 @@ def nutritionalSearch(ingredient):
 	shouldCycleAPIKeys = True
 	return True, searchRequest
 
+def getSearchRequest(ingredient, currentAPIKey):
+	apiSearchString = "http://api.nal.usda.gov/ndb/search/?format=json&q=%s&max=1&api_key=%s" % (ingredient, currentAPIKey)
+	try:
+		return requests.get(apiSearchString)
+	except requests.exceptions.ConnectionError as e:
+		return None
 
+def getRemaining(searchRequest):
+	if 'X-RateLimit-Remaining' in searchRequest.headers:
+		return int(searchRequest.headers['X-RateLimit-Remaining'])
+	return -1
+
+def getDataRequest(ingredientId, currentAPIKey):
+	apiGetString = "http://api.nal.usda.gov/ndb/reports/?ndbno={0}&type=b&format=json&api_key={1}".format(ingredientId, currentAPIKey)
+	try:
+		return requests.get(apiGetString)
+	except requests.exceptions.ConnectionError as e:
+		return None
 # Function: getNutritionalRequest
 # ---------------------
 # Makes get request on Nutritional API. Then, if the status is not 200
@@ -228,25 +259,18 @@ def getNutritionalRequest(ingredientId):
 	global lastAPIKeyIndex
 	global currentAPIKey
 
-
 	#Load current values for the APIKeyIndex and the APIKey
 	currentAPIKeyIndex = lastAPIKeyIndex
 	currentAPIKey = govAPIArray[currentAPIKeyIndex]
 
-	#Try to get the necessary info.
-	apiGetString = "http://api.nal.usda.gov/ndb/reports/?ndbno={0}&type=b&format=json&api_key={1}".format(ingredientId, currentAPIKey)
-	getRequest = requests.get(apiGetString)
-	if c.PRINT_REMAINING_CALLS: 
-		print "GET: Gov Nutrional Database requests remaining: %d" % int(getRequest.headers['X-RateLimit-Remaining'])
+	getRequest = getDataRequest(ingredientId, currentAPIKey)
+	remaining = getRemaining(getRequest)
+	if remaining < 0 or getRequest is None:
+		return None
 
 	#On failure, Notify and either return/break on error, or loop API keys if waiting for the API limit to refresh.
 	while getRequest.status_code != 200:
-		print
 		print "[BROKE REQUEST] Status code != 200"
-
-		remaining = int(getRequest.headers['X-RateLimit-Remaining'])
-		print "GET: Gov Nutrional Database requests remaining: %d with API Key %s" %	 (remaining, currentAPIKeyIndex)
-
 		if remaining >= c.SLEEP_THRESHOLD:
 			print "[ERROR] GET: Status != 200 but remaining (%d) >= SLEEP_THRESHOLD (%d)" % (remaining, c.SLEEP_THRESHOLD)
 			return None
@@ -258,16 +282,19 @@ def getNutritionalRequest(ingredientId):
 			if shouldCycleAPIKeys:
 				currentAPIKeyIndex = getNextAPIKeyIndex()
 				currentAPIKey = govAPIArray[currentAPIKeyIndex]
-				apiGetString = "http://api.nal.usda.gov/ndb/reports/?ndbno={0}&type=b&format=json&api_key={1}".format(ingredientId, currentAPIKey)
-				searchRequest = requests.get(apiGetString)
-				remaining = int(searchRequest.headers['X-RateLimit-Remaining'])
+				getRequest = getDataRequest(ingredientId, currentAPIKey)
+				remaining = getRemaining(getRequest)
+				if remaining < 0 or getRequest is None:
+					return None
 			else:
 				print "GET: Request failed because exceeded Gov 1K API requests/hour"
 				print "... Sleeping for 10 min ..."
 				time.sleep(c.SLEEP_TIME)
-				getRequest = requests.get(apiGetString)
-				remaining = int(getRequest.headers['X-RateLimit-Remaining'])
-		print "GET: Gov Nutrional Database requests remaining: %d with API Key %s" %	 (remaining, currentAPIKeyIndex)
+				getRequest = getDataRequest(ingredientId, currentAPIKey)
+				remaining = getRemaining(getRequest)
+				if remaining < 0 or getRequest is None:
+					return None
+	print "GET: Gov Nutrional Database requests remaining: %d with API Key %s" %	 (remaining, currentAPIKeyIndex)
 
 	#Updates variables for proper cycling through API Keys
 	lastSuccessfulAPIKeyIndex = currentAPIKeyIndex
@@ -286,32 +313,34 @@ def getNutritionalRequest(ingredientId):
 #
 # Once we have looped through all ingredients, we store the nutritionalDatabase in
 # json format on the file with the filename.
-def buildNutritionalDatabase(ingredientNameIdMap, filename):
+def buildNutritionalDatabase(ingredientNameIdMap):
+	nutrientFilename = os.path.join(c.PATH_TO_RESOURCES, "nutrients", "nutrientdata", "nutrientdata")
 	numIngredients = len(ingredientNameIdMap)
 	print "... Creating Nutritional Database with %d items ..." % numIngredients
 
 	nutritionalDatabase = {}
-
-	for ingredientName, ingredientId in ingredientNameIdMap.iteritems():
-		getRequest = getNutritionalRequest(ingredientId, currentAPIKey)
-
+	nutrientFileCount = 0
+	numLoaded = 0
+	for ingredientName in ingredientNameIdMap:
+		ingredientId = ingredientNameIdMap[ingredientName].encode('ascii', errors='ignore')
+		print "Getting data for ingredient ID %s, (%d/%d) complete" % (ingredientId, numLoaded, numIngredients)
+		getRequest = getNutritionalRequest(ingredientId)
 		if getRequest is not None:
-			getFood = json.loads(getRequest.content)
-			foodCalories = getFood['report']['food']['nutrients'][1]
+			requestAsJson = json.loads(getRequest.content)
+			requestAsFormattedDict = nutrientDictFromJSON(requestAsJson)
+			nutritionalDatabase[ingredientName] = requestAsFormattedDict
+			numLoaded += 1
+		#If dictionary threshold of YUM_STEP is reached, output it to a json file.
+		if shouldWriteJSON(nutritionalDatabase):
+			writeSegmentedJSONFile(nutritionalDatabase, nutrientFilename, nutrientFileCount)
+			nutritionalDatabase.clear()
+			nutrientFileCount+=1
 
-			ingredientObj = {'ingredientName': ingredientName,
-							 'ingredientId': ingredientId,
-							 'foodCalories': (foodCalories['value'], foodCalories['unit'], foodCalories['measures'])}
-
-			nutritionalDatabase[ingredientName] = ingredientObj
-
-	jsonNutritionalDatabase = json.dumps(nutritionalDatabase, sort_keys=True, indent=4)
-	allNutritionalFile = open(filename, 'w+')
-	allNutritionalFile.write(jsonNutritionalDatabase)
-	allNutritionalFile.close()
+	# jsonNutritionalDatabase = json.dumps(nutritionalDatabase, sort_keys=True, indent=4)
+	# allNutritionalFile = open(filename, 'w+')
+	# allNutritionalFile.write(jsonNutritionalDatabase)
+	# allNutritionalFile.close()
 	print "... Done creating Nutritional Database with %d items ..." % numIngredients
-
-	print "... Out of all %d ingredient in our recipe, we found %d of them, and missed %d of them ..." % (foundItems + missedItems, foundItems, missedItems)
 
 # Function: buildRecipeEntry
 # ---------------------
@@ -443,20 +472,104 @@ def createOnlyRecipeDatabase(recipeFilename, nutritionalFileName, numRecipes, st
 # ---------------------
 # Creates the Recipe and the Nutritional Databases and store them in the
 # respective files in json format.
-def createOnlyNutrientDatabase():
-	print "creatingNutrientDatabase!"
-	#aliasList = ["white rice", "chocolate", "parmesan cheese", "salsa", "peas", "couch", "horse", "wall"]
+def createNutrientIDFiles():
 	aliasList = util.listAllAliases()
+	aliasList.sort()
 	hitIngredientCount = 0
 	missedIngredientCount = 0
-	filename = "nutrientTestRead"
+	print "Number of Ingredients to Query: " + str(len(aliasList))
 	addIngredientToNutritionalList(aliasList)
 	print foundIngredients
-	#buildNutritionalDatabase(aliasList, filename)
-	#buildOnlyRecipeDatabase(recipeFilename, numRecipes, startIndex)
+
+def createNutrientDataJSON():
+	nutrientIDsFilePath = os.path.join(c.PATH_TO_RESOURCES, "allNutrientIDs.json")
+	nutrientIDs = util.loadJSONDict(nutrientIDsFilePath)
+	buildNutritionalDatabase(nutrientIDs)
+
+def hasNumbers(inputString):	
+    return any(char.isdigit() for char in inputString)
 
 
+# Function: nutrientDictFromJSON
+# ---------------------
+# Given a dict loaded from a json file for a nutrient (basically from the API)
+# get request, and returns a unified dict of all the selected nutrient groups:
+# (proximates, minerals, vitamins, lipids, amino acids, other)
+#
+# Returns a dictionary with the nutrient map and conversion values.
+# returnDict['nutrients'], returnDict['measure']
 
+def nutrientDictFromJSON(givenIngredient):
+
+    #Flags
+    ignoreNumericalLipids = True
+
+    returnDict = {}
+    measureDict = {}
+    loadedMeasures = False
+
+    #Variables that determine which groups are included
+    getProximates = True
+    getMinerals = True
+    getVitamins = True
+    getLipids = True
+    getAminoAcids = True
+    getOther = True
+
+
+    nutrientDict = {}
+    nutrientDict['proximates'] = {}
+    nutrientDict['minerals'] = {}
+    nutrientDict['vitamins'] = {}
+    nutrientDict['lipids'] = {}
+    nutrientDict['amino acids'] = {}
+    nutrientDict['other'] = {}
+
+    #Loop through each nutrient in the given ingredient
+    for nutrient in givenIngredient['report']['food']['nutrients']:
+        nutrientGroup = nutrient['group'].encode('ascii', errors='ignore').lower()
+        nutrientName =  nutrient['name'].encode('ascii', errors='ignore').lower()
+        nutrientVal = nutrient['value'].encode('ascii', errors='ignore').lower()
+        nutrientUnit = nutrient['unit'].encode('ascii', errors='ignore')
+
+        #Saves the nutrient value and unit per 100g
+        if ignoreNumericalLipids and nutrientGroup == 'lipids' \
+            and hasNumbers(nutrientName):
+            continue                
+
+        #Saves the info of the current nutrient to the dictionary
+        nutrientDict[nutrientGroup][nutrientName] = tuple((nutrientVal, nutrientUnit))
+
+        #Load the measurement conversions for each ingredient exactly once.
+        if not loadedMeasures:
+            for measureKey in nutrient['measures']:
+                equivUnit = measureKey['label'].encode('ascii', errors='ignore')
+                equivValue = measureKey['eqv']
+                measureDict[equivUnit] = equivValue
+            loadedMeasures = True
+
+    # Creates a merged dictionary based on which groups are selected.
+    mergeList = []
+
+    if getProximates: mergeList.append(nutrientDict['proximates'])
+    if getMinerals: mergeList.append(nutrientDict['minerals'])
+    if getVitamins: mergeList.append(nutrientDict['vitamins'])
+    if getLipids: mergeList.append(nutrientDict['lipids'])
+    if getAminoAcids: mergeList.append(nutrientDict['amino acids'])
+    if getOther: mergeList.append(nutrientDict['other'])
+
+    returnDict['nutrients'] = util.mergeNutrientDicts([mergeList])   
+    returnDict['measure'] = measureDict
+
+    # print "\n\n\n"
+    # print "Nutrients:"
+    # print returnDict['nutrients']
+    # print "Conversions:"
+    # print returnDict['measure']
+    # print "Calories per 100g: " + returnDict['nutrients']['energy'][0] + " " + returnDict['nutrients']['energy'][1]
+    
+
+    return returnDict
 
 
 ###########################################################

@@ -103,7 +103,7 @@ def init(pathToRoot):
 	# Used by:
 	#  - main.py to direct execution to the proper executable in bin/
 	EXECUTABLES = ["process_recipes", "query_online_db", "write_recipes", "sandbox", "merge_recipes",
-		"convert_file_to_json"]
+		"convert_file_to_json", "query_nutrient_ids", "query_nutrient_data", "merge_nutrient_ids"]
 	EXE_ARG_POS = 1
 
 	##
@@ -141,7 +141,7 @@ def init(pathToRoot):
 	NUM_API_KEYS = 20
 
 	SLEEP_THRESHOLD = 1
-	SLEEP_TIME = 60*30
+	SLEEP_TIME = 60*5
 	PRINT_REMAINING_CALLS = False
 	PRINT_MISSED_INGREDIENTS = False
 
