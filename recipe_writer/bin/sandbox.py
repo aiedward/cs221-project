@@ -459,6 +459,11 @@ def testNutrientDatabaseClass():
     print nutDatabase.getNutrientFromGrams(200,"accent flavor enhancer", 'energy')
     print nutDatabase.getNutrientFromGrams(100,"accent flavor enhancer", 'protein')
 
+    print "Get Percentage Tests"
+    print "Calories from Fat: " + str(nutDatabase.getPercentage("caloriesfromfat", "accent flavor enhancer"))
+    print "Daily Values: " + str(nutDatabase.getPercentage("dailyvalues_sodium", "accent flavor enhancer"))
+    print "Daily Values: " + str(nutDatabase.getPercentage("mass_fat", "accent flavor enhancer"))
+
 []
 
 

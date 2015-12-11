@@ -5,9 +5,10 @@ import tokenize, re, string
 import json, unicodedata
 from lib import util
 from lib import constants as c
-from enum import Enum
 
 STANDARD_GRAMS = 100 #everything is given with this
+CALORIES_PER_GRAM_FAT = 9 #Taken from internet info
+CALORIES_PER_GRAM_SUGAR = 3.87
 
 class NutrientDatabase:
     def __init__(self):
@@ -41,8 +42,7 @@ class NutrientDatabase:
     ##
     def getNutrientFromGrams(self, grams, ingredient, nutrient):
         # Special case, for ease of use.
-        if nutrient == 'calories':
-            nutrient = 'energy'
+        nutrient = self.translateNutrient(nutrient)
 
         if not self.isValidIngredient(ingredient):
             return None
@@ -59,9 +59,8 @@ class NutrientDatabase:
     # i.e. how many calories are in 10 g of flour?
     ##
     def getNutrientFromUnit(self, amount, ingredient, nutrient, unit):
-        # Special case, for ease of use.
-        if nutrient == 'calories':
-            nutrient = 'energy'
+        nutrient = self.translateNutrient(nutrient)
+
         if not self.isValidIngredient(ingredient):
             return None
         if not self.isValidNutrient(nutrient):
@@ -89,8 +88,8 @@ class NutrientDatabase:
     ##
     # Function: getNutrientUnit
     # --------------------------------
-    # Returns the unit of a nutrient in an ingredient as a unitless
-    # value. Returns an error if either the ingredient or the nutrient
+    # Returns the unit of a nutrient in an ingredient
+    # Returns an error if either the ingredient or the nutrient
     # is not found.
     ##    
     def getNutrientUnit(self, ingredient, nutrient):
@@ -99,6 +98,78 @@ class NutrientDatabase:
         if not self.invalidNutrient(nutrient):
             return None
         return float(self.nutrientDict[ingredient]['nutrients'][nutrient][1])
+
+
+    def getPercentage(self, inputString, ingredient):
+        words = inputString.split('_')
+      
+        #Special Cases
+        if inputString == 'caloriesfromfat':
+            return self.getPercentageCaloriesFromFat(ingredient)
+        if len(words) > 1:
+            command = words[0]
+            print words[1]
+            nutrient = self.translateNutrient(words[1])
+            if command == 'dailyvalues':
+                return self.getPercentDailyValuesPerGram(ingredient, nutrient)
+            if command == 'absolutedailyvalues':
+                # Second input is mass in grams to calculate
+                if len(words) == 2:
+                    return float(words[2])*self.getPercentDailyValuesPerGram(ingredient, nutrient)
+
+            if command == 'mass':
+                return self.getNutrient(ingredient, nutrient)
+        return None
+        
+    ##
+    # Function: getPercentageCaloriesFromFat:
+    # --------------------------------
+    # Returns the percentage of calories from fat for a given ingredient.
+    # i.e. 78% (78)
+    ##    
+    def getPercentageCaloriesFromFat(self, ingredient):
+        if not self.isValidIngredient(ingredient):
+            return None
+        calories = float(self.getCalories(ingredient))
+        gramsFat = self.getNutrient(ingredient, 'total lipid (fat)')
+        return float(100*(gramsFat * CALORIES_PER_GRAM_FAT)/calories)
+    
+    ##
+    # Function: getPercentageDailyValuesPerGram
+    # --------------------------------
+    # Returns the percentage of your daily value of a nutrient you get per
+    # gram of a selected ingredient.  Returns null on error, negative if
+    # we dont have a daily value for the nutrient
+    #
+
+    def getPercentDailyValuesPerGram(self, ingredient, nutrient):
+        if not self.isValidIngredient(ingredient):
+            return None
+        nutrientValuePerGram = self.getNutrient(ingredient, nutrient)/STANDARD_GRAMS
+        return nutrientValuePerGram/self.validNutrientsDict[nutrient]
+
+
+
+#######################################
+#############   Helpers ###############
+#######################################
+    ##
+    # Function: translateNutrient
+    # --------------------------------
+    # Translates special case nutrients to make communication easier
+    ##
+    def translateNutrient(self, potentialNutrient):
+        # Special case, for ease of use.
+        if potentialNutrient == 'calories' or potentialNutrient == 'kcal':
+            return 'energy'
+        if potentialNutrient == 'fat':
+            return 'total lipid (fat)'
+        for key in self.validNutrientsDict:
+            if potentialNutrient in key:
+                print key
+                return key
+        return potentialNutrient
+
 
     ##
     # Function: getConversionFactor
@@ -166,6 +237,3 @@ class NutrientDatabase:
         if not self.isValidIngredient(ingredient):
             return None
         return unit in self.nutrientDict[ingredient]['measure']
-
-
-
