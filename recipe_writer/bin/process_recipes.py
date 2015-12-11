@@ -16,6 +16,7 @@ from lib import constants as c
 from lib import nutrientdatabase as ndb
 
 validAliasDict = {}
+nutDB = ndb.NutrientDatabase()
 
 ##
 # Function: main
@@ -43,7 +44,7 @@ def main(argv):
 	# Convert all string data to lowercase.
 	lowerAllStrings(allRecipes)
 
-	nutDB = ndb.NutrientDatabase()
+	#nutDB = ndb.NutrientDatabase()
 	
 	#Let's fuck around.
 	for recipe in allRecipes:
@@ -63,18 +64,32 @@ def main(argv):
 		 		ingredientLineDict[ingredient] = []
 		 	ingredientLineDict[ingredient].append(ingredientLine)
 
-	print ingredientLineDict
+	#print ingredientLineDict
 
 	for ingredient in ingredientLineDict:
 		for ingredientLine in ingredientLineDict[ingredient]:
 			#TIME TO PARSE.
 			words = ingredientLine.split()
-			potentialStart = words[0]
+			potentialStart = removeHyphen(words[0])
 
 			#If the first token is a number, try the next few.
-			if hasNumbers(words[0]):
-				potentialUnit = words[1]
-				print str(potentialStart) + " " + potentialUnit + " ||" + str(words)
+			if isPossibleAmount(words[0]):
+				if '/' in potentialStart:
+					tokens = potentialStart.split('/')
+					first = float(tokens[0])
+					second = float(tokens[1])
+					potentialStart = first/second
+				amount = float(potentialStart)
+				potentialUnit = extractUnit(words, ingredient)
+				#print "Amount: " + str(amount)
+				if potentialUnit != None:
+					pass
+					#print "Amount: " + str(amount) + " Unit: " + potentialUnit
+				else:
+					print "Couldn't match unit for ingredient: " + ingredient
+					print words
+			
+			#Need to figure out what unit. It is.
 			#print words[0]
 			#print ingredientLine
 
@@ -119,8 +134,49 @@ def main(argv):
 	# largeFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_large.json")
 	# util.dumpJSONDict(largeFilePath, smallAliasData)
 
-def hasNumbers(inputString):	
-    return any(char.isdigit() for char in inputString)
+# Loop throuh each of the tokens of the ingredient line, looking for a match
+# with the units given for that particular ingredient.
+def extractUnit(tokens, ingredient):
+	#print tokens
+	for potentialUnit in tokens:
+		potentialUnit = translatePotentialUnit(potentialUnit)
+		#print "Potential unit: " + potentialUnit
+		#print "Testing if " + potentialUnit + " is a possible unit for " + ingredient
+		if nutDB.isValidConversionUnit(ingredient, potentialUnit):
+			return potentialUnit
+		#Check plurals by removing the last letter
+		if nutDB.isValidConversionUnit(ingredient, potentialUnit[:-1]):
+			return potentialUnit
+	return None
+
+
+
+def translatePotentialUnit(unit):
+	unit = unit.replace('.', '')
+	if unit == 'cups':
+		return 'cup'
+	if unit == 'pounds' or unit == 'pound':
+		return 'lb'
+	if unit == 'teaspoons' or unit == 'teaspoon':
+		return 'tsp'
+	if unit == 'tablespoons' or unit == 'tablespoon':
+		return 'tbsp'
+	if unit == 'ounce' or unit == 'ounces':
+		return 'oz'
+	return unit
+
+
+def removeHyphen(inputString):
+	if '-' in inputString:
+		return inputString[inputString.rfind('-'):]
+	return inputString
+
+def isPossibleAmount(inputString):
+	for char in inputString:
+		if not char.isdigit() or char == '/' or char == '-':
+			return False
+	return True
+    #return any(char.isdigit() for char in inputString)
 
 ##
 # Function: extractRecipesFromJSON

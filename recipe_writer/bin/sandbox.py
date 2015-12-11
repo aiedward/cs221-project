@@ -464,7 +464,6 @@ def testNutrientDatabaseClass():
     print nutDatabase.getNutrientFromGrams(200,"accent flavor enhancer", 'energy')
     print nutDatabase.getNutrientFromGrams(100,"accent flavor enhancer", 'protein')
 
-<<<<<<< HEAD
 def test_variableNumberLambdaArgs1():
     csp = constraint.Problem()
     numVars = 3
@@ -557,7 +556,8 @@ def main(argv):
     #testAliasExtraction()
     # testNutrientDatabaseClass()
     # test_variableNumberLambdaArgs1()
-    test_variableNumberLambdaArgs1()
+    #test_variableNumberLambdaArgs1()
+    database.manualNutrientQuery("eggs", 01124)
 
 if __name__ == "__main__":
     main(sys.argv)
