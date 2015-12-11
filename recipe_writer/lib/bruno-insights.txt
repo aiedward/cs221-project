@@ -13,9 +13,8 @@ TODO:
 - Use aliases, alisesM, and alisesL on clusters that are interesting
 - Figure out to to draw stuff
 - Talk about 1D, 2D, 3D...
+- Implement totalTimeInSeconds, numIngredient
 
-DONE:
-- Write outputs into JSON file, remember to put a timestamp on it
 
 INSIGHTS:
 1) One shouldn't use too many features at once, since it creates clusters that don't make 
