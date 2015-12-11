@@ -5,6 +5,7 @@
 ##
 
 import collections, itertools, copy, Queue
+from collections import Counter
 import numpy, scipy, math, random
 import os, sys, time, importlib
 import tokenize, re, string
@@ -16,7 +17,7 @@ from lib import constants as c
 from lib import nutrientdatabase as ndb
 
 validAliasDict = {}
-nutDB = ndb.NutrientDatabase()
+ndb = ndb.NutrientDatabase()
 
 ##
 # Function: main
@@ -28,6 +29,7 @@ def main(argv):
 	validIngredientsFilePath = os.path.join(c.PATH_TO_RESOURCES, "validIngredients.json")
 	validAliasDict = util.loadJSONDict(validIngredientsFilePath)
 
+	conversionDict = createWaterConversionDict()
 
 	allRecipes = []
 
@@ -37,6 +39,8 @@ def main(argv):
 	#   "lines"
 	aliasData = {}
 	ingredientLineDict = {}
+	ingredientMassDict = {}
+	unitCountDict = {}
 
 	# Read in and parse recipe data structures (dictionaries) from a json file.
 	extractRecipesFromJSON(allRecipes)
@@ -44,7 +48,7 @@ def main(argv):
 	# Convert all string data to lowercase.
 	lowerAllStrings(allRecipes)
 
-	#nutDB = ndb.NutrientDatabase()
+	#ndb = ndb.NutrientDatabase()
 	
 	#Let's fuck around.
 	for recipe in allRecipes:
@@ -80,15 +84,37 @@ def main(argv):
 					second = float(tokens[1])
 					potentialStart = first/second
 				amount = float(potentialStart)
-				potentialUnit = extractUnit(words, ingredient)
-				#print "Amount: " + str(amount)
+				potentialUnit, foundUnit = extractUnit(words, ingredient, conversionDict)
+				
 				if potentialUnit != None:
-					pass
+					#Add both the mass and the unit count
+					if foundUnit:
+						massInGrams = amount*ndb.getConversionFactor(ingredient, potentialUnit)
+						if ingredient not in unitCountDict:
+							unitCountDict[ingredient] = Counter()
+						unitCountDict[ingredient][potentialUnit] += 1
+					else:
+						massInGrams = amount*conversionDict[potentialUnit]
+					if ingredient not in ingredientMassDict:
+						ingredientMassDict[ingredient] = []
+					ingredientMassDict[ingredient].append(massInGrams)
 					#print "Amount: " + str(amount) + " Unit: " + potentialUnit
 				else:
 					print "Couldn't match unit for ingredient: " + ingredient
 					print words
-			
+					print
+
+			if not hasAnAmount(words):
+				if ingredient not in unitCountDict:
+					unitCountDict[ingredient] = Counter()
+				unitCountDict[ingredient]['unitless'] += 1
+
+
+	print "\n\nIngredient Mass Dict:"
+	print ingredientMassDict
+	print "\n\nUnit Counter Dict"
+	print unitCountDict
+
 			#Need to figure out what unit. It is.
 			#print words[0]
 			#print ingredientLine
@@ -100,6 +126,7 @@ def main(argv):
 	# Create a dictionary storing relationships between the various aliases.
 	# Create a dictionary with aliases as keys and lists of lines they've been
 	# associated with as values.
+
 	fillAliasData(allRecipes, aliasData)
 
 
@@ -134,34 +161,69 @@ def main(argv):
 	# largeFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_large.json")
 	# util.dumpJSONDict(largeFilePath, smallAliasData)
 
+def hasAnAmount(tokens):
+	for token in tokens:
+		if isPossibleAmount(token):
+			return True
+	return False
+
 # Loop throuh each of the tokens of the ingredient line, looking for a match
 # with the units given for that particular ingredient.
-def extractUnit(tokens, ingredient):
-	#print tokens
+def extractUnit(tokens, ingredient, conversionDict):
+
 	for potentialUnit in tokens:
+		if isPossibleAmount(potentialUnit):
+			continue
 		potentialUnit = translatePotentialUnit(potentialUnit)
 		#print "Potential unit: " + potentialUnit
 		#print "Testing if " + potentialUnit + " is a possible unit for " + ingredient
-		if nutDB.isValidConversionUnit(ingredient, potentialUnit):
-			return potentialUnit
-		#Check plurals by removing the last letter
-		if nutDB.isValidConversionUnit(ingredient, potentialUnit[:-1]):
-			return potentialUnit
-	return None
+		singular = potentialUnit
+		plural = potentialUnit[:-1]
+		validUnitList = ndb.listConversionUnits(ingredient)
+		# print "Testing:"
+		# print potentialUnit
+		# print validUnitList
+		# print
+		if validUnitList is not None:
+			#Check for perfect match first.
+			for validConversionUnit in validUnitList:
+				#validConversionUnit= validConversionUnit.replace('.', '')
+				if singular == validConversionUnit or plural == validConversionUnit:
+					return validConversionUnit, True
+			#Check for contains match second.
+			for validConversionUnit in validUnitList:
+				if singular in validConversionUnit or plural in validConversionUnit:
+					return validConversionUnit, True
+					
+	# If here, couldn't find a matching unit, so match a standard unit.
+	for potentialUnit in tokens:
+		potentialUnit = translatePotentialUnit(potentialUnit)
+		if potentialUnit in conversionDict:
+			return potentialUnit, False
+	return None, None
 
-
+def createWaterConversionDict():
+	returnDict = {}
+	returnDict['cup'] = 236.6
+	returnDict['lb'] = 453.6
+	returnDict['tsp'] = 4.929
+	returnDict['tbsp'] = 14.79
+	returnDict['oz'] = 28.35
+	returnDict['ml'] = 1
+	returnDict['l'] = 1000
+	return returnDict
 
 def translatePotentialUnit(unit):
 	unit = unit.replace('.', '')
 	if unit == 'cups':
 		return 'cup'
-	if unit == 'pounds' or unit == 'pound':
+	if unit == 'pounds' or unit == 'pound' or unit == 'lbs':
 		return 'lb'
 	if unit == 'teaspoons' or unit == 'teaspoon':
 		return 'tsp'
 	if unit == 'tablespoons' or unit == 'tablespoon':
 		return 'tbsp'
-	if unit == 'ounce' or unit == 'ounces':
+	if unit == 'ounce' or unit == 'ounces' or unit == 'ozs':
 		return 'oz'
 	return unit
 

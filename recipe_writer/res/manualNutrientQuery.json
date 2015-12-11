@@ -1,0 +1,122 @@
+{
+    "milk": {
+        "measure": {
+            "cup": 245.0, 
+            "quart": 980.0
+        }, 
+        "nutrients": {
+            "calcium, ca": [
+                "128", 
+                "mg"
+            ], 
+            "carbohydrate, by difference": [
+                "4.97", 
+                "g"
+            ], 
+            "cholesterol": [
+                "8", 
+                "mg"
+            ], 
+            "energy": [
+                "51", 
+                "kcal"
+            ], 
+            "fatty acids, total monounsaturated": [
+                "0.555", 
+                "g"
+            ], 
+            "fatty acids, total polyunsaturated": [
+                "0.071", 
+                "g"
+            ], 
+            "fatty acids, total saturated": [
+                "1.195", 
+                "g"
+            ], 
+            "fiber, total dietary": [
+                "0.0", 
+                "g"
+            ], 
+            "folate, dfe": [
+                "5", 
+                "g"
+            ], 
+            "iron, fe": [
+                "0.05", 
+                "mg"
+            ], 
+            "magnesium, mg": [
+                "14", 
+                "mg"
+            ], 
+            "niacin": [
+                "0.090", 
+                "mg"
+            ], 
+            "phosphorus, p": [
+                "100", 
+                "mg"
+            ], 
+            "potassium, k": [
+                "162", 
+                "mg"
+            ], 
+            "protein": [
+                "3.48", 
+                "g"
+            ], 
+            "riboflavin": [
+                "0.173", 
+                "mg"
+            ], 
+            "sodium, na": [
+                "52", 
+                "mg"
+            ], 
+            "thiamin": [
+                "0.040", 
+                "mg"
+            ], 
+            "total lipid (fat)": [
+                "1.92", 
+                "g"
+            ], 
+            "vitamin a, iu": [
+                "204", 
+                "IU"
+            ], 
+            "vitamin a, rae": [
+                "56", 
+                "g"
+            ], 
+            "vitamin b-12": [
+                "0.38", 
+                "g"
+            ], 
+            "vitamin b-6": [
+                "0.045", 
+                "mg"
+            ], 
+            "vitamin c, total ascorbic acid": [
+                "1.0", 
+                "mg"
+            ], 
+            "vitamin d": [
+                "40", 
+                "IU"
+            ], 
+            "vitamin d (d2 + d3)": [
+                "1.0", 
+                "g"
+            ], 
+            "water": [
+                "88.86", 
+                "g"
+            ], 
+            "zinc, zn": [
+                "0.40", 
+                "mg"
+            ]
+        }
+    }
+}

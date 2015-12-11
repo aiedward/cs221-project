@@ -226,7 +226,10 @@ class NutrientDatabase:
     def listConversionUnits(self, ingredient):
         if not self.isValidIngredient(ingredient):
             return None
-        return self.nutrientDict[ingredient]['measure'].keys()
+        try:
+            return self.nutrientDict[ingredient]['measure'].keys()
+        except KeyError:
+            return None
 
     ##
     # Function: isValidConversionUnit
@@ -237,4 +240,7 @@ class NutrientDatabase:
     def isValidConversionUnit(self, ingredient, unit):
         if not self.isValidIngredient(ingredient):
             return None
-        return unit in self.nutrientDict[ingredient]['measure']
+        try:
+            return unit in self.nutrientDict[ingredient]['measure']
+        except KeyError:
+            return None

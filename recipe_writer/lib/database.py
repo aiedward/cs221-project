@@ -574,13 +574,14 @@ def nutrientDictFromJSON(givenIngredient):
 
 
 def manualNutrientQuery(ingredientName, ingredientId):
+	filePath = os.path.join(c.PATH_TO_RESOURCES, "manualNutrientQuery.json")
 	manualDict = {}
 	getRequest = getNutritionalRequest(ingredientId)
-		if getRequest is not None:
-			requestAsJson = json.loads(getRequest.content)
-			requestAsFormattedDict = nutrientDictFromJSON(requestAsJson)
-			manualDict[ingredientName] = requestAsFormattedDict
-	util.dumpJSONDict("manualNutrientQuery", manualDict)
+	if getRequest is not None:
+		requestAsJson = json.loads(getRequest.content)
+		requestAsFormattedDict = nutrientDictFromJSON(requestAsJson)
+		manualDict[ingredientName] = requestAsFormattedDict
+	util.dumpJSONDict(filePath, manualDict)
 
 ###########################################################
 ###############   DEPRECATED FUNCTIONS   ##################

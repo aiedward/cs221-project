@@ -19,13 +19,15 @@ import thread
 import threading
 import time
 
+
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from lib import util
+from lib import database
 from lib import constants as c
 from lib import nutrientdatabase as ndb
 c.init(os.path.dirname(os.path.dirname(__file__)))
-import constraint
+#import constraint
 
 def printFunctionName():
     print ""
@@ -464,55 +466,55 @@ def testNutrientDatabaseClass():
     print nutDatabase.getNutrientFromGrams(200,"accent flavor enhancer", 'energy')
     print nutDatabase.getNutrientFromGrams(100,"accent flavor enhancer", 'protein')
 
-def test_variableNumberLambdaArgs1():
-    csp = constraint.Problem()
-    numVars = 3
+# def test_variableNumberLambdaArgs1():
+#     csp = constraint.Problem()
+#     numVars = 3
 
-    aVars = ["varA_%d" % i for i in range(numVars)]
-    bVars = ["varB_%d" % i for i in range(numVars)]
-    aDomain = range(1,20,4)
-    bDomain = range(1,20,4)
+#     aVars = ["varA_%d" % i for i in range(numVars)]
+#     bVars = ["varB_%d" % i for i in range(numVars)]
+#     aDomain = range(1,20,4)
+#     bDomain = range(1,20,4)
 
-    csp.addVariables(aVars, aDomain)
-    csp.addConstraint(constraint.MaxSumConstraint(30))
-    csp.addVariables(bVars, bDomain)
-    csp.addConstraint(constraint.MaxSumConstraint(10))
+#     csp.addVariables(aVars, aDomain)
+#     csp.addConstraint(constraint.MaxSumConstraint(30))
+#     csp.addVariables(bVars, bDomain)
+#     csp.addConstraint(constraint.MaxSumConstraint(10))
 
-    def makeMaxFunc(maxSum):
-        def maxFunc(*vals):
-            return sum(vals) < maxSum
-        return maxFunc
-    # csp.addConstraint(constraint.FunctionConstraint(makeMaxFunc(30)), aVars)
-    # csp.addConstraint(constraint.FunctionConstraint(makeMaxFunc(50)), bVars)
-    # csp.addConstraint(constraint.MaxSumConstraint(30))
+#     def makeMaxFunc(maxSum):
+#         def maxFunc(*vals):
+#             return sum(vals) < maxSum
+#         return maxFunc
+#     # csp.addConstraint(constraint.FunctionConstraint(makeMaxFunc(30)), aVars)
+#     # csp.addConstraint(constraint.FunctionConstraint(makeMaxFunc(50)), bVars)
+#     # csp.addConstraint(constraint.MaxSumConstraint(30))
 
-    for solution in csp.getSolutions():
-        print solution
+#     for solution in csp.getSolutions():
+#         print solution
 
-def test_variableNumberLambdaArgs2():
-    csp = constraint.Problem()
-    numVars = 3
+# def test_variableNumberLambdaArgs2():
+#     csp = constraint.Problem()
+#     numVars = 3
 
-    aVars = ["varA_%d" % i for i in range(numVars)]
-    aDomain = range(1,10,2)
-    csp.addVariables(aVars, aDomain)
-    csp.addConstraint(constraint.MaxSumConstraint(6))
+#     aVars = ["varA_%d" % i for i in range(numVars)]
+#     aDomain = range(1,10,2)
+#     csp.addVariables(aVars, aDomain)
+#     csp.addConstraint(constraint.MaxSumConstraint(6))
 
-    bDomainDict = util.greedyMergeDicts(csp.getSolutions())
+#     bDomainDict = util.greedyMergeDicts(csp.getSolutions())
 
-    csp.reset()
+#     csp.reset()
 
-    bVars = ["varB_%d" % i for i in range(numVars)]
+#     bVars = ["varB_%d" % i for i in range(numVars)]
 
-    for bVar in bVars:
-        aVarEquiv = bVar.replace("varB", "varA")
-        bDomain = list(set([val*2 for val in bDomainDict[aVarEquiv]]))
-        csp.addVariable(bVar, bDomain)
+#     for bVar in bVars:
+#         aVarEquiv = bVar.replace("varB", "varA")
+#         bDomain = list(set([val*2 for val in bDomainDict[aVarEquiv]]))
+#         csp.addVariable(bVar, bDomain)
 
-    csp.addConstraint(constraint.MaxSumConstraint(10))
+#     csp.addConstraint(constraint.MaxSumConstraint(10))
 
-    for solution in csp.getSolutions():
-        print solution
+#     for solution in csp.getSolutions():
+#         print solution
 
 def getPercentageTests():
     printFunctionName()
@@ -557,7 +559,7 @@ def main(argv):
     # testNutrientDatabaseClass()
     # test_variableNumberLambdaArgs1()
     #test_variableNumberLambdaArgs1()
-    database.manualNutrientQuery("eggs", 01124)
+    database.manualNutrientQuery("milk", '01080')
 
 if __name__ == "__main__":
     main(sys.argv)
