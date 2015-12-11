@@ -26,29 +26,6 @@ FLAVOR_ADJUSTMENT = float(100)
 CUISINE_ADJUSTMENT = float(100)
 INGREDIENT_ADJUSTMENT = float(5)
 
-# NOTE
-# K-Means
-#     1a. Cluster recipes together based on
-#         - flavors
-#         - course/meal
-#         - common ingredients
-#         - subsets of common ingredients like spices, meats, sweets
-#         - cooking time
-#         - total calories
-#         - % calories from fat
-#         - # ingredients
-#         - average ingredient line length
-#     1b. Cluster ingredients together based on
-#         - common ingredient/alias buddies 
-#           (implemented like synonyms from 107)
-#     2.  After clustering
-#         - Manually label clusters as mexican/meats/breakfast/etc.
-
-# Nut recipes, meat recipes (checkout json file)
-# Try to cluster on fewer features, very few at a time
-# Name clusters (automatic labeling)
-# Output stuff to JSON file , dump json dict
-
 ##
 # Function: testDatapoints
 # -------------
