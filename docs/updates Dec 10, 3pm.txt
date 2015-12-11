@@ -1,0 +1,16 @@
+Updates Thursday December 10th, 3:00PM
+
+Alright, so last night Alex came up with the idea of splitting the full CSP into two subproblems: Picking aliases for each ingredient (choosing ingredients), then picking amounts for each ingredient (in grams). 
+
+Picking aliases:
+    The first method I tried to use was just using the CSP and BacktrackingSearch classes we used in class. Unfortunately, these create expanded dictionaries for every factor’s possible result given your variables’ domains, so this method was extremely computationally expensive. 
+
+    I decided to implement a lazy-evaluation version of the CSP,  where factors would be stored as functions and evaluated on the fly. Additionally, instead of backtracking search, I decided to use beam search, where we choose an initial set of values for our variables such that all constraints are satisfied, then we “reroll” for each variable’s value (its alias), keeping the new values that improve the overall weight (we repeat this step numIters number of times, so each variable tries on numIters different values).
+
+     Scoring works like this: Normal constraints (such as “no meat” or “no two aliases can share any of the same words”)  need to be satisfied, and a weight of 0.0 is returned if they aren’t satisfied; Weighted factors (such as “buddy score between two aliases”) are multiplied together for all factors relating to current assignment to get its weight. I tried adding them together before, and this can also work, with slightly different results.
+
+    Implementing the “amount CSP” will also be challenging. The variables will be amounts for each chosen alias/ingredient, and the values will be in some range of grams with some step size, indicated in csp_defaultTraits.json (remember, this is like a research project, so it doesn’t actually need to have a dynamic user interface to allow for adjustments). An example would be that all amounts are either 5, 10, 15, 20, 25, or 30 grams.
+
+    Each amount can have a unary factor that restricts how much of it there is (don’t have a use case for this yet, but I guess there might be one). There can be sum constraints between all the amounts that makes sure the sum of all alias/amount pairs in some category (e.g. kcal, protein, sodium)is above/below/equal to a specific number (e.g. total kcal in recipe must be less than 500). Conversions are possible in the factor functions because we already know the aliases, and all you need to convert is an alias, an amount in grams, and a requested output unit. I can also do other types of sum-ish constraints, where some quality of the entire recipe is kept below/above a certain number (e.g. fatCalories/totalCalories < 20%).
+
+   I have only implemented alias picking as of now. It works just fine, but I notice that recipes often lack substance and just include sauces or decorations - not some “main” ingredient to center the dish around. I’m thinking we could hard-code a list of main ingredients (e.g. pasta, fish, rice, tofu) and make sure at least one alias is in that list (implementation: an or_variable_factor). We could also ask the user to supply a main-ingredient-ish word and make sure at least one alias has that word in it. If Bruno’s kmeans clustering works well, we might be able to automatically generate the “main ingredient” category and just use that.
