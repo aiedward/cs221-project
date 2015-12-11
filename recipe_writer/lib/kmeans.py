@@ -10,6 +10,7 @@ import os, importlib
 import json, unicodedata
 import pdb
 
+import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction import DictVectorizer
 # import matplotlib.pyplot as plt
@@ -135,7 +136,7 @@ def clusterAssignment(est, pointToRecipeName):
 
 	for point, recipeName in pointToRecipeName.iteritems():
 		cluster = labels[point]
-		clusterRecipeList = clusterToRecipes.get(labels[point])
+		clusterRecipeList = clusterToRecipes.get(cluster)
 		if clusterRecipeList is None:
 			clusterRecipeList = []
 		clusterRecipeList.append(recipeName)
@@ -160,6 +161,13 @@ def printClusters(clusterToRecipes, est):
 			print recipe
 		print
 
+# NOT WORKING YET
+def drawClusters(dataMatrix, pred):
+	plt.figure(figsize=(12, 12))
+	plt.title("Recipe Clusters")
+	plt.scatter(dataMatrix[:, 0], dataMatrix[:, 1], c=pred)
+	plt.show()
+
 ##
 # Function: cluster
 # -------------
@@ -178,10 +186,11 @@ def cluster(jsonFilePath, K):
 	'''
 	dataMatrix, pointToRecipeName = createDatapoints(jsonFilePath)
 	est = KMeans(n_clusters = K)
-	est.fit_predict(dataMatrix)
+	pred = est.fit_predict(dataMatrix)
 	clusterToRecipes = clusterAssignment(est, pointToRecipeName)
 	
-	print printClusters(clusterToRecipes, est)
+	printClusters(clusterToRecipes, est)
+	# drawClusters(dataMatrix, pred)
 	
 ##
 # Function: run
@@ -192,13 +201,14 @@ def cluster(jsonFilePath, K):
 def run(verbose=False, K='5', filename='testRecipeTh'):
 
 	numClusters = int(K)
-	fullFilename = filename+'.json'
+	fullFilename = filename + '.json'
 
 	print '***** Starting Kmeans on ' + fullFilename + '! *****'
 	print
+
 	jsonFilePath = os.path.join(c.PATH_TO_ROOT, "res", fullFilename)
 	cluster(jsonFilePath, numClusters)
 
 	print
-	return '***** Kmeans completed on ' + fullFilename + '! :) *****'
+	return '***** Kmeans completed on ' + fullFilename + '! *****'
 
