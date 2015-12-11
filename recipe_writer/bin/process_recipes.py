@@ -14,12 +14,18 @@ import thread
 from lib import util
 from lib import constants as c
 
+validAliasDict = {}
+
 ##
 # Function: main
 # --------------
 #
 ##
 def main(argv):
+	global validAliasDict
+	validIngredientsFilePath = os.path.join(c.PATH_TO_RESOURCES, "validIngredients.json")
+	validAliasDict = util.loadJSONDict(validIngredientsFilePath)
+
 	allRecipes = []
 
 	# Each alias has 3 main fields:
@@ -40,16 +46,35 @@ def main(argv):
 	#    associated with as values.
 	fillAliasData(allRecipes, aliasData)
 
+	for key in aliasData:
+		if key not in validAliasDict:
+			print "Ya fucked up with the ingredient: " + key
+
 	dumpAliasDataToJSONFiles(aliasData)
 
 	#Now create small files
-	smallAliasData {}
+	smallAliasData = {}
 	for _ in range(250):
 		item = aliasData.popitem()
 		smallAliasData[item[0]] = item[1]
 
 	smallFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_small.json")
-	util.dumpJSONDict(smallFilePath, aliasData)
+	util.dumpJSONDict(smallFilePath, smallAliasData)
+
+	for _ in range(250):
+		item = aliasData.popitem()
+		smallAliasData[item[0]] = item[1]
+
+	mediumFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_medium.json")
+	util.dumpJSONDict(mediumFilePath, smallAliasData)
+
+	for _ in range(500):
+		item = aliasData.popitem()
+		smallAliasData[item[0]] = item[1]
+
+	largeFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_large.json")
+	util.dumpJSONDict(largeFilePath, smallAliasData)
+
 
 
 ##
@@ -101,6 +126,8 @@ def fillAliasData(allRecipes, aliasData):
 def initializeAliasData(allRecipes, aliasData):
 	for recipe in allRecipes:
 		for alias in recipe["ingredients"]:
+			if alias not in validAliasDict:
+				continue
 			if alias not in aliasData:
 				aliasData[alias] = \
 					{"count": 0, 
@@ -122,6 +149,8 @@ def initializeAliasData(allRecipes, aliasData):
 def fillAliasCounts(allRecipes, aliasData):
 	for recipe in allRecipes:
 		for alias in recipe["ingredients"]:
+			if alias not in validAliasDict:
+				continue
 			aliasData[alias]["count"] += 1
 
 ##
@@ -141,6 +170,8 @@ def fillAliasRelations(allRecipes, aliasData):
 	for recipe in allRecipes:
 		ingredientAliases = recipe["ingredients"]
 		for i, alias in enumerate(ingredientAliases):
+			if alias not in validAliasDict:
+				continue
 			# Add the other aliases in this recipe to this alias's
 			# buddy alias dict (aliases it's been seen with)
 			for j, aliasBuddy in enumerate(ingredientAliases):
@@ -165,6 +196,8 @@ def fillAliasRelations(allRecipes, aliasData):
 def fillAliasLineRelations(allRecipes, aliasData):
 	for recipe in allRecipes:
 		for alias, aliasLine in zip(recipe["ingredients"], recipe["ingredientLines"]):
+			if alias not in validAliasDict:
+				continue
 			aliasData[alias]["lines"].append(aliasLine)
 
 ##
