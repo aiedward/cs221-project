@@ -11,7 +11,7 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 import lib.constants as c
-from enum import Enum
+# from enum import Enum
 from lib import constants as c
 
 aliasData = None

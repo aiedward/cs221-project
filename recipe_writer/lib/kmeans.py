@@ -35,6 +35,11 @@ from lib import constants as c
 #     2.  After clustering
 #         - Manually label clusters as mexican/meats/breakfast/etc.
 
+# Nut recipes, meat recipes (checkout json file)
+# Try to cluster on fewer features, very few at a time
+# Name clusters (automatic labeling)
+# Output stuff to JSON file , dump json dict
+
 ##
 # Function: testDatapoints
 # -------------
@@ -74,19 +79,19 @@ def createPoint(recipe):
 		for c in cuisine:
 			point['cuisine-'+c] = 1
 
-	if flavors is not None and len(flavors) > 0:
-		point['bitter'] = flavors['bitter']
-		point['meaty'] = flavors['meaty']
-		point['piquant'] = flavors['piquant']
-		point['salty'] = flavors['salty']
-		point['sour'] = flavors['sour']
-		point['sweet'] = flavors['sweet']
+	# if flavors is not None and len(flavors) > 0:
+	# 	point['bitter'] = flavors['bitter']
+	# 	point['meaty'] = flavors['meaty']
+	# 	point['piquant'] = flavors['piquant']
+	# 	point['salty'] = flavors['salty']
+	# 	point['sour'] = flavors['sour']
+	# 	point['sweet'] = flavors['sweet']
 
-	point['totalTimeInSeconds'] = recipe['totalTimeInSeconds']
-	point['numIngredients'] = len(ingredients)
+	# point['totalTimeInSeconds'] = recipe['totalTimeInSeconds']
+	# point['numIngredients'] = len(ingredients)
 
-	for ingredient in ingredients:
-		point['ingredient-'+ingredient] = 1
+	# for ingredient in ingredients:
+	# 	point['ingredient-'+ingredient] = 1
 
 	return point
 

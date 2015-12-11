@@ -1,6 +1,6 @@
 {
 	"num_ingredients": 6,
-	"num_iters": 150,
+	"num_iters": 10000,
 	"amount_range": {
 		"min": 10, 
 		"max": 50,
