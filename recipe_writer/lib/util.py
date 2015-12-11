@@ -11,7 +11,6 @@ import tokenize, re, string
 import json, unicodedata
 import thread
 import lib.constants as c
-from enum import Enum
 from lib import constants as c
 
 aliasData = None
@@ -92,6 +91,20 @@ def naivelyMergeDicts(listOfDicts):
     for d in listOfDicts:
         masterList += d.items()
     return dict(masterList)
+    # return dict(deleteDuplicatesBy(masterList, lambda x, y: x[0] == y[0]))
+
+##
+# Function: greedyMergeDicts
+# ---------------------------
+# Merges a list of dictionaries into one dictionary, not caring which
+# value it keeps for keys that have multiple values.
+##
+def greedyMergeDicts(listOfDicts):
+    masterDict = collections.defaultdict(list)
+    for d in listOfDicts:
+        for k, v in d.items():
+            masterDict[k].append(v)
+    return dict(masterDict)
     # return dict(deleteDuplicatesBy(masterList, lambda x, y: x[0] == y[0]))
 
 def mergeNutrientDicts(listOfDicts):
@@ -699,5 +712,88 @@ class BacktrackingSearch():
 
         # END_YOUR_CODE
 
+def get_sum_variable(csp, name, variables, maxSum):
+    """
+    Given a list of |variables| each with non-negative integer domains,
+    returns the name of a new variable with domain range(0, maxSum+1), such that
+    it's consistent with the value |n| iff the assignments for |variables|
+    sums to |n|.
 
+    @param name: Prefix of all the variables that are going to be added.
+        Can be any hashable objects. For every variable |var| added in this
+        function, it's recommended to use a naming strategy such as
+        ('sum', |name|, |var|) to avoid conflicts with other variable names.
+    @param variables: A list of variables that are already in the CSP that
+        have non-negative integer values as its domain.
+    @param maxSum: An integer indicating the maximum sum value allowed. You
+        can use it to get the auxiliary variables' domain
+
+    @return result: The name of a newly created variable with domain range
+        [0, maxSum] such that it's consistent with an assignment of |n|
+        iff the assignment of |variables| sums to |n|.
+    """
+    # BEGIN_YOUR_CODE (around 20 lines of code expected)
+    # new_vars = []
+    # new_var_domains = []
+
+    num_variables = len(variables)
+
+    maxes_of_variables = [max(csp.values[variable]) for variable in variables]
+
+    mins_of_variables = [min(csp.values[variable]) for variable in variables]
+
+    runningMaxSum = 0
+    runningMinSum = 0
+
+    last_var = None
+    last_var_domain = None
+
+    for i in xrange(num_variables):
+        new_var = ('sum', name, i)
+        new_var_domain = None
+        old_runningMaxSum = runningMaxSum
+        runningMaxSum += maxes_of_variables[i]
+
+        old_runningMinSum = runningMinSum
+        runningMinSum += mins_of_variables[i]
+
+        # if i == num_variables - 1:
+        #     maxDomainVal = max(runningMaxSum, maxSum)
+        #     new_var_domain = [[ for x in ] for y in range(runningMinSum, maxDomainVal + 1)] 
+        # else:
+        new_var_domain = []
+
+        leftRange = range(old_runningMinSum, old_runningMaxSum + 1)
+        rightRange = range(runningMinSum, runningMaxSum + 1)
+
+        leftRange = range(0, maxSum + 1)
+        rightRange = range(0, maxSum + 1)
+
+        if i == 0:
+            leftRange = [0]
+            # csp.add_unary_factor(new_var, lambda bi: bi[1] == 0)
+
+        for x in leftRange:
+            for y in rightRange:
+                new_var_domain.append((x, y))
+
+        csp.add_variable(new_var, tuple(new_var_domain))
+
+        csp.add_binary_factor(variables[i], new_var, lambda xi, bi: bi[1] == bi[0] + xi)
+        
+        if i != 0:
+            csp.add_binary_factor(last_var, new_var, lambda bimin1, bi: bi[0] == bimin1[1])
+
+        last_var = new_var
+        last_var_domain = new_var_domain
+
+    sum_var = ('sum', name, num_variables)
+    csp.add_variable(sum_var, range(0, maxSum+1))
+    csp.add_unary_factor(sum_var, lambda bn: bn <= maxSum)
+    if last_var:
+        csp.add_binary_factor(last_var, sum_var, lambda bnmin1, bn: bn == bnmin1[1])
+    else:
+        csp.add_unary_factor(sum_var, lambda bn: bn == 0)
+
+    return sum_var
 

@@ -5,7 +5,6 @@ import tokenize, re, string
 import json, unicodedata
 from lib import util
 from lib import constants as c
-from enum import Enum
 
 STANDARD_GRAMS = 100 #everything is given with this
 

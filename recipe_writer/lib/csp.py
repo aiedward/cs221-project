@@ -10,9 +10,10 @@ import os, sys, time, importlib
 import tokenize, re, string
 import json, unicodedata
 import thread
+import constraint
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from lib import util, constants, nutrition, search
+from lib import util, constants, nutrition, search, nutrientdatabase
 constants.init(os.path.dirname(os.path.dirname(__file__)))
 
 
@@ -26,12 +27,8 @@ constants.init(os.path.dirname(os.path.dirname(__file__)))
 #            be printed as csp.py progresses through its solution.
 ##
 def run(verbose):
-    # These variables will likely be fed through run()'s arguments later
-    traitsDataPath = os.path.join(constants.PATH_TO_ROOT, "res", "csp_defaultTraits.json")
-    traits = util.loadJSONDict(traitsDataPath)
-
-    traits["verbose"] = verbose
-
+    traits = initializeTraits(verbose)
+    
     if traits["verbose"]:
         print "Creating recipe with %d ingredients." % traits["num_ingredients"]
 
@@ -50,6 +47,18 @@ def run(verbose):
     return {k: v for k, v in traits.items() if k in ["alias_choices", "amount choices"]}
 
 ##
+# Function: initializeTraits
+# --------------------------
+#
+##
+def initializeTraits(verbose):
+    traitsDataPath = os.path.join(constants.PATH_TO_ROOT, "res", "csp_defaultTraits.json")
+    traits = util.loadJSONDict(traitsDataPath)
+    traits["verbose"] = verbose
+    traits["ND"] = nutrientdatabase.NutrientDatabase()
+    return traits
+
+##
 # Function: solveAliasCSP
 # ---------------------------
 # Solve the problem of picking aliases for the ingredients given 
@@ -57,10 +66,9 @@ def run(verbose):
 ##
 def solveAliasCSP(traits):
     csp = AliasCSP()
-    addVariables(csp, traits, "alias")
-    addFactors(csp, traits, "alias")
+    addVariablesAndFactors(csp, traits, "alias")
 
-    solver = AliasCSPSolver(traits, numSolutions=1, verbose=True)
+    solver = AliasCSPSolver(traits, numSolutions=1, verbose=traits["verbose"])
     solver.solve(csp)
 
     traits["alias_choices"] = solver.curAssignment
@@ -73,11 +81,10 @@ def solveAliasCSP(traits):
 ##
 def solveAmountCSP(traits):
     csp = util.CSP()
-    addVariables(csp, traits, "amount")
-    addFactors(csp, traits, "amount")
+    addVariablesAndFactors(csp, traits, "amount")
 
-    solver = util.BacktrackingSearch(numSolutions=10, verbose=True)
-    solver.solve(csp)
+    solver = util.BacktrackingSearch()
+    solver.solve(csp, mcv=True, ac3=True)
 
     traits["amount_choices"] = solver.optimalAssignment
 
@@ -86,7 +93,7 @@ def solveAmountCSP(traits):
 # ---------------------------
 # 
 ##
-def addVariables(csp, traits, whichCSP):
+def addVariablesAndFactors(csp, traits, whichCSP):
     num_ingredients = traits["num_ingredients"]
 
     if whichCSP == "alias":
@@ -99,22 +106,6 @@ def addVariables(csp, traits, whichCSP):
         if traits["verbose"]:
             "Solving aliasCSP. Added variables: ", csp.variables
 
-    elif whichCSP == "amount":
-        amountVariables = ['amount_%d'%i for i in xrange(0, num_ingredients)]
-
-        # Every number from 0 to max_ingredient_mass in intervals of 5, not
-        # including 0, but yes including max_ingredient_mass.
-        amountDomain = getAmountDomain(traits)
-        for var in amountVariables:
-            csp.add_variable(var, amountDomain)
-
-##
-# Function: addFactors
-# --------------------------
-#
-##
-def addFactors(csp, traits, whichCSP):
-    if whichCSP == "alias":
         constraints = traits["alias_constraints"]
         addFactors_sameName(csp, traits)
         if constraints.get("free_of_nuts", "False").lower() == "true":
@@ -123,10 +114,63 @@ def addFactors(csp, traits, whichCSP):
             addFactors_freeOfMeat(csp, traits)
         addFactors_buddyScore(csp, traits)
 
-    if whichCSP == "amount":
-        constraints = traits["amount_constraints"]
-        if "max_total_kcal" in constraints:
-            addFactors_maxTotalCalories(csp, traits)
+    elif whichCSP == "amount":
+        # Shorthand for nutritional database class
+        ND = traits["ND"]
+
+        variables = []
+        domains = []
+
+        variables += ['grams_%d'%i for i in xrange(0, num_ingredients)]
+        domains += [getAmountDomain(traits) for i in xrange(0, num_ingredients)]
+
+        # Get a list of all nutrients that are mentioned in amount constraints
+        # (focusNutrients)
+        validNutrients = ND.validNutrientsDict.keys() + ['kcal']
+        focusNutrients = []
+        for constraint in traits["amount_constraints"]:
+            focusNutrients += [n for n in constraint.split("_") if n in validNutrients]
+        
+        # Create a variable for each focus nutrient / index combination
+        for nutrient in focusNutrients:
+            for i in xrange(0, num_ingredients):
+                newVar = '%s_%d' % (nutrient, i)
+                variables.append(newVar)
+                alias = indToAlias(traits, i)
+                domains.append([ND.getNutrientFromUnit(g, alias, "grams", nutrient) for g in getAmountDomain(traits)])
+
+        # Add all the amount variables
+        for var, dom in zip(variables, domains):
+            print "Domain of var %s is %r" % (var, dom)
+            csp.add_variable(var, dom)
+
+        # Add all amount constraints specified in csp_defaultTraits.json
+        for constraint in traits["amount_constraints"]:
+            splitConstraint = constraint.split("_")
+
+            # If the amount constraint is a "max total ___" constraint...
+            if splitConstraint[:2] == ["max", "total"]:
+                unit = splitConstraint[2]
+
+                # Get all variables that correspond to the unit (e.g. kcal, percentFat)
+                relevantVars = [var for var in variables if var.startswith(unit)]
+                print relevantVars
+                
+##
+# Function: amountVarToAlias
+# ----------------------------
+#
+##
+def amountVarToAlias(traits, amountVar):
+    return [val for key, val in traits['alias_choices'].items() if key[-2:] == amountVar[-2:]][0]
+
+##
+# Function: indToAlias
+# ----------------------------
+#
+##
+def indToAlias(traits, ind):
+    return [val for key, val in traits['alias_choices'].items() if key.endswith(str(ind))][0]
     
 
 ##
@@ -193,7 +237,7 @@ def addFactor_maxTotalCalories(csp, traits):
 #
 ##
 def getAmountDomain(traits):
-    range(*tuple(traits["amount_range"].values())) + [traits["amount_range"]["max"]]
+    return range(*tuple(traits["amount_range"].values())) + [traits["amount_range"]["max"]]
 
 
 
@@ -287,7 +331,8 @@ class AliasCSPSolver:
             for counter in xrange(100):
                 possibleValues = self.csp.domain
                 val = random.choice(possibleValues)
-                print "Trying an initial assignment for %s: %s" % (var, val)
+                if self.verbose:
+                    print "Trying an initial assignment for %s: %s" % (var, val)
                 if self.getDeltaWeight2(var, val) > 0:
                     self.curAssignment[var] = val
                     self.curVarsAssigned.add(var)
@@ -317,15 +362,17 @@ class AliasCSPSolver:
                 #     print "\n###"
                 val = random.choice(possibleValues)
                 if self.getDeltaWeight2(var, val) > 0:
-                    print
-                    print "Old assignments: ", self.curAssignment.values()
-                    print "Old score: ", self.calculateCurrentWeight()
+                    if self.verbose:
+                        print
+                        print "Old assignments: ", self.curAssignment.values()
+                        print "Old score: ", self.calculateCurrentWeight()
                     self.curAssignment[var] = val
-                    print "New assignments: ", self.curAssignment.values()
-                    print "New score: ", self.calculateCurrentWeight()
+                    if self.verbose:
+                        print "New assignments: ", self.curAssignment.values()
+                        print "New score: ", self.calculateCurrentWeight()
                 self.csp.domain.remove(val)
 
-        def getDeltaWeight(self, newVar, newVal, varAssigned=True):
+    def getDeltaWeight(self, newVar, newVal, varAssigned=True):
         oldWeight = self.calculateCurrentWeight()
 
         oldVal = self.curAssignment[newVar]
@@ -498,4 +545,4 @@ def get_ingredient_sum_variable(csp, traits, name, sumVal, minOrMax, conversionF
 
 
 if __name__ == "__main__":
-    run(True)
+    run(False)
