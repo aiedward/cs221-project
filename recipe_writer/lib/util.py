@@ -859,7 +859,7 @@ def make_sum_variable(csp, unit, variables, maxSum, unitInd):
 
     # Add factor to get sum as close as possible to limit
     def limitCloseness(bn):
-        if abs(maxSum - bn[1]) <= 1.0:
+        if abs(maxSum - bn[1]) <= 0.01 * maxSum:
             return 1.0
         else:
             return 1.0 / abs(maxSum - bn[1])
