@@ -38,7 +38,8 @@ class NutrientDatabase:
     # Returns a unitless value of the specified nutrient given a value
     # in grams.
     #
-    # i.e. how many calories are in 10 g of flour?
+    # i.e. Given [five] grams of [butter], how many [calories] are there?
+    # returns the number of calories
     ##
     def getNutrientFromGrams(self, grams, ingredient, nutrient):
         # Special case, for ease of use.
@@ -56,9 +57,9 @@ class NutrientDatabase:
     # Returns a unitless value of the specified nutrient given a amount
     # in a certain unit, and that unit.
     #
-    # i.e. how many calories are in 10 g of flour?
+    # i.e. How much [sodium] is in [one] [stick] of [butter]
     ##
-    def getNutrientFromUnit(self, amount, ingredient, nutrient, unit):
+    def getNutrientFromUnit(self, nutrient, amount, unit, ingredient):
         nutrient = self.translateNutrient(nutrient)
 
         if not self.isValidIngredient(ingredient):

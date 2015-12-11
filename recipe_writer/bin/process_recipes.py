@@ -42,8 +42,14 @@ def main(argv):
 
 	dumpAliasDataToJSONFiles(aliasData)
 
-	# printAliasData(aliasData, 5, True)
-	
+	#Now create small files
+	smallAliasData {}
+	for _ in range(250):
+		item = aliasData.popitem()
+		smallAliasData[item[0]] = item[1]
+
+	smallFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_small.json")
+	util.dumpJSONDict(smallFilePath, aliasData)
 
 
 ##
