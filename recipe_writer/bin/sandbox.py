@@ -464,6 +464,7 @@ def testNutrientDatabaseClass():
     print nutDatabase.getNutrientFromGrams(200,"accent flavor enhancer", 'energy')
     print nutDatabase.getNutrientFromGrams(100,"accent flavor enhancer", 'protein')
 
+<<<<<<< HEAD
 def test_variableNumberLambdaArgs1():
     csp = constraint.Problem()
     numVars = 3
@@ -513,6 +514,13 @@ def test_variableNumberLambdaArgs2():
 
     for solution in csp.getSolutions():
         print solution
+
+def getPercentageTests():
+    printFunctionName()
+    print "Get Percentage Tests"
+    print "Calories from Fat: " + str(nutDatabase.getPercentage("caloriesfromfat", "accent flavor enhancer"))
+    print "Daily Values: " + str(nutDatabase.getPercentage("dailyvalues_sodium", "accent flavor enhancer"))
+    print "Daily Values: " + str(nutDatabase.getPercentage("mass_fat", "accent flavor enhancer"))
 
 
 

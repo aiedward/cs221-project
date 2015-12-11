@@ -10,6 +10,7 @@ import os, importlib
 import json, unicodedata
 import pdb
 
+import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction import DictVectorizer
 # import matplotlib.pyplot as plt
@@ -33,6 +34,11 @@ from lib import constants as c
 #           (implemented like synonyms from 107)
 #     2.  After clustering
 #         - Manually label clusters as mexican/meats/breakfast/etc.
+
+# Nut recipes, meat recipes (checkout json file)
+# Try to cluster on fewer features, very few at a time
+# Name clusters (automatic labeling)
+# Output stuff to JSON file , dump json dict
 
 ##
 # Function: testDatapoints
@@ -73,19 +79,19 @@ def createPoint(recipe):
 		for c in cuisine:
 			point['cuisine-'+c] = 1
 
-	if flavors is not None and len(flavors) > 0:
-		point['bitter'] = flavors['bitter']
-		point['meaty'] = flavors['meaty']
-		point['piquant'] = flavors['piquant']
-		point['salty'] = flavors['salty']
-		point['sour'] = flavors['sour']
-		point['sweet'] = flavors['sweet']
+	# if flavors is not None and len(flavors) > 0:
+	# 	point['bitter'] = flavors['bitter']
+	# 	point['meaty'] = flavors['meaty']
+	# 	point['piquant'] = flavors['piquant']
+	# 	point['salty'] = flavors['salty']
+	# 	point['sour'] = flavors['sour']
+	# 	point['sweet'] = flavors['sweet']
 
-	point['totalTimeInSeconds'] = recipe['totalTimeInSeconds']
-	point['numIngredients'] = len(ingredients)
+	# point['totalTimeInSeconds'] = recipe['totalTimeInSeconds']
+	# point['numIngredients'] = len(ingredients)
 
-	for ingredient in ingredients:
-		point['ingredient-'+ingredient] = 1
+	# for ingredient in ingredients:
+	# 	point['ingredient-'+ingredient] = 1
 
 	return point
 
@@ -135,7 +141,7 @@ def clusterAssignment(est, pointToRecipeName):
 
 	for point, recipeName in pointToRecipeName.iteritems():
 		cluster = labels[point]
-		clusterRecipeList = clusterToRecipes.get(labels[point])
+		clusterRecipeList = clusterToRecipes.get(cluster)
 		if clusterRecipeList is None:
 			clusterRecipeList = []
 		clusterRecipeList.append(recipeName)
@@ -160,6 +166,13 @@ def printClusters(clusterToRecipes, est):
 			print recipe
 		print
 
+# NOT WORKING YET
+def drawClusters(dataMatrix, pred):
+	plt.figure(figsize=(12, 12))
+	plt.title("Recipe Clusters")
+	plt.scatter(dataMatrix[:, 0], dataMatrix[:, 1], c=pred)
+	plt.show()
+
 ##
 # Function: cluster
 # -------------
@@ -178,10 +191,11 @@ def cluster(jsonFilePath, K):
 	'''
 	dataMatrix, pointToRecipeName = createDatapoints(jsonFilePath)
 	est = KMeans(n_clusters = K)
-	est.fit_predict(dataMatrix)
+	pred = est.fit_predict(dataMatrix)
 	clusterToRecipes = clusterAssignment(est, pointToRecipeName)
 	
-	print printClusters(clusterToRecipes, est)
+	printClusters(clusterToRecipes, est)
+	# drawClusters(dataMatrix, pred)
 	
 ##
 # Function: run
@@ -192,13 +206,14 @@ def cluster(jsonFilePath, K):
 def run(verbose=False, K='5', filename='testRecipeTh'):
 
 	numClusters = int(K)
-	fullFilename = filename+'.json'
+	fullFilename = filename + '.json'
 
 	print '***** Starting Kmeans on ' + fullFilename + '! *****'
 	print
+
 	jsonFilePath = os.path.join(c.PATH_TO_ROOT, "res", fullFilename)
 	cluster(jsonFilePath, numClusters)
 
 	print
-	return '***** Kmeans completed on ' + fullFilename + '! :) *****'
+	return '***** Kmeans completed on ' + fullFilename + '! *****'
 
