@@ -80,6 +80,7 @@ class NutrientDatabase:
     # if either the ingredient or the nutrient is not found.
     ##    
     def getNutrient(self, ingredient, nutrient):
+        nutrient = translateNutrient(nutrient)
         if not self.isValidIngredient(ingredient):
             return None
         if not self.isValidNutrient(nutrient):
@@ -94,6 +95,7 @@ class NutrientDatabase:
     # is not found.
     ##    
     def getNutrientUnit(self, ingredient, nutrient):
+        nutrient = translateNutrient(nutrient)
         if not self.isValidIngredient(ingredient):
             return None
         if not self.invalidNutrient(nutrient):
@@ -144,6 +146,7 @@ class NutrientDatabase:
     #
 
     def getPercentDailyValuesPerGram(self, ingredient, nutrient):
+        nutrient = translateNutrient(nutrient)
         if not self.isValidIngredient(ingredient):
             return None
         nutrientValuePerGram = self.getNutrient(ingredient, nutrient)/STANDARD_GRAMS
@@ -165,6 +168,8 @@ class NutrientDatabase:
             return 'energy'
         if potentialNutrient == 'fat':
             return 'total lipid (fat)'
+        if potentialNutrient == 'carbs':
+            return 'carbohydrate, by difference'
         for key in self.validNutrientsDict:
             if potentialNutrient in key:
                 print key
@@ -226,7 +231,10 @@ class NutrientDatabase:
     def listConversionUnits(self, ingredient):
         if not self.isValidIngredient(ingredient):
             return None
-        return self.nutrientDict[ingredient]['measure'].keys()
+        try:
+            return self.nutrientDict[ingredient]['measure'].keys()
+        except KeyError:
+            return None
 
     ##
     # Function: isValidConversionUnit
@@ -237,4 +245,7 @@ class NutrientDatabase:
     def isValidConversionUnit(self, ingredient, unit):
         if not self.isValidIngredient(ingredient):
             return None
-        return unit in self.nutrientDict[ingredient]['measure']
+        try:
+            return unit in self.nutrientDict[ingredient]['measure']
+        except KeyError:
+            return None

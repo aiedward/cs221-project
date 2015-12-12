@@ -5,7 +5,9 @@
 ##
 
 import collections, itertools, copy, Queue
-import numpy, scipy, math, random
+from collections import Counter
+import numpy as np
+import scipy, math, random
 import os, sys, time, importlib
 import tokenize, re, string
 import json, unicodedata
@@ -16,18 +18,22 @@ from lib import constants as c
 from lib import nutrientdatabase as ndb
 
 validAliasDict = {}
-nutDB = ndb.NutrientDatabase()
-
+ndb = ndb.NutrientDatabase()
+ingredientMassDict = {}
+unitCountDict = {}
 ##
 # Function: main
 # --------------
 #
 ##
 def main(argv):
+	global ingredientMassDict
 	global validAliasDict
+	global unitCountDict
 	validIngredientsFilePath = os.path.join(c.PATH_TO_RESOURCES, "validIngredients.json")
 	validAliasDict = util.loadJSONDict(validIngredientsFilePath)
 
+	conversionDict = createWaterConversionDict()
 
 	allRecipes = []
 
@@ -37,6 +43,8 @@ def main(argv):
 	#   "lines"
 	aliasData = {}
 	ingredientLineDict = {}
+	#ingredientMassDict = {}
+	#unitCountDict = {}
 
 	# Read in and parse recipe data structures (dictionaries) from a json file.
 	extractRecipesFromJSON(allRecipes)
@@ -44,14 +52,16 @@ def main(argv):
 	# Convert all string data to lowercase.
 	lowerAllStrings(allRecipes)
 
-	#nutDB = ndb.NutrientDatabase()
+	#ndb = ndb.NutrientDatabase()
 	
 	#Let's fuck around.
+	unmatched = float(0)
+	tried = float(0)
 	for recipe in allRecipes:
-		print "Ingredient Lines: " + str(len(recipe['ingredientLines']))
-		print recipe['ingredientLines']
-		print "\nIngredients: " + str(len(recipe['ingredients']))
-		print recipe['ingredients']
+		# print "Ingredient Lines: " + str(len(recipe['ingredientLines']))
+		# print recipe['ingredientLines']
+		# print "\nIngredients: " + str(len(recipe['ingredients']))
+		# print recipe['ingredients']
 
 		for ingredientLineIndex in range(0, len(recipe['ingredientLines'])):
 			if ingredientLineIndex == len(recipe['ingredients']):
@@ -80,88 +90,139 @@ def main(argv):
 					second = float(tokens[1])
 					potentialStart = first/second
 				amount = float(potentialStart)
-				potentialUnit = extractUnit(words, ingredient)
-				#print "Amount: " + str(amount)
+				potentialUnit, foundUnit = extractUnit(words, ingredient, conversionDict)
+				
 				if potentialUnit != None:
-					pass
+					#Add both the mass and the unit count
+					if foundUnit:
+						massInGrams = amount*ndb.getConversionFactor(ingredient, potentialUnit)
+					else:
+						massInGrams = amount*conversionDict[potentialUnit]
+					if ingredient not in ingredientMassDict:
+						ingredientMassDict[ingredient] = []
+					ingredientMassDict[ingredient].append(massInGrams)
+					if ingredient not in unitCountDict:
+						unitCountDict[ingredient] = Counter()
+					unitCountDict[ingredient][potentialUnit] += 1	
 					#print "Amount: " + str(amount) + " Unit: " + potentialUnit
 				else:
-					print "Couldn't match unit for ingredient: " + ingredient
-					print words
-			
-			#Need to figure out what unit. It is.
-			#print words[0]
-			#print ingredientLine
+					unmatched += 1
+					#print "Couldn't match unit for ingredient: " + ingredient
+					#print words
+					#print
 
-	# 	for i in range(0, len(ingredient)):
-	# 		print ingredientLineDict[ingredient]
-	
+
+			elif not hasAnAmount(words):
+				if ingredient not in unitCountDict:
+					unitCountDict[ingredient] = Counter()
+				unitCountDict[ingredient]['unitless'] += 1
+			tried += 1
+	print "Missed amounts for " + str(unmatched) + " / " + str(tried) + " ingredients."
+	print str((tried-unmatched)/tried*100) + "% Success rate!"
+
+
 	# Get the counts of ingredient short names.
 	# Create a dictionary storing relationships between the various aliases.
 	# Create a dictionary with aliases as keys and lists of lines they've been
 	# associated with as values.
+
 	fillAliasData(allRecipes, aliasData)
 
-
-
-	for key in aliasData:
-		if key not in validAliasDict:
-			print "Ya fucked up with the ingredient: " + key
-
 	#Temporarily removed to test.
-	#dumpAliasDataToJSONFiles(aliasData)
+	dumpAliasDataToJSONFiles(aliasData)
 
-	# #Now create small files
-	# smallAliasData = {}
-	# for _ in range(250):
-	# 	item = aliasData.popitem()
-	# 	smallAliasData[item[0]] = item[1]
+	#Now create small files
+	smallAliasData = {}
+	for _ in range(250):
+		item = aliasData.popitem()
+		smallAliasData[item[0]] = item[1]
 
-	# smallFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_small.json")
-	# util.dumpJSONDict(smallFilePath, smallAliasData)
+	smallFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_small.json")
+	util.dumpJSONDict(smallFilePath, smallAliasData)
 
-	# for _ in range(250):
-	# 	item = aliasData.popitem()
-	# 	smallAliasData[item[0]] = item[1]
+	for _ in range(250):
+		item = aliasData.popitem()
+		smallAliasData[item[0]] = item[1]
 
-	# mediumFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_medium.json")
-	# util.dumpJSONDict(mediumFilePath, smallAliasData)
+	mediumFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_medium.json")
+	util.dumpJSONDict(mediumFilePath, smallAliasData)
 
-	# for _ in range(500):
-	# 	item = aliasData.popitem()
-	# 	smallAliasData[item[0]] = item[1]
+	for _ in range(500):
+		item = aliasData.popitem()
+		smallAliasData[item[0]] = item[1]
 
-	# largeFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_large.json")
-	# util.dumpJSONDict(largeFilePath, smallAliasData)
+	largeFilePath = os.path.join(c.PATH_TO_RESOURCES, "aliasData_large.json")
+	util.dumpJSONDict(largeFilePath, smallAliasData)
 
+def hasAnAmount(tokens):
+	for token in tokens:
+		if isPossibleAmount(token):
+			return True
+	return False
+
+##
+# Function: extractRecipesFromJSON
+# --------------------------------
 # Loop throuh each of the tokens of the ingredient line, looking for a match
 # with the units given for that particular ingredient.
-def extractUnit(tokens, ingredient):
-	#print tokens
-	for potentialUnit in tokens:
-		potentialUnit = translatePotentialUnit(potentialUnit)
-		#print "Potential unit: " + potentialUnit
-		#print "Testing if " + potentialUnit + " is a possible unit for " + ingredient
-		if nutDB.isValidConversionUnit(ingredient, potentialUnit):
-			return potentialUnit
-		#Check plurals by removing the last letter
-		if nutDB.isValidConversionUnit(ingredient, potentialUnit[:-1]):
-			return potentialUnit
-	return None
+#
+##
 
+def extractUnit(tokens, ingredient, conversionDict):
 
+	#To limit to second word only, change to potentialUnit = token[1]
+	#for potentialUnit in tokens:
+	potentialUnit = tokens[1]
+	if isPossibleAmount(potentialUnit):
+		#return none none for naive
+		return None, None
+		#continue
+	potentialUnit = translatePotentialUnit(potentialUnit)
+	singular = potentialUnit
+	plural = potentialUnit[:-1]
+	validUnitList = ndb.listConversionUnits(ingredient)
+	
+	if validUnitList is not None:
+		#Check for perfect match first.
+		for validConversionUnit in validUnitList:
+			#validConversionUnit= validConversionUnit.replace('.', '')
+			if singular == validConversionUnit or plural == validConversionUnit:
+				return validConversionUnit, True
+		#Check for contains match second.
+		for validConversionUnit in validUnitList:
+			if singular in validConversionUnit or plural in validConversionUnit:
+				return validConversionUnit, True
+				
+	# If here, couldn't find a matching unit within the nutritional data, so match
+	# the unti we see in the ingredient line (if any) to match a standard unit.
+	#for potentialUnit in tokens:
+	potentialUnit = translatePotentialUnit(potentialUnit)
+	if potentialUnit in conversionDict:
+		return potentialUnit, False
+	return None, None
+
+def createWaterConversionDict():
+	returnDict = {}
+	returnDict['cup'] = 236.6
+	returnDict['lb'] = 453.6
+	returnDict['tsp'] = 4.929
+	returnDict['tbsp'] = 14.79
+	returnDict['oz'] = 28.35
+	returnDict['ml'] = 1
+	returnDict['l'] = 1000
+	return returnDict
 
 def translatePotentialUnit(unit):
 	unit = unit.replace('.', '')
 	if unit == 'cups':
 		return 'cup'
-	if unit == 'pounds' or unit == 'pound':
+	if unit == 'pounds' or unit == 'pound' or unit == 'lbs':
 		return 'lb'
 	if unit == 'teaspoons' or unit == 'teaspoon':
 		return 'tsp'
-	if unit == 'tablespoons' or unit == 'tablespoon':
+	if unit == 'tablespoons' or unit == 'tablespoon' or unit == 'tbs':
 		return 'tbsp'
-	if unit == 'ounce' or unit == 'ounces':
+	if unit == 'ounce' or unit == 'ounces' or unit == 'ozs':
 		return 'oz'
 	return unit
 
@@ -178,14 +239,17 @@ def isPossibleAmount(inputString):
 	return True
     #return any(char.isdigit() for char in inputString)
 
+def reject_outliers(data, m=2):
+    return data[abs(data - np.mean(data)) < m * np.std(data)]
+
 ##
 # Function: extractRecipesFromJSON
 # --------------------------------
 # Reads in all data from the json file containing all recipe data.
 ##
 def extractRecipesFromJSON(allRecipes):
-	#jsonFilePath = os.path.join(c.PATH_TO_RESOURCES, c.FILENAME_JSON_RECIPES)
-	jsonFilePath = os.path.join(c.PATH_TO_RESOURCES, "tempAllRecipes.json")	
+	jsonFilePath = os.path.join(c.PATH_TO_RESOURCES, c.FILENAME_JSON_RECIPES)
+	#jsonFilePath = os.path.join(c.PATH_TO_RESOURCES, "tempAllRecipes.json")	
 	myDict = util.loadJSONDict(jsonFilePath)
 
 	# Fill allRecipes with just the values for each JSON member,
@@ -212,10 +276,13 @@ def lowerAllStrings(allRecipes):
 #    An alias for "4 cloves garlic, minced" might be "garlic"
 ##
 def fillAliasData(allRecipes, aliasData):
+	print "Initializing data"
 	initializeAliasData(allRecipes, aliasData)
-
+	print "Filling Counts"
 	fillAliasCounts(allRecipes, aliasData)
+	print "Filling Relations"
 	fillAliasRelations(allRecipes, aliasData)
+	print "Filling Line Relations"
 	fillAliasLineRelations(allRecipes, aliasData)
 
 	convertBuddyListToNormalDict(aliasData)
@@ -226,15 +293,32 @@ def fillAliasData(allRecipes, aliasData):
 # Make the various field's for each alias's dict easier to add things to.
 ##
 def initializeAliasData(allRecipes, aliasData):
-	for recipe in allRecipes:
-		for alias in recipe["ingredients"]:
-			if alias not in validAliasDict:
-				continue
-			if alias not in aliasData:
-				aliasData[alias] = \
-					{"count": 0, 
-					"aliasBuddies": collections.defaultdict(int), 
-					"lines": []}
+	# for recipe in allRecipes:
+	# 	for alias in recipe["ingredients"]:
+	# 		if alias not in ingredientMassDict:
+				# continue
+	#print "Num aliases: " + str(len(ingredientMassDict))
+	#count = 0
+	for alias in ingredientMassDict:
+		#print "Alias #: " + str(count)
+		#count += 1
+		if alias not in unitCountDict.keys():
+			continue
+		if alias not in aliasData:
+			amountStats = {}
+			amountStats['max'] = max(ingredientMassDict[alias])
+			amountStats['min'] = min(ingredientMassDict[alias])
+			amountStats['mean'] = numpy.mean(ingredientMassDict[alias])
+			amountStats['stddev'] = numpy.std(ingredientMassDict[alias])
+			amountStats['median'] = numpy.median(ingredientMassDict[alias])
+			aliasData[alias] = \
+				{"count": 0, 
+				"aliasBuddies": collections.defaultdict(int), 
+				"lines": [],
+				"allAmounts": ingredientMassDict[alias],
+				"amountStatistics": amountStats,
+				"unitCounter": unitCountDict[alias]
+				}
 
 ##
 # Function: fillAliasCounts
@@ -251,9 +335,13 @@ def initializeAliasData(allRecipes, aliasData):
 def fillAliasCounts(allRecipes, aliasData):
 	for recipe in allRecipes:
 		for alias in recipe["ingredients"]:
-			if alias not in validAliasDict:
+			if alias not in ingredientMassDict:
 				continue
-			aliasData[alias]["count"] += 1
+	#for alias in ingredientMassDict:
+			try:
+				aliasData[alias]["count"] += 1
+			except KeyError:
+				pass
 
 ##
 # Function: fillAliasRelations
@@ -272,8 +360,10 @@ def fillAliasRelations(allRecipes, aliasData):
 	for recipe in allRecipes:
 		ingredientAliases = recipe["ingredients"]
 		for i, alias in enumerate(ingredientAliases):
-			if alias not in validAliasDict:
+			if alias not in ingredientMassDict:
 				continue
+			#if alias not in unitCountDict.keys():
+			#	continue
 			# Add the other aliases in this recipe to this alias's
 			# buddy alias dict (aliases it's been seen with)
 			for j, aliasBuddy in enumerate(ingredientAliases):
@@ -281,7 +371,10 @@ def fillAliasRelations(allRecipes, aliasData):
 					continue
 
 				# Add 1 to the count for this buddy
-				aliasData[alias]["aliasBuddies"][aliasBuddy] +=1
+				try:
+					aliasData[alias]["aliasBuddies"][aliasBuddy] +=1
+				except KeyError:
+					pass
 
 ##
 # Function: fillAliasLineRelations
@@ -298,9 +391,14 @@ def fillAliasRelations(allRecipes, aliasData):
 def fillAliasLineRelations(allRecipes, aliasData):
 	for recipe in allRecipes:
 		for alias, aliasLine in zip(recipe["ingredients"], recipe["ingredientLines"]):
-			if alias not in validAliasDict:
+			if alias not in ingredientMassDict:
 				continue
-			aliasData[alias]["lines"].append(aliasLine)
+			#if alias not in unitCountDict.keys():
+			#	continue
+			try:
+				aliasData[alias]["lines"].append(aliasLine)
+			except KeyError:
+				pass
 
 ##
 # Function: convertBuddyListToNormalDict

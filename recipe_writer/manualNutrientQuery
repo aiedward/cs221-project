@@ -1,0 +1,138 @@
+{
+    "eggs": {
+        "measure": {
+            "cup": 243.0, 
+            "large": 33.0
+        }, 
+        "nutrients": {
+            "caffeine": [
+                "0", 
+                "mg"
+            ], 
+            "calcium, ca": [
+                "7", 
+                "mg"
+            ], 
+            "carbohydrate, by difference": [
+                "0.73", 
+                "g"
+            ], 
+            "cholesterol": [
+                "0", 
+                "mg"
+            ], 
+            "energy": [
+                "52", 
+                "kcal"
+            ], 
+            "fatty acids, total monounsaturated": [
+                "0.000", 
+                "g"
+            ], 
+            "fatty acids, total polyunsaturated": [
+                "0.000", 
+                "g"
+            ], 
+            "fatty acids, total saturated": [
+                "0.000", 
+                "g"
+            ], 
+            "fiber, total dietary": [
+                "0.0", 
+                "g"
+            ], 
+            "folate, dfe": [
+                "4", 
+                "g"
+            ], 
+            "iron, fe": [
+                "0.08", 
+                "mg"
+            ], 
+            "magnesium, mg": [
+                "11", 
+                "mg"
+            ], 
+            "niacin": [
+                "0.105", 
+                "mg"
+            ], 
+            "phosphorus, p": [
+                "15", 
+                "mg"
+            ], 
+            "potassium, k": [
+                "163", 
+                "mg"
+            ], 
+            "protein": [
+                "10.90", 
+                "g"
+            ], 
+            "riboflavin": [
+                "0.439", 
+                "mg"
+            ], 
+            "sodium, na": [
+                "166", 
+                "mg"
+            ], 
+            "sugars, total": [
+                "0.71", 
+                "g"
+            ], 
+            "thiamin": [
+                "0.004", 
+                "mg"
+            ], 
+            "total lipid (fat)": [
+                "0.17", 
+                "g"
+            ], 
+            "vitamin a, iu": [
+                "0", 
+                "IU"
+            ], 
+            "vitamin a, rae": [
+                "0", 
+                "g"
+            ], 
+            "vitamin b-12": [
+                "0.09", 
+                "g"
+            ], 
+            "vitamin b-6": [
+                "0.005", 
+                "mg"
+            ], 
+            "vitamin c, total ascorbic acid": [
+                "0.0", 
+                "mg"
+            ], 
+            "vitamin d": [
+                "0", 
+                "IU"
+            ], 
+            "vitamin d (d2 + d3)": [
+                "0.0", 
+                "g"
+            ], 
+            "vitamin e (alpha-tocopherol)": [
+                "0.00", 
+                "mg"
+            ], 
+            "vitamin k (phylloquinone)": [
+                "0.0", 
+                "g"
+            ], 
+            "water": [
+                "87.57", 
+                "g"
+            ], 
+            "zinc, zn": [
+                "0.03", 
+                "mg"
+            ]
+        }
+    }
+}
