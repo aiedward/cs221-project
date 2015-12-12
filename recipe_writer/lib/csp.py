@@ -180,7 +180,7 @@ def addVariablesAndFactors(csp, traits, whichCSP):
         # Create domains for the variables
         for var in variables:
             allDomains = []
-            gramDomain = getAmountDomain(traits)
+            gramDomain = util.getIngredientRange(aliasVarDict[var], 4)
             allDomains.append(gramDomain)
             for nu in focusNutrients:
                 nuDomain = [ND.getNutrientFromGrams(g, aliasVarDict[var], nu) for g in gramDomain]
