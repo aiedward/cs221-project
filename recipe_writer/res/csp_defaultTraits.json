@@ -4,15 +4,25 @@
 	"amount_range": {
 		"min": 5, 
 		"max": 50,
-		"step": 9
+		"step": 12
 	},
+	"focusNutrients": [
+		"kcal", "carbs", "fat", "sodium", "protein"
+	],
 	"alias_constraints": {
 		"free_of_nuts": "True",
-		"free_of_meat": "False"
+		"free_of_meat": "False",
+		"has_aliases": [
+			"chicken",
+			"olive oil",
+			"pasta"
+		]
 	},
 	"amount_constraints": {
 		"close_total_kcal": 200,
-		"max_total_sodium": 250,
-		"min_total_protein": 20
+		"max_total_carbs": 45,
+		"max_total_fat": 20,
+		"max_total_sodium": 300,
+		"min_total_protein": 6
 	}
 }
