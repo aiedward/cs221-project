@@ -539,6 +539,10 @@ def getPercentageTests():
 
 
 def getRange():
+    c = Counter()
+    c['0'] = 5
+    c['1'] = 2
+    print max(c)
     print util.getIngredientRange('olive oil', 5)
 
 

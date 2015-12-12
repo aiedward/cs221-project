@@ -40,7 +40,7 @@ def getIngredientRange(ingredient, listSize):
     return returnList
 
 def gramsToUnitAmount(ingredient):
-    pass
+    return
 
 
 
