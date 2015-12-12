@@ -239,8 +239,17 @@ def isPossibleAmount(inputString):
 	return True
     #return any(char.isdigit() for char in inputString)
 
-def reject_outliers(data, m=2):
+def removeOutliers(data, m=2):
     return data[abs(data - np.mean(data)) < m * np.std(data)]
+
+
+def reject_outliers(data):
+    m = 2 #reject if this many stddevs outside the mean
+    u = np.median(data)
+    s = np.std(data)
+    filtered = [e for e in data if (u - 2 * s < e < u + 2 * s)]
+    return filtered
+
 
 ##
 # Function: extractRecipesFromJSON
@@ -305,17 +314,21 @@ def initializeAliasData(allRecipes, aliasData):
 		if alias not in unitCountDict.keys():
 			continue
 		if alias not in aliasData:
+			if len(ingredientMassDict[alias]) > 10:
+				amountsList = reject_outliers(ingredientMassDict[alias])
+			else:
+				amountsList = ingredientMassDict[alias]
 			amountStats = {}
-			amountStats['max'] = max(ingredientMassDict[alias])
-			amountStats['min'] = min(ingredientMassDict[alias])
-			amountStats['mean'] = numpy.mean(ingredientMassDict[alias])
-			amountStats['stddev'] = numpy.std(ingredientMassDict[alias])
-			amountStats['median'] = numpy.median(ingredientMassDict[alias])
+			amountStats['max'] = max(amountsList)
+			amountStats['min'] = min(amountsList)
+			amountStats['mean'] = np.mean(amountsList)
+			amountStats['stddev'] = np.std(amountsList)
+			amountStats['median'] = np.median(amountsList)
 			aliasData[alias] = \
 				{"count": 0, 
 				"aliasBuddies": collections.defaultdict(int), 
 				"lines": [],
-				"allAmounts": ingredientMassDict[alias],
+				"allAmounts": amountsList,
 				"amountStatistics": amountStats,
 				"unitCounter": unitCountDict[alias]
 				}
