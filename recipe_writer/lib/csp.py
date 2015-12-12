@@ -56,18 +56,18 @@ def printResults(traits):
     totals = [0.0 for _ in range(max(traits["nutrientIndices"].values()) + 2)]
     for k, v in traits["amount_choices"].items():
         print "%s: " % traits["amountVarToAlias"][k]
-        print "  amount: %f %s" % util.gramsToUnitAmount(v[0], traits["amountVarToAlias"][k])
+        print "  amount: %.1f %s" % util.gramsToUnitAmount(v[0], traits["amountVarToAlias"][k])
         totals[0] += v[0]
         for nu in traits["focusNutrients"]:
             nuInd = traits["nutrientIndices"][nu]
-            print "  %s: %f %s" % (nu, v[nuInd], ND.getNutrientUnit(nu))
+            print "  %s: %.1f %s" % (nu, v[nuInd], ND.getNutrientUnit(nu))
             totals[nuInd] += v[nuInd]
     print
     print "Total mass: "
     for nu in traits["focusNutrients"]:
         nuInd = traits["nutrientIndices"][nu]
         dummyIng = traits["amountVarToAlias"][traits["amount_choices"].keys()[0]]
-        print "Total %s: %f %s" % (nu, totals[nuInd], ND.getNutrientUnit(nu))
+        print "Total %s: %.1f %s" % (nu, totals[nuInd], ND.getNutrientUnit(nu))
 
 ##
 # Function: initializeTraits
@@ -562,4 +562,5 @@ class AliasCSPSolver:
 
 
 if __name__ == "__main__":
-    run(False)
+    print util.aliasBuddyScore("sugar", "pasta")
+    # run(False)

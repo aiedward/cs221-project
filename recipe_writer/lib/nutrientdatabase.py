@@ -24,7 +24,7 @@ class NutrientDatabase:
         self.validNutrientsDict = util.loadJSONDict(validNutrientFilePath)
         self.unitLookupDict = util.loadJSONDict(unitLookupFilePath)
 
-        conversionDict = util.createWaterConversionDict()
+        self.conversionDict = util.createWaterConversionDict()
 
     ##
     # Function: getCalories
