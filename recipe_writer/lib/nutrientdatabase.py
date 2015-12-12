@@ -24,6 +24,7 @@ class NutrientDatabase:
         self.validNutrientsDict = util.loadJSONDict(validNutrientFilePath)
         self.unitLookupDict = util.loadJSONDict(unitLookupFilePath)
 
+        conversionDict = util.createWaterConversionDict()
 
     ##
     # Function: getCalories
@@ -186,7 +187,10 @@ class NutrientDatabase:
     def getConversionFactor(self, ingredient, unit):
         if not self.isValidIngredient(ingredient):
             return None
-        gramsPerUnit = float(self.nutrientDict[ingredient]['measure'][unit])
+        if unit in self.nutrientDict[ingredient]['measure']:
+            gramsPerUnit = float(self.nutrientDict[ingredient]['measure'][unit])
+        else:
+            gramsPerUnit = float(self.conversionDict[unit])
         return gramsPerUnit
 
     ##

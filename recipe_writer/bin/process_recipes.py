@@ -33,7 +33,7 @@ def main(argv):
 	validIngredientsFilePath = os.path.join(c.PATH_TO_RESOURCES, "validIngredients.json")
 	validAliasDict = util.loadJSONDict(validIngredientsFilePath)
 
-	conversionDict = createWaterConversionDict()
+	conversionDict = util.createWaterConversionDict()
 
 	allRecipes = []
 
@@ -201,16 +201,6 @@ def extractUnit(tokens, ingredient, conversionDict):
 		return potentialUnit, False
 	return None, None
 
-def createWaterConversionDict():
-	returnDict = {}
-	returnDict['cup'] = 236.6
-	returnDict['lb'] = 453.6
-	returnDict['tsp'] = 4.929
-	returnDict['tbsp'] = 14.79
-	returnDict['oz'] = 28.35
-	returnDict['ml'] = 1
-	returnDict['l'] = 1000
-	return returnDict
 
 def translatePotentialUnit(unit):
 	unit = unit.replace('.', '')

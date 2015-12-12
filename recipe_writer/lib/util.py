@@ -71,6 +71,16 @@ def gramsToUnitAmount(grams, ingredient):
     # print "The unit amount is: " + str(unitAmount)
     return (unitAmount, maxKey)
 
+def createWaterConversionDict():
+    returnDict = {}
+    returnDict['cup'] = 236.6
+    returnDict['lb'] = 453.6
+    returnDict['tsp'] = 4.929
+    returnDict['tbsp'] = 14.79
+    returnDict['oz'] = 28.35
+    returnDict['ml'] = 1
+    returnDict['l'] = 1000
+    return returnDict
 
 
 # Function: safeConnect
