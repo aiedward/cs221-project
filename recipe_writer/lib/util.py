@@ -70,7 +70,6 @@ def gramsToUnitAmount(grams, ingredient):
     unitAmount = grams/conversionFactor
     print "The unit amount is: " + str(unitAmount)
     return
-    
 
 
 
@@ -104,7 +103,7 @@ def loadJSONDict(jsonFilePath):
     # Read in the JSON file containing recipe data
     fullJsonString = None
     with open(jsonFilePath, 'r') as f:
-		fullJsonString = f.read().encode('ascii', errors='ignore')
+        fullJsonString = f.read().encode('ascii', errors='ignore')
 
 
     # This is dead code I was trying to use to remove all escaped unicode
@@ -167,15 +166,15 @@ def greedyMergeDicts(listOfDicts):
     # return dict(deleteDuplicatesBy(masterList, lambda x, y: x[0] == y[0]))
 
 def mergeNutrientDicts(listOfDicts):
-	masterList = []
-	masterDict = {}
-	for d in listOfDicts:
-		for item in listOfDicts:
-			for item2 in item:
-				masterList += dict(item2).items()
-				#print
-		#masterList += d.items()
-	return dict(masterList)
+    masterList = []
+    masterDict = {}
+    for d in listOfDicts:
+        for item in listOfDicts:
+            for item2 in item:
+                masterList += dict(item2).items()
+                #print
+        #masterList += d.items()
+    return dict(masterList)
 ##
 # Function: listFilesWtihSuffix
 # -----------------------------

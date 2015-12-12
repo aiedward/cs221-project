@@ -1,11 +1,6 @@
 {
 	"num_ingredients": 6,
 	"num_iters": 100,
-	"amount_range": {
-		"min": 5, 
-		"max": 50,
-		"step": 12
-	},
 	"focusNutrients": [
 		"kcal", "carbs", "fat", "sodium", "protein"
 	],
