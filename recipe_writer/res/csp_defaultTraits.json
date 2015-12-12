@@ -11,7 +11,8 @@
 		"free_of_meat": "False"
 	},
 	"amount_constraints": {
-		"max_total_kcal": 150,
-		"max_total_sodium": 250
+		"close_total_kcal": 200,
+		"max_total_sodium": 250,
+		"min_total_protein": 20
 	}
 }

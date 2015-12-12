@@ -39,24 +39,29 @@ def run(verbose):
     # amounts (mass in grams) for each ingredient
     solveAmountCSP(traits)
 
-    print
-    totals = [0.0, 0.0, 0.0]
-    for k, v in traits["amount_choices"].items():
-        print "%s: %d grams, %f kcal, %f mg sodium" % (traits["amountVarToAlias"][k], v[0], v[1], v[2])
-        totals[0] += v[0]
-        totals[1] += v[1]
-        totals[2] += v[2]
-    print
-    print "Total mass: %d grams" % totals[0]
-    print "Total calories: %f kcal" % totals[1]
-    print "Total sodium: %f mg" % totals[2]
+    printResults(traits)
 
-    # Print status update
-    # if verbose:
-    #     print "csp.py ran successfully"
-
-    # return {k: v for k, v in traits.items() if k in ["alias_choices"]}
     return "" #{k: v for k, v in traits.items() if k in ["alias_choices", "amount choices"]}
+
+##
+# Function: printResults
+# -----------------------
+# 
+##
+def printResults(traits):
+    ND = traits["ND"]
+    print
+    totals = [0.0 for _ in range(max(traits["nutrientIndices"].values()) + 1)]
+    for k, v in traits["amount_choices"].items():
+        print "%s: " % traits["amountVarToAlias"][k]
+        for nu in traits["focusNutrients"]:
+            nuInd = traits["nutrientIndices"][nu]
+            print "  %f %s %s" % (v[nuInd], ND.getNutrientUnit(nu), nu)
+            totals[nuInd] += v[nuInd]
+    print
+    for nu in traits["focusNutrients"]:
+        nuInd = traits["nutrientIndices"][nu]
+        print "Total %s: %f %s" % (nu, totals[nuInd], ND.getNutrientUnit(nu))
 
 ##
 # Function: initializeTraits
@@ -148,10 +153,12 @@ def addVariablesAndFactors(csp, traits, whichCSP):
 
         # Get a list of all nutrients that are mentioned in amount constraints
         # (focusNutrients)
-        validNutrients = ND.validNutrientsDict.keys() + ['kcal'] + ['sodium']
-        focusNutrients = []
-        for constraint in traits["amount_constraints"]:
-            focusNutrients += [n for n in constraint.split("_") if n in validNutrients]
+        # validNutrients = ND.validNutrientsDict.keys() + ['kcal'] + ['sodium']
+        focusNutrients = ['kcal', 'carbs', 'fat', 'protein', 'sodium']
+        # for constraint in traits["amount_constraints"]:
+        #     focusNutrients += [n for n in constraint.split("_") if n in validNutrients]
+
+        traits["focusNutrients"] = focusNutrients[:]
 
         # Create domains for the variables
         for var in variables:
@@ -165,16 +172,7 @@ def addVariablesAndFactors(csp, traits, whichCSP):
 
         # Where each unit is in the value tuple
         nutrientIndexDict = {unit: i for i, unit in enumerate(["grams"] + focusNutrients)}
-        
-        # Create a variable for each focus nutrient / index combination
-        # for nutrient in focusNutrients:
-        #     for i in xrange(0, num_ingredients):
-        #         newVar = '%s_%d' % (nutrient, i)
-        #         variables.append(newVar)
-        #         alias = indToAlias(traits, i)
-        #         newDomain = [int(math.ceil(ND.getNutrientFromGrams(g, alias, nutrient))) for g in getAmountDomain(traits)]
-        #         domains.append(newDomain)
-        #         varDomainStepDict[newVar] = newDomain[1] - newDomain[0]
+        traits["nutrientIndices"] = nutrientIndexDict
 
         # Add all the amount variables
         for var in variables:
@@ -188,8 +186,14 @@ def addVariablesAndFactors(csp, traits, whichCSP):
 
             # If the amount constraint is a "max total ___" constraint...
             if splitConstraint[:2] == ["max", "total"]:
-                print "sum_val is %s for unit %s: " % (val, unit)
-                util.make_sum_variable(csp, unit, variables, val, nutrientIndexDict[unit])
+                print "Max sum is %s for unit %s: " % (val, unit)
+                util.make_max_sum_variable(csp, unit, variables, val, nutrientIndexDict[unit])
+            if splitConstraint[:2] == ["min", "total"]:
+                print "Min sum is %s for unit %s: " % (val, unit)
+                util.make_min_sum_variable(csp, unit, variables, val, nutrientIndexDict[unit])
+            if splitConstraint[:2] == ["close", "total"]:
+                print "Close sum is %s for unit %s: " % (val, unit)
+                util.make_close_sum_variable(csp, unit, variables, val, nutrientIndexDict[unit])
 
         print "Finished making amountCSP..."
                 
