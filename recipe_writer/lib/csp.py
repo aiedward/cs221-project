@@ -379,6 +379,8 @@ class AliasCSPSolver:
         # List of all solutions found.
         self.allAssignments = []
 
+        self.presetVars = []
+
     def solve(self, csp):
         self.csp = csp
         self.beamSearch()
@@ -402,6 +404,7 @@ class AliasCSPSolver:
                 val = presets.pop(0)
                 self.curAssignment[var] = val
                 self.curVarsAssigned.add(var)
+                self.presetVars.append(var)
                 continue
             for counter in xrange(100):
                 possibleValues = self.csp.domain
@@ -426,8 +429,9 @@ class AliasCSPSolver:
         if self.verbose:
             print "\nStarting beamSearch in csp.py to pick aliases..."
         self.initializeVariables()
+        nonPresetVars = [var for var in self.csp.variables if var not in self.presetVars]
         for i in xrange(self.numIters):
-            for var in self.csp.variables:
+            for var in nonPresetVars:
                 possibleValues = self.csp.domain
                 if len(possibleValues) == 0:
                     return

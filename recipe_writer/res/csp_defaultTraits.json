@@ -8,16 +8,16 @@
 		"free_of_nuts": "True",
 		"free_of_meat": "False",
 		"has_aliases": [
-			"chicken",
+			"tofu",
 			"olive oil",
 			"pasta"
 		]
 	},
 	"amount_constraints": {
-		"close_total_kcal": 200,
-		"max_total_carbs": 45,
-		"max_total_fat": 20,
-		"max_total_sodium": 300,
-		"min_total_protein": 6
+		"close_total_kcal": 2000,
+		"max_total_carbs": 550,
+		"max_total_fat": 400,
+		"max_total_sodium": 3000,
+		"min_total_protein": 20
 	}
 }
