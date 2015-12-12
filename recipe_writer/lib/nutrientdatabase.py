@@ -186,7 +186,7 @@ class NutrientDatabase:
     def getConversionFactor(self, ingredient, unit):
         if not self.isValidIngredient(ingredient):
             return None
-        gramsPerUnit =  float(self.nutrientDict[ingredient]['measure'][unit])
+        gramsPerUnit = float(self.nutrientDict[ingredient]['measure'][unit])
         return gramsPerUnit
 
     ##

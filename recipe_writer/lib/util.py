@@ -61,15 +61,15 @@ def gramsToUnitAmount(grams, ingredient):
 
     #Now convert it from grams to cups and return the tuple.
 
-    print unitCounter
-    print "The max unit is: " + maxKey
+    # print unitCounter
+    # print "The max unit is: " + maxKey
 
-    print "The inverse conversion factor is: "
+    # print "The inverse conversion factor is: "
     conversionFactor = nutDB.getConversionFactor(ingredient, maxKey)
-    print conversionFactor
-    unitAmount = grams/conversionFactor
-    print "The unit amount is: " + str(unitAmount)
-    return
+    # print conversionFactor
+    unitAmount = grams / conversionFactor
+    # print "The unit amount is: " + str(unitAmount)
+    return (unitAmount, maxKey)
 
 
 
