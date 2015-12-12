@@ -8,6 +8,7 @@
 # Note: Commenting encouraged so other people can learn from what you've done!
 
 import collections, itertools, copy
+from collections import Counter
 import sys, os
 import numpy, scipy, math, random
 import re
@@ -19,7 +20,7 @@ import thread
 import threading
 import time
 
-
+print __file__
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from lib import util
@@ -539,11 +540,24 @@ def getPercentageTests():
 
 
 def getRange():
-    c = Counter()
-    c['0'] = 5
-    c['1'] = 2
-    print max(c)
-    print util.getIngredientRange('olive oil', 5)
+    # c = Counter()
+    # c['0'] = 5
+    # c['1'] = 2
+    # c['2'] = 4
+    
+    # maxKey = 'dummy'
+    # maxVal = 0
+    # for key in c:
+    #     if c[key] >= maxVal:
+    #         maxVal = c[key]
+    #         maxKey = key
+    
+    # print maxVal
+    # print maxKey
+
+    # print util.getIngredientRange('olive oil', 5)
+    util.gramsToUnitAmount(500, 'milk')
+    util.gramsToUnitAmount(200, 'milk')
 
 
 def main(argv):

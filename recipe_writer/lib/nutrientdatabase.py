@@ -3,8 +3,9 @@ import numpy, scipy, math, random
 import os, sys, time, importlib
 import tokenize, re, string
 import json, unicodedata
-from lib import util
+
 from lib import constants as c
+import util
 
 STANDARD_GRAMS = 100 #everything is given with this
 CALORIES_PER_GRAM_FAT = 9 #Taken from internet info

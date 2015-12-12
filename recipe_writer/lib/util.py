@@ -13,9 +13,11 @@ import thread
 import lib.constants as c
 from lib import constants as c
 from lib import cspclasses
+import nutrientdatabase as ndb
 
 aliasData = None
 nutrientData = None
+nutDB = None
 
 def getIngredientRange(ingredient, listSize):
     global aliasData
@@ -39,7 +41,34 @@ def getIngredientRange(ingredient, listSize):
         returnList.append(startSize + i*stepSize)
     return returnList
 
-def gramsToUnitAmount(ingredient):
+def gramsToUnitAmount(grams, ingredient):
+    global aliasData
+    global nutDB
+
+    if nutDB is None:      
+        nutDB = ndb.NutrientDatabase()
+    if aliasData is None:
+        aliasData = loadLatestAliasData()
+
+    unitCounter = aliasData[ingredient]['unitCounter']
+
+    maxKey = ''
+    maxVal = 0
+    for key in unitCounter:
+        if unitCounter[key] >= maxVal and key != 'unitless':
+            maxVal = unitCounter[key]
+            maxKey = key
+
+    #Now convert it from grams to cups and return the tuple.
+
+    print unitCounter
+    print "The max unit is: " + maxKey
+
+    print "The inverse conversion factor is: "
+    conversionFactor = nutDB.getConversionFactor(ingredient, maxKey)
+    print conversionFactor
+    unitAmount = grams/conversionFactor
+    print "The unit amount is: " + str(unitAmount)
     return
 
 
