@@ -80,7 +80,7 @@ class NutrientDatabase:
     # if either the ingredient or the nutrient is not found.
     ##    
     def getNutrient(self, ingredient, nutrient):
-        nutrient = translateNutrient(nutrient)
+        nutrient = self.translateNutrient(nutrient)
         if not self.isValidIngredient(ingredient):
             return None
         if not self.isValidNutrient(nutrient):
@@ -95,7 +95,7 @@ class NutrientDatabase:
     # is not found.
     ##    
     def getNutrientUnit(self, ingredient, nutrient):
-        nutrient = translateNutrient(nutrient)
+        nutrient = self.translateNutrient(nutrient)
         if not self.isValidIngredient(ingredient):
             return None
         if not self.invalidNutrient(nutrient):
@@ -146,7 +146,7 @@ class NutrientDatabase:
     #
 
     def getPercentDailyValuesPerGram(self, ingredient, nutrient):
-        nutrient = translateNutrient(nutrient)
+        nutrient = self.translateNutrient(nutrient)
         if not self.isValidIngredient(ingredient):
             return None
         nutrientValuePerGram = self.getNutrient(ingredient, nutrient)/STANDARD_GRAMS
