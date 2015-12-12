@@ -13,7 +13,7 @@ import thread
 import constraint
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from lib import util, constants, nutrition, search, nutrientdatabase
+from lib import util, constants, nutrition, search, nutrientdatabase, cspclasses
 constants.init(os.path.dirname(os.path.dirname(__file__)))
 
 
@@ -49,6 +49,8 @@ def run(verbose):
 # 
 ##
 def printResults(traits):
+    if traits["amount_choices"] == {} or traits["amount_choices"] == []:
+        return
     ND = traits["ND"]
     print
     totals = [0.0 for _ in range(max(traits["nutrientIndices"].values()) + 1)]
@@ -61,6 +63,7 @@ def printResults(traits):
     print
     for nu in traits["focusNutrients"]:
         nuInd = traits["nutrientIndices"][nu]
+        dummyIng = traits["amountVarToAlias"][traits["amount_choices"].keys()[0]]
         print "Total %s: %f %s" % (nu, totals[nuInd], ND.getNutrientUnit(nu))
 
 ##
@@ -92,7 +95,12 @@ def solveAliasCSP(traits):
     solver.solve(csp)
 
     traits["alias_choices"] = solver.curAssignment
-
+    # traits["alias_choices"] = {"alias_0": "fresh parsley",
+    #     "alias_1": "tomato paste",
+    #     "alias_2": "dry white wine",
+    #     "alias_3": "olive oil",
+    #     "alias_4": "ground black pepper",
+    #     "alias_5": "chicken"}
     for k, v in traits["alias_choices"].items():
         print "Alias for %s is %s" % (k, v)
 
@@ -103,10 +111,19 @@ def solveAliasCSP(traits):
 # aliases and a set of constraints.
 ##
 def solveAmountCSP(traits):
-    csp = util.CSP()
+    usingQuick = True
+    csp = None
+    if usingQuick:
+        csp = cspclasses.QuickCSP()
+    else:
+        csp = util.CSP()
     addVariablesAndFactors(csp, traits, "amount")
 
-    solver = util.BacktrackingSearch()
+    solver = None
+    if usingQuick:
+        solver = cspclasses.QuickBacktrackingSearch()
+    else:
+        solver = util.BacktrackingSearch()
     solver.solve(csp, mcv=True, ac3=True)
 
     assign = solver.optimalAssignment
@@ -154,7 +171,7 @@ def addVariablesAndFactors(csp, traits, whichCSP):
         # Get a list of all nutrients that are mentioned in amount constraints
         # (focusNutrients)
         # validNutrients = ND.validNutrientsDict.keys() + ['kcal'] + ['sodium']
-        focusNutrients = ['kcal', 'carbs', 'fat', 'protein', 'sodium']
+        focusNutrients = traits["focusNutrients"]
         # for constraint in traits["amount_constraints"]:
         #     focusNutrients += [n for n in constraint.split("_") if n in validNutrients]
 
@@ -379,7 +396,13 @@ class AliasCSPSolver:
         self.curAssignment = {var: None for var in self.csp.variables}
         self.curVarsAssigned = set()
         failed = False
+        presets = self.traits["alias_constraints"]["has_aliases"]
         for var in self.csp.variables:
+            if presets != []:
+                val = presets.pop(0)
+                self.curAssignment[var] = val
+                self.curVarsAssigned.add(var)
+                continue
             for counter in xrange(100):
                 possibleValues = self.csp.domain
                 val = random.choice(possibleValues)

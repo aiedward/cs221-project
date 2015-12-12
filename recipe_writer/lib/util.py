@@ -12,6 +12,7 @@ import json, unicodedata
 import thread
 import lib.constants as c
 from lib import constants as c
+from lib import cspclasses
 
 aliasData = None
 nutrientData = None
@@ -222,8 +223,8 @@ def getAliasData():
     global aliasData
     if aliasData == None:
         print "Loading new data"
-        return loadAliasData("/res/aliasData_medium.json")
-        # return loadLatestAliasData()
+        # return loadAliasData("/res/aliasData_large.json")
+        return loadLatestAliasData()
     else:
         return aliasData
 
@@ -605,11 +606,14 @@ class BacktrackingSearch():
         # Get an ordering of the values.
         ordered_values = self.domains[var]
 
+        print "Domain of %s is %r" % (var, ordered_values)
+
         # Continue the backtracking recursion using |var| and |ordered_values|.
         if not self.ac3:
             # When arc consistency check is not enabled.
             for val in ordered_values:
                 deltaWeight = self.get_delta_weight(assignment, var, val)
+                print "var, val, deltaWeight = %s, %r, %f" % (var, val, deltaWeight)
                 if deltaWeight > 0:
                     assignment[var] = val
                     self.backtrack(assignment, numAssigned + 1, weight * deltaWeight)
@@ -744,91 +748,6 @@ class BacktrackingSearch():
 
         # END_YOUR_CODE
 
-def get_sum_variable(csp, name, variables, maxSum):
-    """
-    Given a list of |variables| each with non-negative integer domains,
-    returns the name of a new variable with domain range(0, maxSum+1), such that
-    it's consistent with the value |n| iff the assignments for |variables|
-    sums to |n|.
-
-    @param name: Prefix of all the variables that are going to be added.
-        Can be any hashable objects. For every variable |var| added in this
-        function, it's recommended to use a naming strategy such as
-        ('sum', |name|, |var|) to avoid conflicts with other variable names.
-    @param variables: A list of variables that are already in the CSP that
-        have non-negative integer values as its domain.
-    @param maxSum: An integer indicating the maximum sum value allowed. You
-        can use it to get the auxiliary variables' domain
-
-    @return result: The name of a newly created variable with domain range
-        [0, maxSum] such that it's consistent with an assignment of |n|
-        iff the assignment of |variables| sums to |n|.
-    """
-    # BEGIN_YOUR_CODE (around 20 lines of code expected)
-    # new_vars = []
-    # new_var_domains = []
-
-    num_variables = len(variables)
-
-    maxes_of_variables = [max(csp.values[variable]) for variable in variables]
-
-    mins_of_variables = [min(csp.values[variable]) for variable in variables]
-
-    runningMaxSum = 0
-    runningMinSum = 0
-
-    last_var = None
-    last_var_domain = None
-
-    for i in xrange(num_variables):
-        new_var = ('sum', name, i)
-        new_var_domain = None
-        old_runningMaxSum = runningMaxSum
-        runningMaxSum += maxes_of_variables[i]
-
-        old_runningMinSum = runningMinSum
-        runningMinSum += mins_of_variables[i]
-
-        # if i == num_variables - 1:
-        #     maxDomainVal = max(runningMaxSum, maxSum)
-        #     new_var_domain = [[ for x in ] for y in range(runningMinSum, maxDomainVal + 1)] 
-        # else:
-        new_var_domain = []
-
-        leftRange = range(old_runningMinSum, old_runningMaxSum + 1)
-        rightRange = range(runningMinSum, runningMaxSum + 1)
-
-        leftRange = range(0, maxSum + 1)
-        rightRange = range(0, maxSum + 1)
-
-        if i == 0:
-            leftRange = [0]
-            # csp.add_unary_factor(new_var, lambda bi: bi[1] == 0)
-
-        for x in leftRange:
-            for y in rightRange:
-                new_var_domain.append((x, y))
-
-        csp.add_variable(new_var, tuple(new_var_domain))
-
-        csp.add_binary_factor(variables[i], new_var, lambda xi, bi: bi[1] == bi[0] + xi)
-        
-        if i != 0:
-            csp.add_binary_factor(last_var, new_var, lambda bimin1, bi: bi[0] == bimin1[1])
-
-        last_var = new_var
-        last_var_domain = new_var_domain
-
-    sum_var = ('sum', name, num_variables)
-    csp.add_variable(sum_var, range(0, maxSum+1))
-    csp.add_unary_factor(sum_var, lambda bn: bn <= maxSum)
-    if last_var:
-        csp.add_binary_factor(last_var, sum_var, lambda bnmin1, bn: bn == bnmin1[1])
-    else:
-        csp.add_unary_factor(sum_var, lambda bn: bn == 0)
-
-    return sum_var
-
 def make_max_sum_variable(csp, unit, variables, maxSum, unitInd):
     ## TO DO: If sum of max of all variables in this category
     # is less than maxSum, don't make any sum variables - they aren't necessary.
@@ -874,12 +793,14 @@ def make_max_sum_variable(csp, unit, variables, maxSum, unitInd):
     # Add intra-variable consistencies
     for newVar, realVar in zip(newVars, variables):
         csp.add_binary_factor(newVar, realVar, 
-            lambda bi, xi: isclose(bi[1], bi[0] + xi[unitInd]))
+            lambda bi, xi: isclose(bi[1], bi[0] + xi[unitInd]),
+            lambda xi, bi: isclose(bi[1], bi[0] + xi[unitInd]))
 
     # Add inter-variable consistencies
     for newVar1, newVar2 in zip(newVars[:-1], newVars[1:]):
         csp.add_binary_factor(newVar1, newVar2, 
-            lambda b_prev, b_next: isclose(b_prev[1], b_next[0]))
+            lambda b_prev, b_next: isclose(b_prev[1], b_next[0]),
+            lambda b_next, b_prev: isclose(b_prev[1], b_next[0]))
 
     # Add total consistency factors for first and last sum variables
     csp.add_unary_factor(newVars[0], lambda b0: b0[0] == 0.0)
@@ -941,12 +862,14 @@ def make_min_sum_variable(csp, unit, variables, minSum, unitInd):
     # Add intra-variable consistencies
     for newVar, realVar in zip(newVars, variables):
         csp.add_binary_factor(newVar, realVar, 
-            lambda bi, xi: isclose(bi[1], bi[0] + xi[unitInd]))
+            lambda bi, xi: isclose(bi[1], bi[0] + xi[unitInd]),
+            lambda xi, bi: isclose(bi[1], bi[0] + xi[unitInd]))
 
     # Add inter-variable consistencies
     for newVar1, newVar2 in zip(newVars[:-1], newVars[1:]):
         csp.add_binary_factor(newVar1, newVar2, 
-            lambda b_prev, b_next: isclose(b_prev[1], b_next[0]))
+            lambda b_prev, b_next: isclose(b_prev[1], b_next[0]),
+            lambda b_next, b_prev: isclose(b_prev[1], b_next[0]))
 
     # Add total consistency factors for first and last sum variables
     csp.add_unary_factor(newVars[0], lambda b0: b0[0] == 0.0)
@@ -1005,12 +928,14 @@ def make_close_sum_variable(csp, unit, variables, maxSum, unitInd):
     # Add intra-variable consistencies
     for newVar, realVar in zip(newVars, variables):
         csp.add_binary_factor(newVar, realVar, 
-            lambda bi, xi: isclose(bi[1], bi[0] + xi[unitInd]))
+            lambda bi, xi: isclose(bi[1], bi[0] + xi[unitInd]),
+            lambda xi, bi: isclose(bi[1], bi[0] + xi[unitInd]))
 
     # Add inter-variable consistencies
     for newVar1, newVar2 in zip(newVars[:-1], newVars[1:]):
         csp.add_binary_factor(newVar1, newVar2, 
-            lambda b_prev, b_next: isclose(b_prev[1], b_next[0]))
+            lambda b_prev, b_next: isclose(b_prev[1], b_next[0]),
+            lambda b_next, b_prev: isclose(b_prev[1], b_next[0]))
 
     # Add total consistency factors for first and last sum variables
     csp.add_unary_factor(newVars[0], lambda b0: b0[0] == 0.0)
