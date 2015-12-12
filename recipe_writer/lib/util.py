@@ -801,7 +801,7 @@ def get_sum_variable(csp, name, variables, maxSum):
 
     return sum_var
 
-def make_sum_variable(csp, unit, variables, maxSum, unitInd):
+def make_max_sum_variable(csp, unit, variables, maxSum, unitInd):
     ## TO DO: If sum of max of all variables in this category
     # is less than maxSum, don't make any sum variables - they aren't necessary.
     # Instead, make variables that make sure each variable uses its max amount.
@@ -855,17 +855,145 @@ def make_sum_variable(csp, unit, variables, maxSum, unitInd):
 
     # Add total consistency factors for first and last sum variables
     csp.add_unary_factor(newVars[0], lambda b0: b0[0] == 0.0)
+    csp.add_unary_factor(newVars[-1], lambda bn: bn[1] <= maxSum) #or isclose(bn[1], maxSum))
+
+    # Add factor to get sum as close as possible to limit
+    # def limitCloseness(bn):
+    #     if abs(maxSum - bn[1]) <= 0.01 * maxSum:
+    #         return 1.0
+    #     else:
+    #         return 1.0 / abs(maxSum - bn[1])
+    # csp.add_unary_factor(newVars[-1], limitCloseness)
+
+    print "Finished creating sum variables for %s" % unit
+
+
+
+def make_min_sum_variable(csp, unit, variables, minSum, unitInd):
+    ## TO DO: If sum of max of all variables in this category
+    # is less than minSum, don't make any sum variables - they aren't necessary.
+    # Instead, make variables that make sure each variable uses its max amount.
+    # Additionally, if there are over 8000 possible values for the final bn sum
+    # variable, just raise an exception, reroll aliases, and try again - not worth
+    # the wait.
+    variables = sorted(variables, key=lambda var: -csp.values[var][-1][unitInd])
+    prevDomain = [(0, 0)]
+    newVars = [('sum', unit, i) for i in xrange(len(variables))]
+    realVarDomains = [map(lambda subLi: subLi[unitInd], csp.values[var]) for var in variables]
+    
+    # If the sum can't be surpassed, there's no need to complicate things more...
+    minVarVals = [min(domain) for domain in realVarDomains] 
+    if sum(minVarVals) >= minSum:
+        return
+
+    newVarDomains = []
+
+    # Calculate sum variable domains
+    for i, var in enumerate(variables):
+        newVar = newVars[i]
+        newVarDomain = []
+        for vPair in prevDomain:
+            v = vPair[1]
+            for x in realVarDomains[i]:
+                newVarDomain.append((v, v + x))
+
+        newVarDomains.append(newVarDomain)
+        prevDomain = newVarDomain
+
+    # Make sure each domain only contains unique values
+    newVarDomains = [list(set(domain)) for domain in newVarDomains]
+
+    print "Lengths of sum variable domains: %r" % [len(domain) for domain in newVarDomains]
+    
+    # Add all sum variables
+    for newVar, newVarDomain in zip(newVars, newVarDomains):
+        csp.add_variable(newVar, newVarDomain)
+    
+
+    # Add intra-variable consistencies
+    for newVar, realVar in zip(newVars, variables):
+        csp.add_binary_factor(newVar, realVar, 
+            lambda bi, xi: isclose(bi[1], bi[0] + xi[unitInd]))
+
+    # Add inter-variable consistencies
+    for newVar1, newVar2 in zip(newVars[:-1], newVars[1:]):
+        csp.add_binary_factor(newVar1, newVar2, 
+            lambda b_prev, b_next: isclose(b_prev[1], b_next[0]))
+
+    # Add total consistency factors for first and last sum variables
+    csp.add_unary_factor(newVars[0], lambda b0: b0[0] == 0.0)
+    csp.add_unary_factor(newVars[-1], lambda bn: bn[1] >= minSum) #or isclose(bn[1], minSum))
+
+    # Add factor to get sum as close as possible to limit
+    # def limitCloseness(bn):
+    #     if abs(minSum - bn[1]) <= 0.01 * minSum:
+    #         return 1.0
+    #     else:
+    #         return 1.0 / abs(minSum - bn[1])
+    # csp.add_unary_factor(newVars[-1], limitCloseness)
+
+    print "Finished creating sum variables for %s" % unit
+
+
+def make_close_sum_variable(csp, unit, variables, maxSum, unitInd):
+    ## TO DO: If sum of max of all variables in this category
+    # is less than maxSum, don't make any sum variables - they aren't necessary.
+    # Instead, make variables that make sure each variable uses its max amount.
+    # Additionally, if there are over 8000 possible values for the final bn sum
+    # variable, just raise an exception, reroll aliases, and try again - not worth
+    # the wait.
+    variables = sorted(variables, key=lambda var: -csp.values[var][-1][unitInd])
+    prevDomain = [(0, 0)]
+    newVars = [('sum', unit, i) for i in xrange(len(variables))]
+    realVarDomains = [map(lambda subLi: subLi[unitInd], csp.values[var]) for var in variables]
+    
+    # If the sum can't be surpassed, there's no need to complicate things more...
+    maxVarVals = [max(domain) for domain in realVarDomains] 
+
+    newVarDomains = []
+
+    # Calculate sum variable domains
+    for i, var in enumerate(variables):
+        newVar = newVars[i]
+        newVarDomain = []
+        for vPair in prevDomain:
+            v = vPair[1]
+            for x in realVarDomains[i]:
+                newVarDomain.append((v, v + x))
+
+        newVarDomains.append(newVarDomain)
+        prevDomain = newVarDomain
+
+    # Make sure each domain only contains unique values
+    newVarDomains = [list(set(domain)) for domain in newVarDomains]
+
+    print "Lengths of sum variable domains: %r" % [len(domain) for domain in newVarDomains]
+    
+    # Add all sum variables
+    for newVar, newVarDomain in zip(newVars, newVarDomains):
+        csp.add_variable(newVar, newVarDomain)
+    
+
+    # Add intra-variable consistencies
+    for newVar, realVar in zip(newVars, variables):
+        csp.add_binary_factor(newVar, realVar, 
+            lambda bi, xi: isclose(bi[1], bi[0] + xi[unitInd]))
+
+    # Add inter-variable consistencies
+    for newVar1, newVar2 in zip(newVars[:-1], newVars[1:]):
+        csp.add_binary_factor(newVar1, newVar2, 
+            lambda b_prev, b_next: isclose(b_prev[1], b_next[0]))
+
+    # Add total consistency factors for first and last sum variables
+    csp.add_unary_factor(newVars[0], lambda b0: b0[0] == 0.0)
     # csp.add_unary_factor(newVars[-1], lambda bn: bn[1] <= maxSum) #or isclose(bn[1], maxSum))
 
     # Add factor to get sum as close as possible to limit
     def limitCloseness(bn):
-        if abs(maxSum - bn[1]) <= 0.01 * maxSum:
+        if abs(maxSum - bn[1]) <= 0.05 * maxSum:
             return 1.0
         else:
             return 1.0 / abs(maxSum - bn[1])
     csp.add_unary_factor(newVars[-1], limitCloseness)
 
     print "Finished creating sum variables for %s" % unit
-
-
-
