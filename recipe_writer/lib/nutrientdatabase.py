@@ -16,10 +16,12 @@ class NutrientDatabase:
         nutrientDataDictFilePath = os.path.join(c.PATH_TO_RESOURCES, "allNutrientData.json")
         validIngredientsFilePath = os.path.join(c.PATH_TO_RESOURCES, "validIngredients.json")
         validNutrientFilePath = os.path.join(c.PATH_TO_RESOURCES, "validNutrients.json")
+        unitLookupFilePath = os.path.join(c.PATH_TO_RESOURCES, "nutrientUnits.json")
 
         self.nutrientDict = util.loadJSONDict(nutrientDataDictFilePath)
         self.validIngredientDict = util.loadJSONDict(validIngredientsFilePath)
         self.validNutrientsDict = util.loadJSONDict(validNutrientFilePath)
+        self.unitLookupDict = util.loadJSONDict(unitLookupFilePath)
 
 
     ##
@@ -94,13 +96,9 @@ class NutrientDatabase:
     # Returns an error if either the ingredient or the nutrient
     # is not found.
     ##    
-    def getNutrientUnit(self, ingredient, nutrient):
+    def getNutrientUnit(self, nutrient):
         nutrient = self.translateNutrient(nutrient)
-        if not self.isValidIngredient(ingredient):
-            return None
-        if not self.invalidNutrient(nutrient):
-            return None
-        return float(self.nutrientDict[ingredient]['nutrients'][nutrient][1])
+        return self.unitLookupDict[nutrient]
 
 
     def getPercentage(self, inputString, ingredient):
@@ -172,7 +170,7 @@ class NutrientDatabase:
             return 'carbohydrate, by difference'
         for key in self.validNutrientsDict:
             if potentialNutrient in key:
-                print key
+                #print key
                 return key
         return potentialNutrient
 

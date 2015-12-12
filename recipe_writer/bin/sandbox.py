@@ -462,9 +462,13 @@ def testNutrientDatabaseClass():
     print nutDatabase.listConversionUnits("accent flavor enhancer")
     print nutDatabase.getConversionFactor("accent flavor enhancer", 'cup')
     print nutDatabase.getNutrientFromGrams(100,"accent flavor enhancer", 'calories')
-    print nutDatabase.getNutrientFromUnit(1,"accent flavor enhancer", 'calories', 'cup')
+    print nutDatabase.getNutrientFromUnit('calories', 1, 'cup', 'accent flavor enhancer')
     print nutDatabase.getNutrientFromGrams(200,"accent flavor enhancer", 'energy')
     print nutDatabase.getNutrientFromGrams(100,"accent flavor enhancer", 'protein')
+    print nutDatabase.getNutrientUnit('fat')
+    print nutDatabase.getNutrientUnit('carbs')
+    print nutDatabase.getNutrientUnit('protein')
+    print nutDatabase.getNutrientUnit('energy')
 
 # def test_variableNumberLambdaArgs1():
 #     csp = constraint.Problem()
@@ -556,10 +560,10 @@ def main(argv):
     # test_threading1()
     #saveNutrientInfo()
     #testAliasExtraction()
-    # testNutrientDatabaseClass()
+    testNutrientDatabaseClass()
     # test_variableNumberLambdaArgs1()
     #test_variableNumberLambdaArgs1()
-    database.manualNutrientQuery("milk", '01080')
+    #database.manualNutrientQuery("milk", '01080')
 
 if __name__ == "__main__":
     main(sys.argv)
