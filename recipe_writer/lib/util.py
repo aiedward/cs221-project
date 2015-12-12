@@ -15,6 +15,34 @@ from lib import constants as c
 
 aliasData = None
 nutrientData = None
+
+def getIngredientRange(ingredient, listSize):
+    global aliasData
+
+    if aliasData is None:
+        aliasData = loadLatestAliasData()
+
+    m = 2
+    mean = aliasData[ingredient]['amountStatistics']['median']
+    stddev = aliasData[ingredient]['amountStatistics']['stddev']
+
+    #print "Mean: %f" % aliasData[ingredient]['amountStatistics']['mean']
+    #print "Stddev: %f" % aliasData[ingredient]['amountStatistics']['stddev']
+    rangeSize = stddev * m
+    stepSize = rangeSize/listSize
+    startSize = mean - rangeSize / 2
+    if startSize < 0:
+        startSize = stepSize
+    returnList = []
+    for i in range(0, listSize):
+        returnList.append(startSize + i*stepSize)
+    return returnList
+
+def gramsToUnitAmount(ingredient):
+    
+
+
+
 # Function: safeConnect
 # ---------------------
 # Wrapper for a function requesting info from a server.  Returns the

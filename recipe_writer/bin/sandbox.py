@@ -538,6 +538,8 @@ def getPercentageTests():
 
 
 
+def getRange():
+    print util.getIngredientRange('olive oil', 5)
 
 
 def main(argv):
@@ -560,10 +562,11 @@ def main(argv):
     # test_threading1()
     #saveNutrientInfo()
     #testAliasExtraction()
-    testNutrientDatabaseClass()
+    #testNutrientDatabaseClass()
     # test_variableNumberLambdaArgs1()
     #test_variableNumberLambdaArgs1()
     #database.manualNutrientQuery("milk", '01080')
+    getRange()
 
 if __name__ == "__main__":
     main(sys.argv)
